@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 蘚苔探險家</title>
+    <style>
+        /* 全域變數與重置 */
+        :root {
+            --primary-color: #2e7d32; /* 蘚苔綠 */
+            --secondary-color: #4caf50;
+            --accent-color: #ff9800; /* 倒數計時器強調色 */
+            --bg-color: #f1f8e9;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 導覽列 */
+        nav {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #c8e6c9;
+        }
+
+        /* Hero Section (主視覺區塊) */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 4rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+
+        /* 倒數計時器區塊 */
+        .countdown-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: inline-block;
+            backdrop-filter: blur(5px);
+        }
+
+        .countdown-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        /* 主選單網格 (網站地圖入口) */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            flex-grow: 1;
+        }
+
+        .card-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .card-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        /* 頁尾 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>AI 蘚苔探險家</h1>
+        <div class="nav-links">
+            <a href="#about">平台理念</a>
+            <a href="tools.html">研究工具箱</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h2>發現腳下的森林，讓AI成為你的科學放大鏡！</h2>
+        <p>專為高中生打造的科展與小論文資訊平台，結合 AI 影像分析，帶你從日常生活展開科學探險。</p>
+        
+        <div class="countdown-container">
+            <div class="countdown-title">全國中學生網站小論文投稿倒數</div>
+            <div id="timer">計算中...</div>
+        </div>
+    </header>
+
+    <main class="container">
+        
+        <article class="card">
+            <h3>研究導航路徑</h3>
+            <p>循序漸進完成 Quest 1 到 Quest 5 的探險任務，包含主題選擇、文獻探討、實驗設計與成果展示。</p>
+            <a href="#" class="card-btn">展開探險清單</a>
+        </article>
+
+        <article class="card">
+            <h3>微觀探險儀</h3>
+            <p>學習蘚苔觀察與正確拍攝方式，建立苔蘚學與植物分類學的基礎科學知識。</p>
+            <a href="#" class="card-btn">學習觀察技巧</a>
+        </article>
+
+        <article class="card">
+            <h3>研究工具箱</h3>
+            <p>包含苔蘚特徵矩陣比對器、資料比例計算機、APA 格式產生器，解決研究過程中的技術痛點。</p>
+            <a href="tools.html" class="card-btn">前往工具箱</a>
+        </article>
+
+        <article class="card">
+            <h3>AI 腦袋怎麼動</h3>
+            <p>深入淺出說明 AI 辨識（CNN 卷積神經網路）的基本原理，理解電腦如何「看懂」植物特徵。</p>
+            <a href="#" class="card-btn">探索 AI 原理</a>
+        </article>
+
+        <article class="card">
+            <h3>延伸議題探索</h3>
+            <p>了解蘚苔與空氣汙染（苔球法）、全球暖化（泥炭沼澤）以及商業生醫之間的跨領域連結。</p>
+            <a href="#" class="card-btn">閱讀延伸議題</a>
+        </article>
+
+        <article class="card">
+            <h3>資源與助手</h3>
+            <p>提供關鍵詞彙索引典，以及台灣與國際重要的植物學、人工智慧學會與期刊連結。</p>
+            <a href="#" class="card-btn">查詢學術資源</a>
+        </article>
+
+    </main>
+
+    <footer>
+        <p>© 2026 AI 蘚苔探險家. 專為科學實踐設計的學習導航平台。</p>
+    </footer>
+
+    <script>
+        // 設定小論文截稿日期 (此處設定為當年 10 月 15 日中午 12:00 作為範例)
+        const currentYear = new Date().getFullYear();
+        const deadline = new Date(`${currentYear}-10-15T12:00:00`).getTime();
+
+        // 更新倒數計時器的函數
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = deadline - now;
+
+            if (distance < 0) {
+                document.getElementById("timer").innerHTML = "本梯次徵稿已結束！";
+                return;
+            }
+
+            // 計算天、時、分、秒
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // 格式化輸出，補零確保視覺整齊
+            document.getElementById("timer").innerHTML = 
+                `${days} 天 ${hours.toString().padStart(2, '0')} 時 ${minutes.toString().padStart(2, '0')} 分 ${seconds.toString().padStart(2, '0')} 秒`;
+        }
+
+        // 立即執行一次，並設定每秒更新
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
