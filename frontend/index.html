@@ -23,13 +23,14 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            padding-bottom: 60px; /* 預留底部控制列的空間 */
+            padding-bottom: 70px; /* 預留底部控制列的空間 */
             line-height: 1.6;
+            transition: background-color 0.3s ease; /* 讓換色更平滑 */
         }
 
         a { text-decoration: none; color: inherit; }
 
-        /* 頂部狀態列 (對應設計圖最上方) */
+        /* 頂部狀態列 */
         .status-bar {
             background-color: var(--top-bar-bg);
             color: #eeeeee;
@@ -58,11 +59,12 @@
         nav {
             background-color: var(--primary-color);
             color: white;
-            padding: 1rem 5%;
+            padding: 0.8rem 5%;
             display: flex;
             align-items: center;
-            gap: 3rem;
+            justify-content: space-between; /* 讓 LOGO 和選單分兩邊 */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease; /* 讓換色更平滑 */
         }
 
         .brand {
@@ -71,50 +73,98 @@
             gap: 12px;
         }
 
-        /* LOGO 圖片設定 */
         .logo {
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            background-color: white; /* 若 LOGO 去背，可有白色底襯托 */
+            background-color: white;
             object-fit: contain;
             border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 0.8rem;
         }
 
-        .brand h1 { margin: 0; font-size: 1.5rem; }
+        .brand h1 { margin: 0; font-size: 1.4rem; letter-spacing: 1px;}
 
+        /* 導覽列選單 */
         .nav-links {
             display: flex;
             gap: 1.5rem;
+            align-items: center;
         }
 
         .nav-links a {
             color: rgba(255,255,255,0.8);
             font-weight: 600;
+            font-size: 0.95rem;
             transition: color 0.3s;
         }
 
         .nav-links a.active, .nav-links a:hover { color: white; }
 
-        /* Hero 區塊 (發現腳下的森林) */
+        /* 下拉選單設計 */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .dropdown:hover .dropbtn { color: white; }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 8px;
+            overflow: hidden;
+            top: 150%;
+            right: 0;
+        }
+
+        .dropdown-content a {
+            color: var(--text-main) !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: var(--primary-color) !important;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Hero 區塊 */
         .hero {
             text-align: center;
             padding: 4rem 1rem;
-            background-color: var(--bg-color);
             position: relative;
             overflow: hidden;
         }
 
         .hero h2 { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--primary-color); }
         .hero p { font-size: 1.2rem; color: var(--text-muted); }
-
-        /* 裝飾性點點 (模擬設計圖背景) */
-        .dot {
-            position: absolute;
-            background-color: var(--secondary-color);
-            border-radius: 50%;
-            opacity: 0.2;
-        }
 
         /* 導航員與時間軸區塊 */
         .container {
@@ -168,12 +218,12 @@
             font-weight: bold;
         }
 
-        /* 當前進度的節點樣式 */
         .node.active {
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
             color: var(--primary-color);
             position: relative;
+            background-color: white;
         }
 
         .node.active::before {
@@ -192,7 +242,7 @@
         .content-box {
             background-color: var(--card-bg);
             border-radius: 16px;
-            height: 300px;
+            height: 250px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             border: 1px solid #e0e0e0;
             display: flex;
@@ -212,10 +262,11 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            padding: 10px 5%;
+            padding: 12px 5%;
             gap: 2rem;
             box-sizing: border-box;
             z-index: 1000;
+            flex-wrap: wrap; /* 讓小螢幕不跑版 */
         }
 
         .control-group {
@@ -225,6 +276,49 @@
             font-size: 0.9rem;
         }
 
+        /* 即時調色盤區塊 UI */
+        .color-picker-wrapper {
+            margin-left: auto; /* 推到最右邊 */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 0;
+            background: none;
+        }
+
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        
+        .color-picker-wrapper input[type="color"]::-webkit-color-swatch {
+            border: 2px solid #fff;
+            border-radius: 50%;
+        }
+
+        .reset-btn {
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover { background-color: #777; }
+
         select {
             background-color: #333;
             color: white;
@@ -233,34 +327,6 @@
             border-radius: 20px;
             outline: none;
         }
-
-        /* 切換開關 (Toggle) */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #555;
-            border-radius: 20px;
-            transition: .4s;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px; width: 14px;
-            left: 3px; bottom: 3px;
-            background-color: white;
-            border-radius: 50%;
-            transition: .4s;
-        }
-        input:checked + .slider { background-color: var(--secondary-color); }
-        input:checked + .slider:before { transform: translateX(20px); }
 
     </style>
 </head>
@@ -285,30 +351,34 @@
         </div>
     </div>
 
-    <!-- 主導覽列 -->
+    <!-- 主導覽列 (已完全依照企劃書地圖更新) -->
     <nav>
         <div class="brand">
-            <!-- 這裡放入 LOGO 圖片 -->
-            <img src="logo.png" alt="蘚苔探險家LOGO" class="logo">
+            <div class="logo">蘚苔</div>
             <h1>AI 蘚苔探險家</h1>
         </div>
         <div class="nav-links">
             <a href="#" class="active">首頁</a>
-            <a href="#">探險路徑</a>
-            <a href="tools.html">工具箱</a>
-            <a href="#">延伸議題</a>
-            <a href="#">關於我們</a>
+            <a href="#">研究導航路徑</a>
+            <a href="#">微觀探險儀</a>
+            <a href="#">AI 腦袋怎麼動</a>
+            <a href="#">研究工具箱</a>
+            <a href="#">延伸議題探索</a>
+            
+            <!-- 下拉選單收納剩餘的三個項目 -->
+            <div class="dropdown">
+                <button class="dropbtn">更多資源 ▾</button>
+                <div class="dropdown-content">
+                    <a href="#">關鍵詞彙索引</a>
+                    <a href="#">可供參考組織網站</a>
+                    <a href="#">關於探險</a>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- 主視覺區塊 -->
     <header class="hero">
-        <!-- 裝飾點點 -->
-        <div class="dot" style="width:10px; height:10px; top:20%; left:20%;"></div>
-        <div class="dot" style="width:15px; height:15px; top:60%; left:15%;"></div>
-        <div class="dot" style="width:8px; height:8px; top:30%; right:25%;"></div>
-        <div class="dot" style="width:12px; height:12px; top:70%; right:10%;"></div>
-        
         <h2>發現腳下的森林</h2>
         <p>讓 AI 成為你的科學放大鏡！</p>
     </header>
@@ -336,7 +406,7 @@
     <!-- 底部控制列 -->
     <div class="bottom-bar">
         <div class="control-group">
-            <label>當前任務階段</label>
+            <label>當前任務階段：</label>
             <select>
                 <option>Quest 1: 發現腳下的綠意</option>
                 <option>Quest 2: 翻閱自然的檔案</option>
@@ -345,18 +415,28 @@
                 <option>Quest 5: 發布探險日誌</option>
             </select>
         </div>
-        <div class="control-group" style="margin-left: 20px;">
-            <label>顯示配色助手</label>
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider"></span>
-            </label>
+
+        <!-- 網頁端即時調色盤 -->
+        <div class="color-picker-wrapper">
+            <label style="font-size: 0.85rem; font-weight: bold;">🎨 網站配色即時調校：</label>
+            
+            <div style="display: flex; align-items: center; gap: 5px;" title="更改主色調(導覽列與文字)">
+                <span style="font-size: 0.75rem;">主色</span>
+                <input type="color" id="primaryColor" value="#2e7d32">
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 5px;" title="更改網頁背景色">
+                <span style="font-size: 0.75rem;">背景</span>
+                <input type="color" id="bgColor" value="#f1f8e9">
+            </div>
+
+            <button class="reset-btn" id="resetColors">重設</button>
         </div>
     </div>
 
     <!-- 動態腳本區塊 -->
     <script>
-        // 設定小論文截稿日期 (以當年 10 月 15 日為例)
+        // --- 1. 倒數計時器邏輯 ---
         const currentYear = new Date().getFullYear();
         const deadline = new Date(`${currentYear}-10-15T12:00:00`).getTime();
 
@@ -369,13 +449,43 @@
                 return;
             }
 
-            // 計算天數
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById("top-timer").innerHTML = `-${days} 天`;
         }
 
         updateTimer();
-        setInterval(updateTimer, 1000 * 60 * 60); // 每小時更新一次天數即可
+        setInterval(updateTimer, 1000 * 60 * 60);
+
+        // --- 2. 網頁端即時配色邏輯 ---
+        const primaryPicker = document.getElementById('primaryColor');
+        const bgPicker = document.getElementById('bgColor');
+        const resetBtn = document.getElementById('resetColors');
+        const root = document.documentElement;
+
+        // 預設顏色記憶
+        const defaultPrimary = "#2e7d32";
+        const defaultBg = "#f1f8e9";
+
+        // 監聽主色調更改
+        primaryPicker.addEventListener('input', function(e) {
+            root.style.setProperty('--primary-color', e.target.value);
+            // 同步稍微改變一下次要顏色(變淺一點)當作點綴
+            root.style.setProperty('--secondary-color', e.target.value); 
+        });
+
+        // 監聽背景色更改
+        bgPicker.addEventListener('input', function(e) {
+            root.style.setProperty('--bg-color', e.target.value);
+        });
+
+        // 一鍵重設為預設綠色系
+        resetBtn.addEventListener('click', function() {
+            root.style.setProperty('--primary-color', defaultPrimary);
+            root.style.setProperty('--secondary-color', '#4caf50');
+            root.style.setProperty('--bg-color', defaultBg);
+            primaryPicker.value = defaultPrimary;
+            bgPicker.value = defaultBg;
+        });
     </script>
 </body>
 </html>
