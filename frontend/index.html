@@ -54,7 +54,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap; /* 允許空間不足時換行 */
+            flex-wrap: wrap;
             gap: 1rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease;
@@ -79,7 +79,7 @@
         /* 導覽列選單 */
         .nav-links {
             display: flex;
-            flex-wrap: wrap; /* 項目過多時自動往下排 */
+            flex-wrap: wrap;
             gap: 1rem 1.2rem;
             align-items: center;
         }
@@ -89,15 +89,13 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.3s;
-            white-space: nowrap; /* 保持文字不斷行 */
+            white-space: nowrap;
         }
 
         .nav-links a.active, .nav-links a:hover { color: white; }
 
-        /* ----- 三層式下拉選單設計 ----- */
-        .dropdown { position: relative; display: inline-block; }
-
-        /* 第一層按鈕 */
+        /* 三層式下拉選單設計 */
+        .dropdown { position: relative; display: inline-block; padding-bottom: 10px; margin-bottom: -10px; } 
         .dropbtn {
             background: none; border: none; color: rgba(255,255,255,0.8);
             font-weight: 600; font-size: 0.95rem; cursor: pointer;
@@ -105,43 +103,45 @@
         }
         .dropdown:hover .dropbtn { color: white; }
 
-        /* 第二層選單容器 */
         .dropdown-content {
             display: none; position: absolute;
-            background-color: white; min-width: 180px;
+            background-color: white; min-width: 190px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 100; border-radius: 8px; top: 150%; left: 0;
-            padding: 0.5rem 0;
+            z-index: 100; border-radius: 8px; 
+            top: 100%; left: 0; padding: 0.5rem 0;
         }
         .dropdown:hover .dropdown-content { display: block; }
 
-        /* 第三層選單容器 (懸浮於右側) */
         .dropdown-submenu { position: relative; }
         .submenu-content {
             display: none; position: absolute;
-            top: 0; left: 100%; /* 從父元素的右側展開 */
-            background-color: white; min-width: 220px;
+            top: -5px; left: 100%; 
+            background-color: white; min-width: 240px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 101; border-radius: 8px; padding: 0.5rem 0;
-            margin-left: 2px;
         }
+        
+        .submenu-content::before {
+            content: ""; position: absolute;
+            top: 0; left: -15px; width: 15px; height: 100%;
+        }
+        
         .dropdown-submenu:hover .submenu-content { display: block; }
 
-        /* 下拉選單內的文字與連結樣式 */
         .dropdown-content a, .dropdown-content .submenu-btn {
             color: var(--text-main) !important;
-            padding: 10px 16px; text-decoration: none;
+            padding: 12px 16px; text-decoration: none;
             display: block; font-weight: 500; font-size: 0.9rem;
             text-align: left; background: none; border: none; width: 100%;
             box-sizing: border-box; cursor: pointer; font-family: inherit;
         }
+        
         .dropdown-content a:hover, .dropdown-submenu:hover .submenu-btn {
-            background-color: #f1f1f1; color: var(--primary-color) !important;
+            background-color: #f1f8e9; color: var(--primary-color) !important;
         }
         
-        /* 選單右箭頭指示 */
         .submenu-btn { display: flex !important; justify-content: space-between; align-items: center; }
-        .submenu-btn::after { content: "▸"; margin-left: 10px; color: #888; }
+        .submenu-btn::after { content: "▸"; margin-left: 10px; color: #aaa; }
 
         /* Hero 與其他版面區塊 */
         .hero { text-align: center; padding: 4rem 1rem; position: relative; overflow: hidden; }
@@ -154,11 +154,20 @@
         .timeline-wrapper { position: relative; margin-bottom: 3rem; padding: 0 20px; }
         .timeline-line { position: absolute; top: 50%; left: 0; right: 0; height: 2px; background-color: #cccccc; z-index: 1; transform: translateY(-50%); }
         .timeline-nodes { display: flex; justify-content: space-between; position: relative; z-index: 2; }
-        .node { background-color: var(--bg-color); border: 2px solid #aaaaaa; border-radius: 50%; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; font-size: 0.9rem; color: #666666; font-weight: bold; }
+        
+        /* 這裡加入了 cursor: pointer 讓節點看起來可以點擊 */
+        .node { 
+            background-color: var(--bg-color); border: 2px solid #aaaaaa; border-radius: 50%; 
+            width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; 
+            font-size: 0.9rem; color: #666666; font-weight: bold; 
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .node:hover { background-color: #e8f5e9; border-color: var(--secondary-color); }
+
         .node.active { border-color: var(--secondary-color); box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2); color: var(--primary-color); position: relative; background-color: white; }
         .node.active::before { content: "目前進度"; position: absolute; top: -35px; background-color: var(--primary-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; white-space: nowrap; }
 
-        .content-box { background-color: var(--card-bg); border-radius: 16px; height: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; display: flex; justify-content: center; align-items: center; color: var(--text-muted); }
+        .content-box { background-color: var(--card-bg); border-radius: 16px; height: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e0e0e0; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 1.1rem;}
 
         /* 底部控制列 */
         .bottom-bar { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bottom-bar-bg); color: white; display: flex; justify-content: flex-start; align-items: center; padding: 12px 5%; gap: 2rem; box-sizing: border-box; z-index: 1000; flex-wrap: wrap; }
@@ -170,7 +179,7 @@
         .color-picker-wrapper input[type="color"]::-webkit-color-swatch { border: 2px solid #fff; border-radius: 50%; }
         .reset-btn { background-color: #555; color: white; border: none; padding: 4px 10px; border-radius: 12px; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
         .reset-btn:hover { background-color: #777; }
-        select { background-color: #333; color: white; border: 1px solid #555; padding: 6px 12px; border-radius: 20px; outline: none; }
+        select { background-color: #333; color: white; border: 1px solid #555; padding: 6px 12px; border-radius: 20px; outline: none; cursor: pointer;}
     </style>
 </head>
 <body>
@@ -179,10 +188,6 @@
     <div class="status-bar">
         <div>AI 蘚苔探險家 網站預覽</div>
         <div class="status-stats">
-            <div class="stat-col">
-                <span class="stat-label">當前任務</span>
-                <span class="stat-value">實驗設計</span>
-            </div>
             <div class="stat-col">
                 <span class="stat-label">投稿倒數</span>
                 <span class="stat-value" id="top-timer">計算中...</span>
@@ -194,7 +199,7 @@
         </div>
     </div>
 
-    <!-- 主導覽列 (攤平項目 + 三層式工具箱) -->
+    <!-- 主導覽列 -->
     <nav>
         <div class="brand">
             <div class="logo">蘚苔</div>
@@ -210,32 +215,24 @@
             <div class="dropdown">
                 <button class="dropbtn">研究工具箱 ▾</button>
                 <div class="dropdown-content">
-                    
-                    <!-- 第二層：輔助科展工具 -->
                     <div class="dropdown-submenu">
                         <button class="submenu-btn">輔助科展工具</button>
                         <div class="submenu-content">
-                            <!-- 第三層：具體工具超連結 -->
                             <a href="#">投稿倒數計時器</a>
                             <a href="#">館員諮詢服務月時間表</a>
                             <a href="#">海報配色建議工具</a>
                         </div>
                     </div>
-
-                    <!-- 第二層：研究痛點工具 -->
                     <div class="dropdown-submenu">
                         <button class="submenu-btn">研究痛點工具</button>
                         <div class="submenu-content">
-                            <!-- 第三層：具體工具超連結 -->
                             <a href="#">苔蘚特徵矩陣比對器</a>
                             <a href="#">AI 訓練資料庫比例計算機</a>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <!-- 剩下的項目完全跟企劃書同級展開 -->
             <a href="#">延伸議題探索</a>
             <a href="#">關鍵詞彙索引</a>
             <a href="#">可供參考組織網站</a>
@@ -255,7 +252,8 @@
         
         <div class="timeline-wrapper">
             <div class="timeline-line"></div>
-            <div class="timeline-nodes">
+            <div class="timeline-nodes" id="quest-nodes">
+                <!-- 這裡加上 id 方便腳本抓取 -->
                 <div class="node">Quest 1</div>
                 <div class="node">Quest 2</div>
                 <div class="node active">Quest 3</div>
@@ -264,7 +262,7 @@
             </div>
         </div>
 
-        <div class="content-box">
+        <div class="content-box" id="quest-content">
             <p>目前位於 Quest 3：設定探險參數 (實驗設計與數據蒐集區塊)</p>
         </div>
     </main>
@@ -273,11 +271,11 @@
     <div class="bottom-bar">
         <div class="control-group">
             <label>當前任務階段：</label>
-            <select>
+            <select id="quest-select">
                 <option>Quest 1: 發現腳下的綠意</option>
                 <option>Quest 2: 翻閱自然的檔案</option>
                 <option selected>Quest 3: 設定探險參數</option>
-                <option>Quest 4: 分析 AI 視野</option>
+                <option>Quest 4: 對未來的持續叩問</option>
                 <option>Quest 5: 發布探險日誌</option>
             </select>
         </div>
@@ -299,7 +297,47 @@
 
     <!-- 動態腳本區塊 -->
     <script>
-        // 倒數計時器邏輯
+        // --- 1. 時間軸與下拉選單雙向連動邏輯 ---
+        const nodes = document.querySelectorAll('#quest-nodes .node');
+        const questSelect = document.getElementById('quest-select');
+        const contentBox = document.getElementById('quest-content');
+
+        // 定義每個 Quest 點擊後要顯示的文字
+        const questContents = [
+            "目前位於 Quest 1：發現腳下的綠意 (選擇主題區塊)<br><span style='font-size:0.9rem; color:#888;'>此處未來將放置引導觀察生活環境的互動內容。</span>",
+            "目前位於 Quest 2：翻閱自然的檔案 (文獻探討區塊)<br><span style='font-size:0.9rem; color:#888;'>此處未來將放置資料庫檢索教學與文獻整理工具。</span>",
+            "目前位於 Quest 3：設定探險參數 (實驗設計與數據蒐集區塊)<br><span style='font-size:0.9rem; color:#888;'>此處將嵌入「苔蘚特徵矩陣比對器」與「AI 資料庫計算機」。</span>",
+            "目前位於 Quest 4：對未來的持續叩問 (結論與展望區塊)<br><span style='font-size:0.9rem; color:#888;'>此處未來將引導學生總結科學假設的驗證結果。</span>",
+            "目前位於 Quest 5：發布探險日誌 (成果呈現區塊)<br><span style='font-size:0.9rem; color:#888;'>此處將提供排版教學與「海報配色建議工具」。</span>"
+        ];
+
+        // 統整更新畫面的函數
+        function updateQuest(index) {
+            // 更新圓圈狀態
+            nodes.forEach((node, i) => {
+                if(i === index) node.classList.add('active');
+                else node.classList.remove('active');
+            });
+            // 更新下拉選單
+            questSelect.selectedIndex = index;
+            // 更新白框內的文字
+            contentBox.innerHTML = `<p style="text-align:center;">${questContents[index]}</p>`;
+        }
+
+        // 點擊圓圈時觸發
+        nodes.forEach((node, index) => {
+            node.addEventListener('click', () => {
+                updateQuest(index);
+            });
+        });
+
+        // 改變下拉選單時觸發
+        questSelect.addEventListener('change', (e) => {
+            updateQuest(e.target.selectedIndex);
+        });
+
+
+        // --- 2. 倒數計時器邏輯 ---
         const currentYear = new Date().getFullYear();
         const deadline = new Date(`${currentYear}-10-15T12:00:00`).getTime();
         function updateTimer() {
@@ -312,7 +350,8 @@
         updateTimer();
         setInterval(updateTimer, 1000 * 60 * 60);
 
-        // 網頁端即時配色邏輯
+
+        // --- 3. 網頁端即時配色邏輯 ---
         const primaryPicker = document.getElementById('primaryColor');
         const bgPicker = document.getElementById('bgColor');
         const resetBtn = document.getElementById('resetColors');
