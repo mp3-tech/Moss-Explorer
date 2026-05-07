@@ -24,7 +24,7 @@
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            padding-bottom: 100px; /* 預留底部調色盤空間 */
+            padding-bottom: 40px; /* 縮減底部留白 */
             transition: background-color 0.3s ease;
         }
 
@@ -50,18 +50,28 @@
             gap: 12px;
         }
 
-        /* --- 圖片 LOGO 樣式修改處 --- */
         .logo-img {
-            height: 40px; /* 設定 LOGO 高度，寬度會隨比例縮放 */
+            height: 45px;
             width: auto;
-            object-fit: contain; /* 確保圖片不變形 */
+            object-fit: contain;
             display: block;
         }
 
-        .brand h2 {
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-text h2 {
             margin: 0;
             font-size: 1.25rem;
             color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .brand-text span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
 
         .nav-links {
@@ -101,10 +111,7 @@
             background: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
             border-radius: 8px; border: 1px solid var(--border-color); padding: 8px 0;
         }
-        /* 防滑鼠掉落隱形橋樑 */
-        .submenu-content::before {
-            content: ""; position: absolute; top: 0; left: -15px; width: 15px; height: 100%;
-        }
+        .submenu-content::before { content: ""; position: absolute; top: 0; left: -15px; width: 15px; height: 100%; }
         .dropdown-submenu:hover .submenu-content { display: block; }
         
         .dropdown-content a, .submenu-btn {
@@ -113,16 +120,15 @@
             color: var(--text-main); font-family: inherit; font-weight: 500; box-sizing: border-box;
         }
         .dropdown-content a:hover, .submenu-btn:hover { background: #f5f5f5; color: var(--primary) !important; }
-        
         .submenu-btn { display: flex !important; justify-content: space-between; align-items: center; }
         .submenu-btn::after { content: "▸"; color: #999; }
 
-        /* ===== 網格整體佈局：左、中、右 三欄 ===== */
+        /* ===== 網格整體佈局：雙欄 (移除了左側導航) ===== */
         .dashboard-container {
             display: grid;
-            grid-template-columns: 240px 1fr 300px;
+            grid-template-columns: 1fr 320px; /* 調整為主內容與右側欄的比例 */
             gap: 24px;
-            padding: 24px;
+            padding: 24px 5%;
             max-width: 1600px;
             margin: 0 auto;
             box-sizing: border-box;
@@ -144,51 +150,6 @@
             color: var(--text-main);
         }
 
-        /* ===== 左側：任務導航 ===== */
-        .quest-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .quest-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            border-radius: var(--radius);
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .quest-item:hover {
-            border-color: var(--secondary);
-            box-shadow: 0 4px 12px rgba(129, 199, 132, 0.15);
-        }
-
-        .quest-item.active {
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
-        }
-
-        .quest-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #e8f5e9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .quest-info h4 { margin: 0 0 4px 0; font-size: 0.95rem; }
-        .quest-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
-
         /* ===== 中間：主要內容區 ===== */
         .main-content {
             display: flex;
@@ -204,10 +165,13 @@
             position: relative;
             overflow: hidden;
             border: 1px solid #c8e6c9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .hero-banner h1 { margin: 0 0 12px 0; font-size: 2.2rem; color: var(--primary); }
-        .hero-banner p { margin: 0 0 24px 0; font-size: 1.1rem; color: var(--text-main); }
+        .hero-text h1 { margin: 0 0 12px 0; font-size: 2.2rem; color: var(--primary); }
+        .hero-text p { margin: 0; font-size: 1.1rem; color: var(--text-main); }
         
         .btn {
             padding: 10px 24px;
@@ -219,13 +183,11 @@
         }
         .btn-primary { background-color: var(--primary); color: white; }
         .btn-primary:hover { background-color: #1b5e20; }
-        .btn-outline { background-color: white; color: var(--primary); border: 1px solid var(--primary); margin-left: 12px;}
-        .btn-outline:hover { background-color: #f1f8e9; }
 
         /* 工具箱網格 */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 16px;
         }
 
@@ -253,7 +215,7 @@
         .btn-tool {
             width: 100%; padding: 6px 0; background-color: #e8f5e9; 
             color: var(--primary); border: none; border-radius: 6px; 
-            font-size: 0.8rem; font-weight: bold; cursor: pointer;
+            font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: 0.2s;
         }
         .btn-tool:hover { background-color: var(--secondary); color: white; }
 
@@ -269,9 +231,21 @@
         /* ===== 右側：小工具與日曆 ===== */
         .right-sidebar { display: flex; flex-direction: column; gap: 24px; }
         
+        .countdown-hint {
+            background-color: #fff9e6;
+            border-left: 3px solid var(--accent);
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            color: #666;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .countdown-hint strong { color: var(--primary); }
+
         .countdown-row { display: flex; justify-content: space-between; text-align: center; margin-top: 12px;}
         .countdown-col h6 { margin: 0 0 4px 0; font-size: 0.85rem; color: var(--text-muted); font-weight: normal;}
-        .countdown-time { font-size: 1.1rem; font-weight: bold; color: var(--primary); font-family: monospace;}
+        .countdown-time { font-size: 1.15rem; font-weight: bold; color: var(--primary); font-family: monospace;}
         .countdown-time span { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin: 0 2px;}
 
         /* 簡易日曆 */
@@ -283,27 +257,45 @@
 
         /* 快速連結 */
         .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
-        .ql-item { cursor: pointer; }
-        .ql-icon { width: 40px; height: 40px; border-radius: 8px; background: #f5f5f5; margin: 0 auto 8px auto; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;}
+        .ql-item { cursor: pointer; transition: 0.2s;}
+        .ql-item:hover .ql-icon { background: #e8f5e9; color: var(--primary); transform: translateY(-2px);}
+        .ql-icon { width: 40px; height: 40px; border-radius: 8px; background: #f5f5f5; margin: 0 auto 8px auto; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; transition: 0.2s;}
         .ql-item span { font-size: 0.75rem; color: var(--text-muted);}
 
-        /* 最新公告 */
-        .news-list { list-style: none; padding: 0; margin: 0; }
-        .news-item { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 8px 0; border-bottom: 1px dashed var(--border-color);}
-        .news-item:last-child { border-bottom: none; }
-        .news-title { color: var(--text-main); }
-        .news-date { color: var(--text-muted); }
+        /* ===== 底部：懸浮調色盤按鈕與控制盤 ===== */
+        .toggle-color-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .toggle-color-btn:hover { background-color: #1b5e20; transform: translateY(-2px); }
 
-        /* ===== 底部：配色控制盤 ===== */
         .bottom-color-bar {
             position: fixed; bottom: 0; left: 0; width: 100%;
             background-color: var(--bg-card);
             border-top: 1px solid var(--border-color);
-            padding: 16px 24px;
+            padding: 16px 5%;
             box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
             display: flex; align-items: center; justify-content: space-between;
             box-sizing: border-box; z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .bottom-color-bar.show { transform: translateY(0); }
 
         .color-controls { display: flex; gap: 24px; align-items: center; }
         .color-group { display: flex; flex-direction: column; gap: 4px; }
@@ -318,6 +310,8 @@
         input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
         
         .hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
+        .close-color-btn { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; padding: 4px;}
+        .close-color-btn:hover { color: #333; }
 
     </style>
 </head>
@@ -325,8 +319,11 @@
 
     <header>
         <div class="brand">
-            <img src="logo.png" alt="AI 蘚苔探險家 LOGO" class="logo-img">
-            <h2>AI 蘚苔探險家</h2>
+            <img src="logo.png" alt="LOGO" class="logo-img">
+            <div class="brand-text">
+                <h2>AI 蘚苔探險家</h2>
+                <span>發現腳下的森林，讓 AI 成為你的科學放大鏡！</span>
+            </div>
         </div>
         <nav class="nav-links">
             <a href="#">首頁</a>
@@ -364,55 +361,13 @@
 
     <div class="dashboard-container">
         
-        <aside class="sidebar-left">
-            <h3 class="section-title">研究任務導航</h3>
-            <div class="quest-list">
-                <div class="quest-item">
-                    <div class="quest-icon">Q1</div>
-                    <div class="quest-info">
-                        <h4>發現腳下的綠意</h4>
-                        <p>選擇主題與建立問題意識</p>
-                    </div>
-                </div>
-                <div class="quest-item">
-                    <div class="quest-icon">Q2</div>
-                    <div class="quest-info">
-                        <h4>翻閱自然的檔案</h4>
-                        <p>文獻探討與資料蒐集</p>
-                    </div>
-                </div>
-                <div class="quest-item active">
-                    <div class="quest-icon">Q3</div>
-                    <div class="quest-info">
-                        <h4>設定探險參數</h4>
-                        <p>實驗設計與數據蒐集</p>
-                    </div>
-                </div>
-                <div class="quest-item">
-                    <div class="quest-icon">Q4</div>
-                    <div class="quest-info">
-                        <h4>解讀線索與證據</h4>
-                        <p>資料分析與結果討論</p>
-                    </div>
-                </div>
-                <div class="quest-item">
-                    <div class="quest-icon">Q5</div>
-                    <div class="quest-info">
-                        <h4>發布探險日誌</h4>
-                        <p>結論撰寫與成果呈現</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
         <main class="main-content">
             <section class="hero-banner">
-                <h1>用 AI 辨識蘚苔植物</h1>
-                <p>從生活中的小觀察，展開科學探險的第一步！</p>
-                <div>
-                    <button class="btn btn-primary">開始探險</button>
-                    <button class="btn btn-outline">觀看教學影片</button>
+                <div class="hero-text">
+                    <h1>用 AI 辨識蘚苔植物</h1>
+                    <p>從生活中的小觀察，展開科學探險的第一步！</p>
                 </div>
+                <button class="btn btn-primary">開始探險</button>
             </section>
 
             <section class="card">
@@ -485,10 +440,15 @@
         <aside class="right-sidebar">
             
             <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
                     <h3 class="section-title" style="margin:0;">科展/小論文倒數</h3>
                     <a href="#" style="font-size:0.75rem; color:var(--primary);">更多時程 ></a>
                 </div>
+                
+                <div class="countdown-hint">
+                    💡 提示：設定最終時間請到 <br><strong>研究工具箱 ➔ 輔助科展工具 ➔ 投稿倒數計時器</strong> 中設置。
+                </div>
+
                 <div class="countdown-row">
                     <div class="countdown-col">
                         <h6>全國中小學科學展覽會</h6>
@@ -550,31 +510,14 @@
                 </div>
             </div>
 
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-                    <h3 class="section-title" style="margin:0;">最新公告</h3>
-                    <a href="#" style="font-size:0.75rem; color:var(--primary);">更多公告 ></a>
-                </div>
-                <ul class="news-list">
-                    <li class="news-item">
-                        <span class="news-title">📣 2026科展系列講座報名中！</span>
-                        <span class="news-date">04/18</span>
-                    </li>
-                    <li class="news-item">
-                        <span class="news-title">📅 館員諮詢服務5月時間表已公布</span>
-                        <span class="news-date">04/15</span>
-                    </li>
-                    <li class="news-item">
-                        <span class="news-title">✨ 新增「AI 模型訓練教學」工具</span>
-                        <span class="news-date">04/10</span>
-                    </li>
-                </ul>
-            </div>
-
         </aside>
     </div>
 
-    <div class="bottom-color-bar">
+    <button class="toggle-color-btn" id="open-color-btn">
+        🎨 網頁調色
+    </button>
+
+    <div class="bottom-color-bar" id="color-bar-panel">
         <div style="display:flex; align-items:center; gap: 16px;">
             <h3 style="margin:0; font-size:1rem; display:flex; align-items:center; gap:8px;">
                 🎨 網站配色即時調校
@@ -597,12 +540,13 @@
                     <span class="hex-value" id="hex-bg">#f7faf5</span>
                 </div>
             </div>
-            <button class="btn btn-primary" id="btn-reset" style="padding: 8px 16px; align-self: flex-end;">重設預設</button>
+            <button class="btn btn-primary" id="btn-reset" style="padding: 8px 16px;">重設預設</button>
+            <button class="close-color-btn" id="close-color-btn" title="關閉面板">✖</button>
         </div>
     </div>
 
     <script>
-        // --- 1. 倒數計時器邏輯 (已更新為每秒更新並顯示至秒) ---
+        // --- 1. 倒數計時器邏輯 (每秒更新並顯示至秒) ---
         function updateCountdowns() {
             const now = new Date().getTime();
             
@@ -614,13 +558,11 @@
             function formatTime(distance) {
                 if (distance < 0) return "已截止";
                 
-                // 計算 天、時、分、秒
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
                 
-                // 補零讓畫面維持整齊的 00 格式
                 const hrStr = hours.toString().padStart(2, '0');
                 const minStr = minutes.toString().padStart(2, '0');
                 const secStr = seconds.toString().padStart(2, '0');
@@ -632,11 +574,25 @@
             document.getElementById("timer-essay").innerHTML = formatTime(essayDate - now);
         }
         
-        // 立即執行一次，然後每秒 (1000ms) 執行一次
         updateCountdowns();
         setInterval(updateCountdowns, 1000);
 
-        // --- 2. 底部即時調色盤邏輯 ---
+        // --- 2. 懸浮調色盤開關邏輯 ---
+        const colorBarPanel = document.getElementById('color-bar-panel');
+        const openColorBtn = document.getElementById('open-color-btn');
+        const closeColorBtn = document.getElementById('close-color-btn');
+
+        openColorBtn.addEventListener('click', () => {
+            colorBarPanel.classList.add('show');
+            openColorBtn.style.display = 'none'; // 打開面板時隱藏按鈕
+        });
+
+        closeColorBtn.addEventListener('click', () => {
+            colorBarPanel.classList.remove('show');
+            openColorBtn.style.display = 'flex'; // 關閉面板時恢復按鈕
+        });
+
+        // --- 3. 底部即時調色盤邏輯 ---
         const cpPrimary = document.getElementById('cp-primary');
         const cpBg = document.getElementById('cp-bg');
         const hexPrimary = document.getElementById('hex-primary');
@@ -667,18 +623,6 @@
             cpBg.value = defaultBg;
             hexPrimary.textContent = defaultPrimary;
             hexBg.textContent = defaultBg;
-        });
-
-        // --- 3. 左側 Quest 點擊切換效果 ---
-        const questItems = document.querySelectorAll('.quest-item');
-        questItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const currentActive = document.querySelector('.quest-item.active');
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                }
-                item.classList.add('active');
-            });
         });
     </script>
 </body>
