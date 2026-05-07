@@ -50,18 +50,12 @@
             gap: 12px;
         }
 
-        .logo-box {
-            width: 36px;
-            height: 36px;
-            background-color: var(--primary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+        /* --- 圖片 LOGO 樣式修改處 --- */
+        .logo-img {
+            height: 40px; /* 設定 LOGO 高度，寬度會隨比例縮放 */
+            width: auto;
+            object-fit: contain; /* 確保圖片不變形 */
+            display: block;
         }
 
         .brand h2 {
@@ -331,7 +325,7 @@
 
     <header>
         <div class="brand">
-            <div class="logo-box">蘚苔</div>
+            <img src="logo.png" alt="AI 蘚苔探險家 LOGO" class="logo-img">
             <h2>AI 蘚苔探險家</h2>
         </div>
         <nav class="nav-links">
@@ -608,7 +602,7 @@
     </div>
 
     <script>
-        // --- 1. 倒數計時器邏輯 (更新為顯示至「秒」) ---
+        // --- 1. 倒數計時器邏輯 (已更新為每秒更新並顯示至秒) ---
         function updateCountdowns() {
             const now = new Date().getTime();
             
@@ -638,7 +632,7 @@
             document.getElementById("timer-essay").innerHTML = formatTime(essayDate - now);
         }
         
-        // 先執行一次避免重整畫面閃爍，然後將更新頻率從 1小時 (1000*60*60) 改為 1秒 (1000)
+        // 立即執行一次，然後每秒 (1000ms) 執行一次
         updateCountdowns();
         setInterval(updateCountdowns, 1000);
 
@@ -679,7 +673,10 @@
         const questItems = document.querySelectorAll('.quest-item');
         questItems.forEach(item => {
             item.addEventListener('click', () => {
-                document.querySelector('.quest-item.active').classList.remove('active');
+                const currentActive = document.querySelector('.quest-item.active');
+                if (currentActive) {
+                    currentActive.classList.remove('active');
+                }
                 item.classList.add('active');
             });
         });
