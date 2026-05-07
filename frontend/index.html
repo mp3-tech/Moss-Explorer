@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 蘚苔探險家</title>
+    <title>AI 蘚苔探險家 - 專案儀表板</title>
     <style>
+        /* 全域變數 */
         :root {
             --primary: #2e7d32;
             --secondary: #81c784;
@@ -18,118 +19,327 @@
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Noto Sans TC', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
-            margin: 0; padding: 0; padding-bottom: 100px;
-            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 100px; /* 預留底部調色盤空間 */
+            transition: background-color 0.3s ease;
         }
 
         a { text-decoration: none; color: inherit; }
 
-        /* ===== 頂部導覽列 (對照網站地圖) ===== */
+        /* ===== 頂部導覽列與 LOGO ===== */
         header {
             background-color: white;
             border-bottom: 1px solid var(--border-color);
-            padding: 0.6rem 5%;
-            display: flex; align-items: center; justify-content: space-between;
-            position: sticky; top: 0; z-index: 1000;
+            padding: 0.8rem 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .logo-box { 
-            width: 36px; height: 36px; background: var(--primary); 
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 0.8rem;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .nav-links { display: flex; gap: 1.2rem; align-items: center; }
-        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-main); transition: 0.2s; }
+        .logo-box {
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .brand h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: color 0.2s;
+        }
+
         .nav-links a:hover { color: var(--primary); }
 
-        /* 三層下拉選單 */
-        .dropdown { position: relative; }
-        .dropbtn { background: none; border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; font-family: inherit; }
+        /* --- 導覽列三層下拉選單 --- */
+        .dropdown { position: relative; padding-bottom: 10px; margin-bottom: -10px; }
+        .dropbtn { 
+            background: none; border: none; font-size: 0.9rem; font-weight: 600; 
+            cursor: pointer; font-family: inherit; color: var(--text-main); padding: 0;
+        }
+        .dropdown:hover .dropbtn { color: var(--primary); }
+        
         .dropdown-content {
-            display: none; position: absolute; background: white; min-width: 180px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; padding: 8px 0;
+            display: none; position: absolute; background: white; min-width: 190px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; 
+            top: 100%; left: 0; padding: 8px 0; border: 1px solid var(--border-color);
         }
         .dropdown:hover .dropdown-content { display: block; }
-
+        
         .dropdown-submenu { position: relative; }
         .submenu-content {
             display: none; position: absolute; top: 0; left: 100%;
-            background: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px;
+            background: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+            border-radius: 8px; border: 1px solid var(--border-color); padding: 8px 0;
+        }
+        /* 防滑鼠掉落隱形橋樑 */
+        .submenu-content::before {
+            content: ""; position: absolute; top: 0; left: -15px; width: 15px; height: 100%;
         }
         .dropdown-submenu:hover .submenu-content { display: block; }
-        .dropdown-content a, .submenu-btn { 
-            padding: 10px 16px; display: block; font-size: 0.85rem; width: 100%; text-align: left;
-            border: none; background: none; cursor: pointer;
+        
+        .dropdown-content a, .submenu-btn {
+            padding: 10px 16px; display: block; font-size: 0.85rem; width: 100%; 
+            text-align: left; border: none; background: none; cursor: pointer; 
+            color: var(--text-main); font-family: inherit; font-weight: 500; box-sizing: border-box;
         }
-        .dropdown-content a:hover, .submenu-btn:hover { background: #f5f5f5; color: var(--primary); }
-        .submenu-btn::after { content: " ▸"; float: right; color: #999; }
+        .dropdown-content a:hover, .submenu-btn:hover { background: #f5f5f5; color: var(--primary) !important; }
+        
+        .submenu-btn { display: flex !important; justify-content: space-between; align-items: center; }
+        .submenu-btn::after { content: "▸"; color: #999; }
 
-        /* ===== 儀表板佈局 (對照設計圖) ===== */
+        /* ===== 網格整體佈局：左、中、右 三欄 ===== */
         .dashboard-container {
-            display: grid; grid-template-columns: 240px 1fr 300px;
-            gap: 24px; padding: 24px; max-width: 1600px; margin: 0 auto; box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 240px 1fr 300px;
+            gap: 24px;
+            padding: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+            box-sizing: border-box;
         }
 
-        .card { background: white; border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; }
-        .section-title { font-size: 1rem; font-weight: bold; margin: 0 0 16px 0; display: flex; justify-content: space-between; }
+        /* 通用卡片樣式 */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
 
-        /* 左側 Quest 列表 */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 16px 0;
+            color: var(--text-main);
+        }
+
+        /* ===== 左側：任務導航 ===== */
+        .quest-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .quest-item {
-            display: flex; align-items: center; gap: 12px; padding: 12px;
-            border-radius: 8px; border: 1px solid var(--border-color); margin-bottom: 10px; cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: var(--radius);
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .quest-item.active { border-left: 4px solid var(--primary); background: #f1f8e9; }
-        .quest-icon { width: 32px; height: 32px; border-radius: 50%; background: #e8f5e9; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 0.8rem; font-weight: bold; flex-shrink: 0; }
-        .quest-info h4 { margin: 0; font-size: 0.85rem; }
 
-        /* 中間 Banner & 工具箱 */
+        .quest-item:hover {
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(129, 199, 132, 0.15);
+        }
+
+        .quest-item.active {
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+        }
+
+        .quest-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e8f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .quest-info h4 { margin: 0 0 4px 0; font-size: 0.95rem; }
+        .quest-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ===== 中間：主要內容區 ===== */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Hero Banner */
         .hero-banner {
             background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            border-radius: var(--radius); padding: 40px; margin-bottom: 24px;
+            border-radius: var(--radius);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #c8e6c9;
         }
-        .hero-banner h1 { margin: 0 0 10px 0; color: var(--primary); }
-        .tools-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
-        .tool-card { text-align: center; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; }
-        .tool-icon { font-size: 1.5rem; margin-bottom: 8px; }
-        .tool-card h5 { margin: 0 0 5px 0; font-size: 0.8rem; height: 2.4rem; overflow: hidden; }
-        .btn-tool { width: 100%; background: #e8f5e9; border: none; padding: 5px; color: var(--primary); border-radius: 4px; font-size: 0.75rem; cursor: pointer; }
 
-        /* 右側 倒數計時 & 月曆 */
-        .countdown-box { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); }
-        .countdown-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
-        .countdown-time { font-size: 1.1rem; font-weight: bold; color: var(--primary); font-family: monospace; }
+        .hero-banner h1 { margin: 0 0 12px 0; font-size: 2.2rem; color: var(--primary); }
+        .hero-banner p { margin: 0 0 24px 0; font-size: 1.1rem; color: var(--text-main); }
         
-        .calendar { width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: center; }
-        .calendar th { padding-bottom: 8px; color: var(--text-muted); font-weight: normal; }
-        .cal-today { background: var(--primary); color: white; border-radius: 50%; display: inline-block; width: 20px; height: 20px; line-height: 20px; }
-
-        /* 底部配色盤 */
-        .color-bar {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: white;
-            border-top: 1px solid var(--border-color); padding: 15px 5%;
-            display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
         }
-        .color-inputs { display: flex; gap: 20px; }
-        .color-group { display: flex; flex-direction: column; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: #1b5e20; }
+        .btn-outline { background-color: white; color: var(--primary); border: 1px solid var(--primary); margin-left: 12px;}
+        .btn-outline:hover { background-color: #f1f8e9; }
+
+        /* 工具箱網格 */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .tool-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 0.2s;
+        }
+        .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); border-color: var(--secondary); }
+        
+        .tool-icon {
+            width: 50px; height: 50px; border-radius: 50%;
+            background-color: #f1f8e9; margin-bottom: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.5rem; color: var(--primary);
+        }
+        .tool-card h5 { margin: 0 0 8px 0; font-size: 0.9rem; height: 2.7rem; display: flex; align-items: center;}
+        .tool-card p { margin: 0 0 16px 0; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; flex-grow: 1;}
+        .btn-tool {
+            width: 100%; padding: 6px 0; background-color: #e8f5e9; 
+            color: var(--primary); border: none; border-radius: 6px; 
+            font-size: 0.8rem; font-weight: bold; cursor: pointer;
+        }
+        .btn-tool:hover { background-color: var(--secondary); color: white; }
+
+        /* 文章資源區 */
+        .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .article-card { border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; background: var(--bg-card);}
+        .article-img { height: 120px; background-color: #e0e0e0; width: 100%; }
+        .article-content { padding: 12px; }
+        .article-tag { display: inline-block; padding: 2px 8px; background: #eee; border-radius: 4px; font-size: 0.7rem; color: #555; margin-bottom: 8px;}
+        .article-content h5 { margin: 0 0 8px 0; font-size: 0.95rem; }
+        .article-content p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ===== 右側：小工具與日曆 ===== */
+        .right-sidebar { display: flex; flex-direction: column; gap: 24px; }
+        
+        .countdown-row { display: flex; justify-content: space-between; text-align: center; margin-top: 12px;}
+        .countdown-col h6 { margin: 0 0 4px 0; font-size: 0.85rem; color: var(--text-muted); font-weight: normal;}
+        .countdown-time { font-size: 1.1rem; font-weight: bold; color: var(--primary); font-family: monospace;}
+        .countdown-time span { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin: 0 2px;}
+
+        /* 簡易日曆 */
+        .calendar { width: 100%; text-align: center; border-collapse: collapse; font-size: 0.85rem;}
+        .calendar th { color: var(--text-muted); padding-bottom: 8px; font-weight: normal;}
+        .calendar td { padding: 6px 0; color: var(--text-main);}
+        .cal-today { background-color: var(--primary); color: white !important; border-radius: 50%; width: 24px; height: 24px; display: inline-block; line-height: 24px;}
+        .cal-event { background-color: #e8f5e9; color: var(--primary) !important; border-radius: 50%; width: 24px; height: 24px; display: inline-block; line-height: 24px; border: 1px solid var(--primary);}
+
+        /* 快速連結 */
+        .quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+        .ql-item { cursor: pointer; }
+        .ql-icon { width: 40px; height: 40px; border-radius: 8px; background: #f5f5f5; margin: 0 auto 8px auto; display: flex; justify-content: center; align-items: center; font-size: 1.2rem;}
+        .ql-item span { font-size: 0.75rem; color: var(--text-muted);}
+
+        /* 最新公告 */
+        .news-list { list-style: none; padding: 0; margin: 0; }
+        .news-item { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 8px 0; border-bottom: 1px dashed var(--border-color);}
+        .news-item:last-child { border-bottom: none; }
+        .news-title { color: var(--text-main); }
+        .news-date { color: var(--text-muted); }
+
+        /* ===== 底部：配色控制盤 ===== */
+        .bottom-color-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 16px 24px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            display: flex; align-items: center; justify-content: space-between;
+            box-sizing: border-box; z-index: 1000;
+        }
+
+        .color-controls { display: flex; gap: 24px; align-items: center; }
+        .color-group { display: flex; flex-direction: column; gap: 4px; }
+        .color-group label { font-size: 0.75rem; color: var(--text-muted); font-weight: bold;}
+        .color-input-wrapper { display: flex; align-items: center; gap: 8px; background: #f5f5f5; padding: 4px 12px 4px 4px; border-radius: 20px; border: 1px solid var(--border-color);}
+        
+        input[type="color"] {
+            border: none; width: 28px; height: 28px; border-radius: 50%;
+            cursor: pointer; padding: 0; background: none;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+        
+        .hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
+
     </style>
 </head>
 <body>
 
     <header>
         <div class="brand">
-            <div class="logo-box">AI</div>
-            <h2 style="margin:0; font-size: 1.2rem;">AI 蘚苔探險家</h2>
+            <div class="logo-box">蘚苔</div>
+            <h2>AI 蘚苔探險家</h2>
         </div>
         <nav class="nav-links">
             <a href="#">首頁</a>
             <a href="#">研究導航路徑</a>
             <a href="#">微觀探險儀</a>
             <a href="#">AI 腦袋怎麼動</a>
+            
             <div class="dropdown">
                 <button class="dropbtn">研究工具箱 ▾</button>
                 <div class="dropdown-content">
@@ -137,117 +347,342 @@
                         <button class="submenu-btn">輔助科展工具</button>
                         <div class="submenu-content">
                             <a href="#">投稿倒數計時器</a>
-                            <a href="#">專家預約時間表</a>
-                            <a href="#">海報配色建議</a>
+                            <a href="#">館員諮詢服務月時間表</a>
+                            <a href="#">海報配色建議工具</a>
                         </div>
                     </div>
                     <div class="dropdown-submenu">
                         <button class="submenu-btn">研究痛點工具</button>
                         <div class="submenu-content">
-                            <a href="#">特徵矩陣比對器</a>
-                            <a href="#">比例計算機</a>
+                            <a href="#">苔蘚特徵矩陣比對器</a>
+                            <a href="#">AI 訓練資料庫比例計算機</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <a href="#">延伸議題探索</a>
             <a href="#">關鍵詞彙索引</a>
-            <a href="#">可供參考資源</a>
+            <a href="#">可供參考組織網站</a>
             <a href="#">關於探險</a>
         </nav>
     </header>
 
     <div class="dashboard-container">
-        <aside>
+        
+        <aside class="sidebar-left">
             <h3 class="section-title">研究任務導航</h3>
-            <div class="quest-item">
-                <div class="quest-icon">Q1</div>
-                <div class="quest-info"><h4>發現腳下的綠意</h4></div>
+            <div class="quest-list">
+                <div class="quest-item">
+                    <div class="quest-icon">Q1</div>
+                    <div class="quest-info">
+                        <h4>發現腳下的綠意</h4>
+                        <p>選擇主題與建立問題意識</p>
+                    </div>
+                </div>
+                <div class="quest-item">
+                    <div class="quest-icon">Q2</div>
+                    <div class="quest-info">
+                        <h4>翻閱自然的檔案</h4>
+                        <p>文獻探討與資料蒐集</p>
+                    </div>
+                </div>
+                <div class="quest-item active">
+                    <div class="quest-icon">Q3</div>
+                    <div class="quest-info">
+                        <h4>設定探險參數</h4>
+                        <p>實驗設計與數據蒐集</p>
+                    </div>
+                </div>
+                <div class="quest-item">
+                    <div class="quest-icon">Q4</div>
+                    <div class="quest-info">
+                        <h4>解讀線索與證據</h4>
+                        <p>資料分析與結果討論</p>
+                    </div>
+                </div>
+                <div class="quest-item">
+                    <div class="quest-icon">Q5</div>
+                    <div class="quest-info">
+                        <h4>發布探險日誌</h4>
+                        <p>結論撰寫與成果呈現</p>
+                    </div>
+                </div>
             </div>
-            <div class="quest-item active">
-                <div class="quest-icon">Q3</div>
-                <div class="quest-info"><h4>設定探險參數</h4></div>
-            </div>
-            </aside>
+        </aside>
 
-        <main>
+        <main class="main-content">
             <section class="hero-banner">
                 <h1>用 AI 辨識蘚苔植物</h1>
                 <p>從生活中的小觀察，展開科學探險的第一步！</p>
-                <button style="padding: 10px 20px; background:var(--primary); color:white; border:none; border-radius:5px; cursor:pointer;">開始探險</button>
+                <div>
+                    <button class="btn btn-primary">開始探險</button>
+                    <button class="btn btn-outline">觀看教學影片</button>
+                </div>
             </section>
 
             <section class="card">
-                <h3 class="section-title">研究工具箱 (輔助小工具)</h3>
+                <h3 class="section-title">研究工具箱 (Vibe Coding 輔助小工具)</h3>
                 <div class="tools-grid">
-                    <div class="tool-card"><div class="tool-icon">🌿</div><h5>特徵矩陣比對器</h5><button class="btn-tool">前往</button></div>
-                    <div class="tool-card"><div class="tool-icon">📊</div><h5>比例計算機</h5><button class="btn-tool">前往</button></div>
-                    <div class="tool-card"><div class="tool-icon">⌛</div><h5>投稿倒數</h5><button class="btn-tool">前往</button></div>
-                    <div class="tool-card"><div class="tool-icon">📅</div><h5>訪談預約</h5><button class="btn-tool">前往</button></div>
-                    <div class="tool-card"><div class="tool-icon">🎨</div><h5>配色建議</h5><button class="btn-tool">前往</button></div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🌿</div>
+                        <h5>苔蘚特徵矩陣<br>比對器</h5>
+                        <p>建立特徵矩陣，輔助物理標籤與分類</p>
+                        <button class="btn-tool">前往使用</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📊</div>
+                        <h5>AI 訓練資料庫<br>比例計算機</h5>
+                        <p>計算資料集比例，幫助實驗設計</p>
+                        <button class="btn-tool">前往使用</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">⏳</div>
+                        <h5>小論文/科展投稿<br>倒數計時器</h5>
+                        <p>掌握投稿時程，規劃研究進度</p>
+                        <button class="btn-tool">前往使用</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">📅</div>
+                        <h5>館員諮詢服務月<br>時間表</h5>
+                        <p>預約專家訪談，產生邀請信與連結</p>
+                        <button class="btn-tool">前往使用</button>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">🎨</div>
+                        <h5>海報配色<br>建議工具</h5>
+                        <p>提供海報配色方案，提升視覺呈現力</p>
+                        <button class="btn-tool">前往使用</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3 class="section-title">最新文章與資源</h3>
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <div class="article-img" style="background: linear-gradient(45deg, #2e7d32, #81c784);"></div>
+                        <div class="article-content">
+                            <span class="article-tag">延伸議題</span>
+                            <h5>苔蘚與空汙：生態指標的應用</h5>
+                            <p>探討苔蘚在空氣污染監測及環境指標中的應用價值。</p>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-img" style="background: linear-gradient(45deg, #1565c0, #64b5f6);"></div>
+                        <div class="article-content">
+                            <span class="article-tag">研究工具</span>
+                            <h5>AI 影像辨識在植物研究的應用</h5>
+                            <p>介紹 AI 技術如何輔助植物研究與物種辨識。</p>
+                        </div>
+                    </div>
+                    <div class="article-card">
+                        <div class="article-img" style="background: linear-gradient(45deg, #ef6c00, #ffb74d);"></div>
+                        <div class="article-content">
+                            <span class="article-tag">研究技巧</span>
+                            <h5>實驗設計的關鍵：控制變因</h5>
+                            <p>如何設計嚴謹的實驗來獲得可靠、有效的研究數據。</p>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
 
-        <aside>
+        <aside class="right-sidebar">
+            
             <div class="card">
-                <h3 class="section-title">科展/小論文倒數</h3>
-                <div class="countdown-box">
-                    <div class="countdown-label">全國中小學科展</div>
-                    <div class="countdown-time" id="timer-sci">00天 00時 00分 00秒</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+                    <h3 class="section-title" style="margin:0;">科展/小論文倒數</h3>
+                    <a href="#" style="font-size:0.75rem; color:var(--primary);">更多時程 ></a>
                 </div>
-                <div class="countdown-box">
-                    <div class="countdown-label">小論文投稿</div>
-                    <div class="countdown-time" id="timer-essay">00天 00時 00分 00秒</div>
+                <div class="countdown-row">
+                    <div class="countdown-col">
+                        <h6>全國中小學科學展覽會</h6>
+                        <div class="countdown-time" id="timer-science">--<span>天</span>--<span>時</span>--<span>分</span>--<span>秒</span></div>
+                    </div>
+                </div>
+                <hr style="border:none; border-top:1px dashed var(--border-color); margin:12px 0;">
+                <div class="countdown-row">
+                    <div class="countdown-col">
+                        <h6>中學生網站小論文投稿</h6>
+                        <div class="countdown-time" id="timer-essay">--<span>天</span>--<span>時</span>--<span>分</span>--<span>秒</span></div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="card" style="margin-top:20px;">
-                <h3 class="section-title">2026年 5月</h3>
+
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                    <h3 class="section-title" style="margin:0;">館員諮詢服務月</h3>
+                    <a href="#" style="font-size:0.75rem; color:var(--primary);">更多時段 ></a>
+                </div>
+                <div style="text-align: center; font-weight: bold; margin-bottom: 12px; font-size: 0.9rem;">
+                    <span style="cursor:pointer;">&lt;</span> 
+                    <span style="margin:0 16px;">2026年 5月</span> 
+                    <span style="cursor:pointer;">&gt;</span>
+                </div>
                 <table class="calendar">
                     <tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr>
                     <tr><td></td><td></td><td></td><td></td><td>1</td><td>2</td><td>3</td></tr>
-                    <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td></tr>
-                    <tr><td>24</td><td>25</td><td>26</td><td><span class="cal-today">27</span></td><td>28</td><td>29</td><td>30</td></tr>
+                    <tr><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+                    <tr><td>11</td><td>12</td><td><span class="cal-event">13</span></td><td>14</td><td><span class="cal-event">15</span></td><td>16</td><td>17</td></tr>
+                    <tr><td>18</td><td>19</td><td><span class="cal-event">20</span></td><td>21</td><td>22</td><td>23</td><td>24</td></tr>
+                    <tr><td>25</td><td>26</td><td><span class="cal-today">27</span></td><td>28</td><td>29</td><td>30</td><td>31</td></tr>
                 </table>
+                <div style="display:flex; justify-content:center; gap:16px; margin-top:12px; font-size:0.75rem; color:var(--text-muted);">
+                    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary);margin-right:4px;"></span>可預約</span>
+                    <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;border:1px solid var(--primary);margin-right:4px;"></span>已預約</span>
+                </div>
             </div>
+
+            <div class="card">
+                <h3 class="section-title">快速連結</h3>
+                <div class="quick-links">
+                    <div class="ql-item">
+                        <div class="ql-icon">📖</div>
+                        <span>使用教學</span>
+                    </div>
+                    <div class="ql-item">
+                        <div class="ql-icon">⚖️</div>
+                        <span>研究倫理</span>
+                    </div>
+                    <div class="ql-item">
+                        <div class="ql-icon">📝</div>
+                        <span>引用格式</span>
+                    </div>
+                    <div class="ql-item">
+                        <div class="ql-icon">🔍</div>
+                        <span>資料庫連結</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                    <h3 class="section-title" style="margin:0;">最新公告</h3>
+                    <a href="#" style="font-size:0.75rem; color:var(--primary);">更多公告 ></a>
+                </div>
+                <ul class="news-list">
+                    <li class="news-item">
+                        <span class="news-title">📣 2026科展系列講座報名中！</span>
+                        <span class="news-date">04/18</span>
+                    </li>
+                    <li class="news-item">
+                        <span class="news-title">📅 館員諮詢服務5月時間表已公布</span>
+                        <span class="news-date">04/15</span>
+                    </li>
+                    <li class="news-item">
+                        <span class="news-title">✨ 新增「AI 模型訓練教學」工具</span>
+                        <span class="news-date">04/10</span>
+                    </li>
+                </ul>
+            </div>
+
         </aside>
     </div>
 
-    <div class="color-bar">
-        <span style="font-size:0.8rem; font-weight:bold;">🎨 網站配色即時調校</span>
-        <div class="color-inputs">
-            <div class="color-group"><label>主色</label><input type="color" id="cp-primary" value="#2e7d32"></div>
-            <div class="color-group"><label>背景</label><input type="color" id="cp-bg" value="#f7faf5"></div>
+    <div class="bottom-color-bar">
+        <div style="display:flex; align-items:center; gap: 16px;">
+            <h3 style="margin:0; font-size:1rem; display:flex; align-items:center; gap:8px;">
+                🎨 網站配色即時調校
+            </h3>
+            <span style="font-size:0.8rem; color:var(--text-muted);">自訂你喜歡的配色風格，打造專屬學習環境！</span>
+        </div>
+
+        <div class="color-controls">
+            <div class="color-group">
+                <label>主色調</label>
+                <div class="color-input-wrapper">
+                    <input type="color" id="cp-primary" value="#2e7d32">
+                    <span class="hex-value" id="hex-primary">#2e7d32</span>
+                </div>
+            </div>
+            <div class="color-group">
+                <label>背景色</label>
+                <div class="color-input-wrapper">
+                    <input type="color" id="cp-bg" value="#f7faf5">
+                    <span class="hex-value" id="hex-bg">#f7faf5</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" id="btn-reset" style="padding: 8px 16px; align-self: flex-end;">重設預設</button>
         </div>
     </div>
 
     <script>
-        function updateTimer() {
-            const now = new Date();
-            // 設截止日為當年度的目標日
-            const sciDeadline = new Date(now.getFullYear(), 8, 1); 
-            const essayDeadline = new Date(now.getFullYear(), 9, 15);
+        // --- 1. 倒數計時器邏輯 (更新為顯示至「秒」) ---
+        function updateCountdowns() {
+            const now = new Date().getTime();
+            
+            // 設定截止日 (以當年 9/1 與 10/15 為例)
+            const currentYear = new Date().getFullYear();
+            const scienceDate = new Date(`${currentYear}-09-01T23:59:59`).getTime();
+            const essayDate = new Date(`${currentYear}-10-15T12:00:00`).getTime();
 
-            function getTimeStr(target) {
-                const diff = target - now;
-                if (diff < 0) return "已截止";
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                const s = Math.floor((diff % 60000) / 1000);
-                return `${d}天 ${h.toString().padStart(2,'0')}時 ${m.toString().padStart(2,'0')}分 ${s.toString().padStart(2,'0')}秒`;
+            function formatTime(distance) {
+                if (distance < 0) return "已截止";
+                
+                // 計算 天、時、分、秒
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // 補零讓畫面維持整齊的 00 格式
+                const hrStr = hours.toString().padStart(2, '0');
+                const minStr = minutes.toString().padStart(2, '0');
+                const secStr = seconds.toString().padStart(2, '0');
+
+                return `${days}<span>天</span>${hrStr}<span>時</span>${minStr}<span>分</span>${secStr}<span>秒</span>`;
             }
 
-            document.getElementById('timer-sci').innerText = getTimeStr(sciDeadline);
-            document.getElementById('timer-essay').innerText = getTimeStr(essayDeadline);
+            document.getElementById("timer-science").innerHTML = formatTime(scienceDate - now);
+            document.getElementById("timer-essay").innerHTML = formatTime(essayDate - now);
         }
-        setInterval(updateTimer, 1000);
-        updateTimer();
+        
+        // 先執行一次避免重整畫面閃爍，然後將更新頻率從 1小時 (1000*60*60) 改為 1秒 (1000)
+        updateCountdowns();
+        setInterval(updateCountdowns, 1000);
 
-        // 簡易調色連動
-        document.getElementById('cp-primary').oninput = (e) => document.documentElement.style.setProperty('--primary', e.target.value);
-        document.getElementById('cp-bg').oninput = (e) => document.documentElement.style.setProperty('--bg-body', e.target.value);
+        // --- 2. 底部即時調色盤邏輯 ---
+        const cpPrimary = document.getElementById('cp-primary');
+        const cpBg = document.getElementById('cp-bg');
+        const hexPrimary = document.getElementById('hex-primary');
+        const hexBg = document.getElementById('hex-bg');
+        const btnReset = document.getElementById('btn-reset');
+        const root = document.documentElement;
+
+        const defaultPrimary = "#2e7d32";
+        const defaultBg = "#f7faf5";
+
+        cpPrimary.addEventListener('input', function(e) {
+            const val = e.target.value;
+            root.style.setProperty('--primary', val);
+            hexPrimary.textContent = val;
+        });
+
+        cpBg.addEventListener('input', function(e) {
+            const val = e.target.value;
+            root.style.setProperty('--bg-body', val);
+            root.style.setProperty('--bg-card', val === '#ffffff' ? '#ffffff' : val);
+            hexBg.textContent = val;
+        });
+
+        btnReset.addEventListener('click', function() {
+            root.style.setProperty('--primary', defaultPrimary);
+            root.style.setProperty('--bg-body', defaultBg);
+            cpPrimary.value = defaultPrimary;
+            cpBg.value = defaultBg;
+            hexPrimary.textContent = defaultPrimary;
+            hexBg.textContent = defaultBg;
+        });
+
+        // --- 3. 左側 Quest 點擊切換效果 ---
+        const questItems = document.querySelectorAll('.quest-item');
+        questItems.forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.quest-item.active').classList.remove('active');
+                item.classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
