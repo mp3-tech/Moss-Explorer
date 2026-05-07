@@ -1,1 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 訓練資料庫比例計算機 - AI 蘚苔探險家</title>
+    <style>
+        /* ===== 共用全域變數 (與儀表板一致) ===== */
+        :root {
+            --primary: #2e7d32;
+            --secondary: #81c784;
+            --accent: #ffb300;
+            --bg-body: #f7faf5;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --border-color: #e0e0e0;
+            --radius: 12px;
+        }
 
+        body {
+            font-family: 'Noto Sans TC', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 40px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ===== 頂部導覽列 ===== */
+        header {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 5%;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo-img { height: 45px; width: auto; object-fit: contain; }
+        .brand-text h2 { margin: 0; font-size: 1.25rem; color: var(--text-main); line-height: 1.2; }
+        .brand-text span { font-size: 0.7rem; color: var(--text-muted); }
+        .nav-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+        .nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--text-main); transition: color 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        /* 導覽列下拉選單 */
+        .dropdown { position: relative; padding-bottom: 10px; margin-bottom: -10px; }
+        .dropbtn { background: none; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; color: var(--primary); padding: 0; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 190px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; top: 100%; left: 0; padding: 8px 0; border: 1px solid var(--border-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-submenu { position: relative; }
+        .submenu-content { display: none; position: absolute; top: 0; left: 100%; background: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; border: 1px solid var(--border-color); padding: 8px 0; }
+        .submenu-content::before { content: ""; position: absolute; top: 0; left: -15px; width: 15px; height: 100%; }
+        .dropdown-submenu:hover .submenu-content { display: block; }
+        .dropdown-content a, .submenu-btn { padding: 10px 16px; display: block; font-size: 0.85rem; width: 100%; text-align: left; border: none; background: none; cursor: pointer; color: var(--text-main); font-weight: 500; box-sizing: border-box; }
+        .dropdown-content a:hover, .submenu-btn:hover { background: #f5f5f5; color: var(--primary) !important; }
+        .submenu-btn { display: flex !important; justify-content: space-between; align-items: center; }
+        .submenu-btn::after { content: "▸"; color: #999; }
+
+        /* ===== 計算機版面配置 ===== */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 5%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .page-header h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem; }
+        .page-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        /* --- 左側：白話文解說區 --- */
+        .explanation-box h3 {
+            color: var(--text-main);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #e8f5e9;
+            padding-bottom: 12px;
+        }
+        
+        .analogy-item {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .analogy-icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; flex-shrink: 0; font-weight: bold;
+        }
+        .icon-train { background: #e3f2fd; color: #1565c0; }
+        .icon-valid { background: #fff3e0; color: #ef6c00; }
+        .icon-test { background: #e8f5e9; color: #2e7d32; }
+
+        .analogy-text h4 { margin: 0 0 4px 0; font-size: 1.05rem; }
+        .analogy-text p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+        
+        .alert-box {
+            background: #fff8e1; border-left: 4px solid var(--accent);
+            padding: 16px; margin-top: 32px; border-radius: 0 8px 8px 0;
+            font-size: 0.9rem; color: #555;
+        }
+
+        /* --- 右側：計算機操作區 --- */
+        .calc-form { margin-bottom: 32px; }
+        .input-group { margin-bottom: 24px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+        .input-group input[type="number"], .input-group select {
+            width: 100%; padding: 12px 16px; font-size: 1.1rem;
+            border: 2px solid var(--border-color); border-radius: 8px;
+            box-sizing: border-box; transition: 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+        }
+
+        .results-box {
+            background: #fafafa;
+            border-radius: 8px; padding: 24px;
+        }
+        .result-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px dashed var(--border-color);
+        }
+        .result-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .res-label { font-weight: bold; display: flex; align-items: center; gap: 8px;}
+        .res-value { font-size: 1.4rem; font-weight: bold; font-family: monospace; }
+        
+        .c-train { color: #1565c0; }
+        .c-valid { color: #ef6c00; }
+        .c-test { color: #2e7d32; }
+
+        /* 視覺化進度條 */
+        .visual-bar {
+            width: 100%; height: 24px; border-radius: 12px;
+            display: flex; overflow: hidden; margin-top: 24px;
+        }
+        .bar-train { background-color: #42a5f5; transition: width 0.3s; }
+        .bar-valid { background-color: #ffa726; transition: width 0.3s; }
+        .bar-test { background-color: #66bb6a; transition: width 0.3s; }
+        
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+            <img src="logo.png" alt="LOGO" class="logo-img" onerror="this.src='https://via.placeholder.com/45x45/2e7d32/ffffff?text=AI'">
+            <div class="brand-text">
+                <h2>AI 蘚苔探險家</h2>
+                <span>發現腳下的森林，讓 AI 成為你的科學放大鏡！</span>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="https://mp3-tech.github.io/index.html">首頁</a>
+            <a href="https://mp3-tech.github.io/quest.html">研究導航路徑</a>
+            <div class="dropdown">
+                <button class="dropbtn">研究工具箱 ▾</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-submenu">
+                        <button class="submenu-btn">輔助科展工具</button>
+                        <div class="submenu-content">
+                            <a href="https://mp3-tech.github.io/tools/countdown.html">投稿倒數計時器</a>
+                            <a href="https://mp3-tech.github.io/tools/calendar.html">館員諮詢服務月時間表</a>
+                            <a href="https://mp3-tech.github.io/tools/palette.html">海報配色建議工具</a>
+                        </div>
+                    </div>
+                    <div class="dropdown-submenu">
+                        <button class="submenu-btn">研究痛點工具</button>
+                        <div class="submenu-content">
+                            <a href="https://mp3-tech.github.io/tools/matrix.html">苔蘚特徵矩陣比對器</a>
+                            <a href="https://mp3-tech.github.io/tools/ratio-calculator.html" style="color:var(--primary); font-weight:bold;">AI 訓練資料庫比例計算機</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://mp3-tech.github.io/issues.html">延伸議題探索</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>AI 訓練資料庫比例計算機</h1>
+            <p>準備給 AI 的照片該怎麼分？一鍵幫你算出最科學的黃金比例！</p>
+        </div>
+
+        <div class="calculator-grid">
+            
+            <div class="card explanation-box">
+                <h3>為什麼 AI 認苔蘚，照片還要分組？</h3>
+                <p style="color:var(--text-muted); line-height:1.6; margin-top:8px;">
+                    想像你在教 AI 認識「真苔」和「泥炭苔」。如果你把拍到的 1,000 張照片全部丟給 AI 去「死背」，它在實驗室裡也許能答對 100%，但只要把它帶去野外，看到一株長得稍微不一樣的苔蘚，它就認不出來了！（這叫做<strong>過度擬合 Overfitting</strong>）。
+                    <br><br>為了解決這個問題，科學家會把照片切分成三個集合，就像學生準備考試一樣：
+                </p>
+
+                <div class="analogy-item">
+                    <div class="analogy-icon icon-train">學</div>
+                    <div class="analogy-text">
+                        <h4 class="c-train">訓練集 (Training Set) ➔ 「課本」</h4>
+                        <p>佔比最大（通常 70%~80%）。AI 用這些苔蘚照片來上課，學習葉子形狀、中肋長短等核心特徵。</p>
+                    </div>
+                </div>
+
+                <div class="analogy-item">
+                    <div class="analogy-icon icon-valid">驗</div>
+                    <div class="analogy-text">
+                        <h4 class="c-valid">驗證集 (Validation Set) ➔ 「模擬考」</h4>
+                        <p>佔約 10%~20%。AI 讀完課本後，用這批照片進行隨堂考。答錯了就回去調整參數，確保它不是在死背照片的背景。</p>
+                    </div>
+                </div>
+
+                <div class="analogy-item">
+                    <div class="analogy-icon icon-test">測</div>
+                    <div class="analogy-text">
+                        <h4 class="c-test">測試集 (Testing Set) ➔ 「期末大會考」</h4>
+                        <p>佔約 10%。這是 AI <strong>從來沒看過</strong>的終極考題！用來客觀評估 AI 到野外真正遇到苔蘚時的辨識準確率，寫進你的科展報告裡。</p>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>科展小提示：</strong> 只要你在小論文裡寫出「本研究將資料集依科學標準分為 8:1:1...」，評審老師就會知道你們具備了正確的資訊科學素養喔！
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="calc-form">
+                    <div class="input-group">
+                        <label for="totalPhotos">請輸入你收集到的苔蘚照片總數：</label>
+                        <input type="number" id="totalPhotos" value="1000" min="10" placeholder="例如：1000">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="ratioSelect">選擇科學切分比例：</label>
+                        <select id="ratioSelect">
+                            <option value="8,1,1">8 : 1 : 1 (經典深度學習比例，適合照片數量多)</option>
+                            <option value="7,2,1">7 : 2 : 1 (嚴謹驗證比例，適合照片數量較少)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="results-box">
+                    <h4 style="margin-top:0; border-bottom:1px solid #ddd; padding-bottom:8px;">計算結果分配</h4>
+                    
+                    <div class="result-item">
+                        <span class="res-label c-train">訓練集照片分配數：</span>
+                        <span class="res-value c-train" id="res-train">800</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="res-label c-valid">驗證集照片分配數：</span>
+                        <span class="res-value c-valid" id="res-valid">100</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="res-label c-test">測試集照片分配數：</span>
+                        <span class="res-value c-test" id="res-test">100</span>
+                    </div>
+
+                    <div class="visual-bar">
+                        <div class="bar-train" id="bar-train" style="width: 80%;" title="訓練集"></div>
+                        <div class="bar-valid" id="bar-valid" style="width: 10%;" title="驗證集"></div>
+                        <div class="bar-test" id="bar-test" style="width: 10%;" title="測試集"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#888; margin-top:8px;">
+                        <span>Train</span>
+                        <span>Valid</span>
+                        <span>Test</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const totalInput = document.getElementById('totalPhotos');
+        const ratioSelect = document.getElementById('ratioSelect');
+        
+        const resTrain = document.getElementById('res-train');
+        const resValid = document.getElementById('res-valid');
+        const resTest = document.getElementById('res-test');
+
+        const barTrain = document.getElementById('bar-train');
+        const barValid = document.getElementById('bar-valid');
+        const barTest = document.getElementById('bar-test');
+
+        function calculateRatio() {
+            let total = parseInt(totalInput.value);
+            
+            if(isNaN(total) || total < 0) total = 0;
+
+            let ratios = ratioSelect.value.split(',').map(Number);
+            let sumRatio = ratios[0] + ratios[1] + ratios[2];
+
+            let validCount = Math.round(total * (ratios[1] / sumRatio));
+            let testCount = Math.round(total * (ratios[2] / sumRatio));
+            let trainCount = total - validCount - testCount; 
+
+            resTrain.textContent = trainCount;
+            resValid.textContent = validCount;
+            resTest.textContent = testCount;
+
+            barTrain.style.width = `${(trainCount / total) * 100}%`;
+            barValid.style.width = `${(validCount / total) * 100}%`;
+            barTest.style.width = `${(testCount / total) * 100}%`;
+        }
+
+        totalInput.addEventListener('input', calculateRatio);
+        ratioSelect.addEventListener('change', calculateRatio);
+
+        calculateRatio();
+    </script>
+</body>
+</html>
