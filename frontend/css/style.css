@@ -646,3 +646,63 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 .hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
 .close-color-btn { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; padding: 4px;}
 .close-color-btn:hover { color: #333; }
+/* =========================================
+   19. 麵包屑導覽列 (Breadcrumbs)
+========================================= */
+.breadcrumb {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.breadcrumb a {
+    color: var(--primary);
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: #1b5e20;
+    text-decoration: underline;
+}
+
+.breadcrumb span {
+    color: var(--text-main);
+}
+
+/* =========================================
+   20. 響應式排版優化 (適應電腦左右半螢幕 50% 與平板)
+========================================= */
+@media (max-width: 1024px) {
+    /* 將所有雙欄排版在半螢幕時，強制切換為上下單欄，避免擁擠 */
+    .dashboard-container,
+    .calculator-grid,
+    .micro-grid,
+    .calendar-layout,
+    .palette-layout,
+    .matrix-layout,
+    .countdown-layout {
+        grid-template-columns: 1fr !important;
+        gap: 24px;
+    }
+    
+    .dashboard-container {
+        padding: 16px 5%;
+    }
+
+    /* 確保導覽列在窄螢幕時不會與 LOGO 疊在一起 */
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 1rem 5%;
+    }
+    
+    .nav-links {
+        width: 100%;
+        gap: 1rem;
+    }
+}
