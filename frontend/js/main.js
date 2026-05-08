@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateCountdowns() {
         const timerScience = document.getElementById("timer-science");
         const timerEssay = document.getElementById("timer-essay");
-        if (!timerScience || !timerEssay) return; // 如果當前頁面沒有計時器就不執行
+        if (!timerScience || !timerEssay) return; 
 
         const now = new Date().getTime();
         const currentYear = new Date().getFullYear();
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function() {
         timerScience.innerHTML = formatTime(scienceDate - now);
         timerEssay.innerHTML = formatTime(essayDate - now);
     }
-    
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
 
@@ -80,14 +79,12 @@ document.addEventListener("DOMContentLoaded", function() {
             root.style.setProperty('--primary', val);
             hexPrimary.textContent = val;
         });
-
         cpBg.addEventListener('input', function(e) {
             const val = e.target.value;
             root.style.setProperty('--bg-body', val);
             root.style.setProperty('--bg-card', val === '#ffffff' ? '#ffffff' : val);
             hexBg.textContent = val;
         });
-
         btnReset.addEventListener('click', function() {
             root.style.setProperty('--primary', defaultPrimary);
             root.style.setProperty('--bg-body', defaultBg);
@@ -96,5 +93,41 @@ document.addEventListener("DOMContentLoaded", function() {
             hexPrimary.textContent = defaultPrimary;
             hexBg.textContent = defaultBg;
         });
+    }
+
+    // --- 5. AI 訓練資料庫比例計算機邏輯 ---
+    const totalInput = document.getElementById('totalPhotos');
+    if (totalInput) {
+        const ratioSelect = document.getElementById('ratioSelect');
+        const resTrain = document.getElementById('res-train');
+        const resValid = document.getElementById('res-valid');
+        const resTest = document.getElementById('res-test');
+        const barTrain = document.getElementById('bar-train');
+        const barValid = document.getElementById('bar-valid');
+        const barTest = document.getElementById('bar-test');
+
+        function calculateRatio() {
+            let total = parseInt(totalInput.value);
+            if(isNaN(total) || total < 0) total = 0;
+
+            let ratios = ratioSelect.value.split(',').map(Number);
+            let sumRatio = ratios[0] + ratios[1] + ratios[2];
+
+            let validCount = Math.round(total * (ratios[1] / sumRatio));
+            let testCount = Math.round(total * (ratios[2] / sumRatio));
+            let trainCount = total - validCount - testCount; 
+
+            resTrain.textContent = trainCount;
+            resValid.textContent = validCount;
+            resTest.textContent = testCount;
+
+            barTrain.style.width = `${(trainCount / total) * 100}%`;
+            barValid.style.width = `${(validCount / total) * 100}%`;
+            barTest.style.width = `${(testCount / total) * 100}%`;
+        }
+
+        totalInput.addEventListener('input', calculateRatio);
+        ratioSelect.addEventListener('change', calculateRatio);
+        calculateRatio(); // 初始載入時計算一次
     }
 });
