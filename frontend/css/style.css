@@ -464,3 +464,96 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
         grid-template-columns: 1fr;
     }
 }
+/* =========================================
+   專屬頁面樣式：AI 腦袋怎麼動 (AI Logic)
+========================================= */
+.logic-page {
+    max-width: 1000px;
+}
+
+.logic-intro {
+    margin-bottom: 30px;
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+}
+
+.logic-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.logic-card {
+    position: relative;
+    padding-top: 40px;
+}
+
+.logic-step {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background-color: var(--primary);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.visual-placeholder {
+    background-color: #333;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 0.8rem;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+/* 掃描動畫模擬效果 */
+.scanning-anim {
+    position: relative;
+    overflow: hidden;
+}
+.scanning-anim::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background-color: #0f0;
+    box-shadow: 0 0 10px #0f0;
+    animation: scan 3s infinite linear;
+}
+@keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+/* 機率顯示條 */
+.prob-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+.prob-item {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+.prob-bar {
+    background-color: #ddd;
+    height: 12px;
+    border-radius: 6px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.prob-bar div {
+    background-color: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    text-align: right;
+    padding-right: 5px;
+    line-height: 12px;
+    transition: width 1s ease-out;
+}
