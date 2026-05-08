@@ -646,6 +646,7 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 .hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
 .close-color-btn { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; padding: 4px;}
 .close-color-btn:hover { color: #333; }
+
 /* =========================================
    19. 麵包屑導覽列 (Breadcrumbs)
 ========================================= */
@@ -706,6 +707,7 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
         gap: 1rem;
     }
 }
+
 /* =========================================
    21. 開場動畫 (Splash Screen)
 ========================================= */
@@ -715,13 +717,15 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     background-color: var(--bg-body);
     z-index: 9999; /* 確保它在最上層覆蓋所有東西 */
     display: flex; justify-content: center; align-items: center;
-    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    /* 加快淡出速度為 0.5 秒 */
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
 
 /* 用 JS 加上 .hidden 來觸發淡出 */
 .splash-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none; /* 💡 確保動畫跑完或被隱藏後，絕對不會卡住滑鼠點擊！ */
 }
 
 .splash-content {
