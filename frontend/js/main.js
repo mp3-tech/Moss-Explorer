@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => console.error("載入導覽列時發生錯誤:", error));
     }
-// --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
+
+    // --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
     function updateCountdowns() {
         const timerScience = document.getElementById("timer-science");
         const timerEssay = document.getElementById("timer-essay");
@@ -69,106 +70,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    /* =========================================
-   4. 專案儀表板首頁 (Index Dashboard)
-========================================= */
-/* 改為單欄置中、向下延伸的版型 */
-.dashboard-container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding: 32px 5%;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-/* 頂部數據看板 */
-.top-widgets {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-.widget-card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-}
-.widget-icon {
-    font-size: 2rem;
-    background: #f5f5f5;
-    width: 60px; height: 60px;
-    display: flex; justify-content: center; align-items: center;
-    border-radius: 12px;
-}
-.widget-info { flex-grow: 1; }
-
-/* 橫向 Quest 導航 */
-.horizontal-quest-track {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 10px;
-    overflow-x: auto;
-}
-.h-quest-node {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    transition: transform 0.2s;
-    min-width: 120px;
-}
-.h-quest-node:hover { transform: translateY(-3px); }
-.h-quest-marker {
-    width: 45px; height: 45px;
-    background-color: var(--primary); color: white;
-    border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 1.2rem; font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.h-quest-node:hover .h-quest-marker { box-shadow: 0 6px 15px rgba(46, 125, 50, 0.3); }
-.h-quest-title {
-    font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--text-main);
-}
-.h-quest-line {
-    flex-grow: 1;
-    height: 4px;
-    background-color: #e0e0e0;
-    margin: 0 10px;
-    border-radius: 2px;
-    transform: translateY(-15px); /* 對齊圓圈高度 */
-}
-
-/* Hero Banner 優化 */
-.hero-banner {
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-    border-radius: var(--radius); padding: 50px; position: relative; overflow: hidden;
-    border: 1px solid #c8e6c9; display: flex; justify-content: space-between; align-items: center;
-}
-.hero-text h1 { margin: 0 0 12px 0; font-size: 2.2rem; color: var(--primary); }
-.hero-text p { margin: 0; font-size: 1.1rem; color: var(--text-main); }
-
-/* 文章資源區 */
-.articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.article-card { border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; background: var(--bg-card);}
-.article-img { height: 120px; background-color: #e0e0e0; width: 100%; }
-.article-content { padding: 12px; }
-.article-tag { display: inline-block; padding: 2px 8px; background: #eee; border-radius: 4px; font-size: 0.7rem; color: #555; margin-bottom: 8px;}
-.article-content h5 { margin: 0 0 8px 0; font-size: 0.95rem; }
-.article-content p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
-
-/* 響應式優化 */
-@media (max-width: 768px) {
-    .horizontal-quest-track { justify-content: flex-start; }
-    .articles-grid { grid-template-columns: 1fr; }
-    .hero-banner { padding: 30px; }
-}
     // --- 5. AI 訓練資料庫比例計算機邏輯 ---
     const totalInput = document.getElementById('totalPhotos');
     if (totalInput) {
@@ -204,8 +105,8 @@ document.addEventListener("DOMContentLoaded", function() {
         ratioSelect.addEventListener('change', calculateRatio);
         calculateRatio(); // 初始載入時計算一次
     }
-});
-// --- 6. 館員諮詢服務月 (Calendar) 邏輯 ---
+
+    // --- 6. 館員諮詢服務月 (Calendar) 邏輯 ---
     const calendarBody = document.getElementById("calendar-body");
     if (calendarBody) {
         const selectedDateInput = document.getElementById("selected-date");
@@ -271,7 +172,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         renderCalendar();
     }
-// --- 7. 海報配色建議工具 (Palette) 邏輯 ---
+
+    // --- 7. 海報配色建議工具 (Palette) 邏輯 ---
     const palettePage = document.querySelector('.palette-page');
     if (palettePage) {
         const themeData = {
@@ -329,7 +231,8 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
-// --- 8. 苔蘚特徵矩陣比對器 (Matrix) 邏輯 ---
+
+    // --- 8. 苔蘚特徵矩陣比對器 (Matrix) 邏輯 ---
     const matrixForm = document.getElementById("matrix-form");
     if (matrixForm) {
         const tbody = document.getElementById("matrix-tbody");
@@ -411,7 +314,8 @@ document.addEventListener("DOMContentLoaded", function() {
             document.body.removeChild(link);
         });
     }
-// --- 9. 開場動畫 (Splash Screen) 智慧控制邏輯 ---
+
+    // --- 9. 開場動畫 (Splash Screen) 智慧控制邏輯 ---
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
@@ -433,3 +337,5 @@ document.addEventListener("DOMContentLoaded", function() {
             splashScreen.classList.add('hidden');
         }
     }
+
+}); // <-- 確保整個檔案的結尾有這行，把所有功能包起來！
