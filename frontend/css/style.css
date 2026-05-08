@@ -794,3 +794,101 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     color: var(--text-muted);
     line-height: 1.4;
 }
+/* =========================================
+   專屬頁面樣式：關於探險 (About)
+========================================= */
+.about-page {
+    margin-bottom: 60px;
+}
+
+.about-hero {
+    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('moss-bg.jpg'); /* 如果有背景圖的話 */
+    background-size: cover;
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.hero-content p {
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.feature-item {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.feature-item h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.feature-item p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* 快速上手步驟樣式 */
+.steps-container {
+    display: flex;
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.step-box {
+    flex: 1;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.step-num {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.step-box h4 {
+    margin: 0 0 10px 0;
+    color: var(--text-main);
+    font-size: 1.05rem;
+}
+
+.step-box p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.step-box a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .steps-container { flex-direction: column; }
+    .about-hero { padding: 25px; }
+}
