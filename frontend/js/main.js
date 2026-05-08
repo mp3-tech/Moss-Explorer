@@ -204,3 +204,61 @@ document.addEventListener("DOMContentLoaded", function() {
 
         renderCalendar();
     }
+// --- 7. 海報配色建議工具 (Palette) 邏輯 ---
+    const palettePage = document.querySelector('.palette-page');
+    if (palettePage) {
+        const themeData = {
+            moss: { primary: '#2e7d32', secondary: '#81c784', accent: '#ffb300', bg: '#f7faf5', text: '#333' },
+            tech: { primary: '#1565c0', secondary: '#90caf9', accent: '#ff5722', bg: '#f0f4f8', text: '#222' },
+            earth: { primary: '#5d4037', secondary: '#a1887f', accent: '#8bc34a', bg: '#efebe9', text: '#3e2723' }
+        };
+
+        const paletteCards = document.querySelectorAll('.palette-card');
+        const posterBoard = document.getElementById('poster-board');
+        const pHeader = document.getElementById('p-header');
+        const pHeadings = document.querySelectorAll('.p-heading');
+        const pTexts = document.querySelectorAll('.p-text');
+        const pAccent = document.getElementById('p-accent');
+        const copyMsg = document.getElementById('copy-msg');
+
+        // 切換主題預覽
+        paletteCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // 更新按鈕 active 狀態
+                paletteCards.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+
+                // 取得對應主題顏色
+                const theme = themeData[this.getAttribute('data-theme')];
+
+                // 更新海報預覽顏色
+                posterBoard.style.backgroundColor = theme.bg;
+                pHeader.style.backgroundColor = theme.primary;
+                pAccent.style.backgroundColor = theme.accent;
+                
+                pHeadings.forEach(h => {
+                    h.style.color = theme.primary;
+                    h.style.borderBottomColor = theme.secondary;
+                });
+                
+                pTexts.forEach(t => {
+                    t.style.color = theme.text;
+                });
+            });
+        });
+
+        // 點擊色塊複製 Hex 碼
+        const swatches = document.querySelectorAll('.swatch-item');
+        swatches.forEach(swatch => {
+            swatch.addEventListener('click', function(e) {
+                e.stopPropagation(); // 避免觸發卡片切換
+                const hexCode = this.querySelector('span').innerText;
+                
+                // 複製到剪貼簿
+                navigator.clipboard.writeText(hexCode).then(() => {
+                    copyMsg.innerText = `已複製色碼：${hexCode} 📋`;
+                    setTimeout(() => { copyMsg.innerText = ''; }, 2000);
+                });
+            });
+        });
+    }
