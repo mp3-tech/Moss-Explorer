@@ -20,7 +20,33 @@
             <div class="splash-subtitle-container">
                 <span class="splash-subtitle">System Initializing... Load Quest Data...</span>
             </div>
-            
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const splash = document.getElementById('splash-screen');
+            if (splash) {
+                const hasSeen = sessionStorage.getItem('moss_splash_seen');
+                if (!hasSeen) {
+                    // 第一次進來，2.5秒後開始隱藏
+                    setTimeout(function() {
+                        splash.style.opacity = '0';
+                        splash.style.visibility = 'hidden';
+                        splash.style.pointerEvents = 'none';
+                        sessionStorage.setItem('moss_splash_seen', 'true');
+                        
+                        // 0.5秒後徹底移除
+                        setTimeout(function() { 
+                            splash.style.display = 'none'; 
+                        }, 500);
+                    }, 2500);
+                } else {
+                    // 已經看過，瞬間消失
+                    splash.style.display = 'none';
+                }
+            }
+        });
+    </script>
+
+    <div id="navbar-placeholder"></div>
             <div class="splash-progress">
                 <div class="splash-progress-bar"></div>
             </div>
