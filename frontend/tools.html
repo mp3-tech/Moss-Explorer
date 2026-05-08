@@ -3,338 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 蘚苔探險家 - 研究工具箱</title>
-    <style>
-        /* 基礎全域設定與色彩變數 */
-        :root {
-            --primary-color: #2e7d32; /* 蘚苔綠 */
-            --secondary-color: #4caf50;
-            --bg-color: #f1f8e9;
-            --card-bg: #ffffff;
-            --text-main: #333333;
-            --text-muted: #666666;
-            --border-radius: 12px;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        /* 導覽列設計 */
-        nav {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-        }
-
-        nav h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* 主視覺容器 */
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            display: grid;
-            gap: 2rem;
-        }
-
-        /* 卡片式 UI 設計 */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary-color);
-            transition: transform 0.2s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-        }
-
-        .card h2 {
-            color: var(--primary-color);
-            margin-top: 0;
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* 表單元素設計 */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-        }
-
-        button {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #1b5e20;
-        }
-
-        /* 結果顯示區塊 */
-        .result-box {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background-color: var(--bg-color);
-            border-radius: 6px;
-            border: 1px dashed var(--secondary-color);
-            min-height: 50px;
-            font-family: monospace;
-            white-space: pre-wrap;
-            word-break: break-all;
-        }
-
-        /* 比例計算機特定的 Grid 排版 */
-        .ratio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            text-align: center;
-        }
-
-        .ratio-item {
-            background: var(--bg-color);
-            padding: 1rem;
-            border-radius: 6px;
-            border: 1px solid #c8e6c9;
-        }
-
-        .ratio-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-top: 0.5rem;
-        }
-    </style>
+    <title>研究工具箱總覽 - AI 蘚苔探險家</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <nav>
-        <h1>🌿 AI 蘚苔探險家 - 研究工具箱</h1>
-    </nav>
+    <div id="navbar-placeholder"></div>
 
-    <div class="container">
+    <div class="container tools-page">
+        <div class="page-header">
+            <h1>研究工具箱總覽</h1>
+            <p>善用數位工具，解決科展痛點，讓你的研究效率翻倍！</p>
+        </div>
 
-        <section class="card" id="tool1">
-            <h2>1. 苔蘚特徵矩陣比對器</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">將視覺觀察轉化為結構化數據，為建立 AI 標籤做準備。</p>
+        <div class="tools-category">
+            <h2 class="category-title" style="color: var(--primary); border-bottom-color: #c8e6c9;">研究痛點工具</h2>
+            <p class="text-muted" style="margin-bottom: 20px;">專門解決建立 AI 模型與處理實驗數據時遇到的技術困難。</p>
             
-            <div class="form-group">
-                <label for="leafShape">葉形特徵：</label>
-                <select id="leafShape">
-                    <option value="">請選擇葉形...</option>
-                    <option value="卵形 (Ovate)">卵形 (Ovate)</option>
-                    <option value="披針形 (Lanceolate)">披針形 (Lanceolate)</option>
-                    <option value="橢圓形 (Elliptic)">橢圓形 (Elliptic)</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="ribLength">中肋長度：</label>
-                <select id="ribLength">
-                    <option value="">請選擇中肋特徵...</option>
-                    <option value="突出葉尖">突出葉尖</option>
-                    <option value="達葉尖">達葉尖</option>
-                    <option value="消失於葉面">消失於葉面</option>
-                    <option value="無中肋">無中肋</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="marginTeeth">邊緣鋸齒：</label>
-                <select id="marginTeeth">
-                    <option value="">請選擇邊緣特徵...</option>
-                    <option value="全緣 (無鋸齒)">全緣 (無鋸齒)</option>
-                    <option value="細鋸齒">細鋸齒</option>
-                    <option value="粗鋸齒">粗鋸齒</option>
-                </select>
-            </div>
-
-            <button onclick="generateMatrix()">產出特徵矩陣資料</button>
-            <div id="matrixResult" class="result-box">尚未生成數據。</div>
-        </section>
-
-        <section class="card" id="tool2">
-            <h2>2. AI 訓練資料庫比例計算機</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">自動計算科學公認的 8:1:1 比例，避免過度擬合 (Overfitting)。</p>
-            
-            <div class="form-group">
-                <label for="totalImages">輸入蒐集到的苔蘚照片總張數：</label>
-                <input type="number" id="totalImages" placeholder="例如：1000" min="10">
-            </div>
-
-            <button onclick="calculateRatio()">計算資料集比例</button>
-            
-            <div class="ratio-grid" id="ratioResult" style="display: none;">
-                <div class="ratio-item">
-                    <div>訓練集 (Training)</div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">80%</div>
-                    <div id="trainCount" class="ratio-value">0</div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon" style="background-color: #e3f2fd; color: #1565c0;">矩陣</div>
+                    <h5>苔蘚特徵矩陣比對器</h5>
+                    <p>建立特徵矩陣，輔助物理標籤與分類，將肉眼觀察轉化為 AI 可讀數據。</p>
+                    <a href="matrix.html" class="btn-tool" style="text-align:center;">前往使用</a>
                 </div>
-                <div class="ratio-item">
-                    <div>驗證集 (Validation)</div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">10%</div>
-                    <div id="valCount" class="ratio-value">0</div>
-                </div>
-                <div class="ratio-item">
-                    <div>測試集 (Testing)</div>
-                    <div style="font-size: 0.8rem; color: var(--text-muted);">10%</div>
-                    <div id="testCount" class="ratio-value">0</div>
+
+                <div class="tool-card">
+                    <div class="tool-icon" style="background-color: #f1f8e9; color: #2e7d32;">比例</div>
+                    <h5>AI 訓練資料庫比例計算機</h5>
+                    <p>一鍵計算訓練集、驗證集與測試集比例，幫助設計嚴謹的實驗。</p>
+                    <a href="ratio-calculator.html" class="btn-tool" style="text-align:center;">前往使用</a>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section class="card" id="tool3">
-            <h2>3. APA 格式自動產生器 (第七版)</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">快速產出標準化的引用條目，維護學術誠信。</p>
+        <div class="tools-category" style="margin-top: 40px;">
+            <h2 class="category-title" style="color: #ef6c00; border-bottom-color: #ffe0b2;">輔助科展工具</h2>
+            <p class="text-muted" style="margin-bottom: 20px;">協助掌控專案時程、視覺設計與尋求專家資源。</p>
             
-            <div class="form-group">
-                <label for="author">作者姓名 (格式：姓氏, 名字縮寫.)：</label>
-                <input type="text" id="author" placeholder="例如：Sun, S. Q., & He, M. Z.">
-            </div>
-            
-            <div class="form-group">
-                <label for="year">出版年份：</label>
-                <input type="number" id="year" placeholder="例如：2010">
-            </div>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon" style="background-color: #fff3e0; color: #ef6c00;">時程</div>
+                    <h5>小論文/科展投稿倒數計時器</h5>
+                    <p>掌握全國中小學科展與小論文投稿時程，設定專屬你的研究進度鬧鐘。</p>
+                    <a href="countdown.html" class="btn-tool" style="text-align:center;">前往使用</a>
+                </div>
 
-            <div class="form-group">
-                <label for="title">文獻標題：</label>
-                <input type="text" id="title" placeholder="例如：Bryophytes as bioindicators of the atmospheric environment">
-            </div>
+                <div class="tool-card">
+                    <div class="tool-icon" style="background-color: #f3e5f5; color: #8e24aa;">諮詢</div>
+                    <h5>館員諮詢服務月時間表</h5>
+                    <p>找不到文獻？預約圖書館專家訪談，系統將自動產生邀請信與預約連結。</p>
+                    <a href="calendar.html" class="btn-tool" style="text-align:center;">前往使用</a>
+                </div>
 
-            <div class="form-group">
-                <label for="source">來源或 DOI / URL：</label>
-                <input type="text" id="source" placeholder="例如：https://doi.org/10.1016/j.envpol.2009.12.012">
+                <div class="tool-card">
+                    <div class="tool-icon" style="background-color: #e8eaf6; color: #3f51b5;">配色</div>
+                    <h5>海報配色建議工具</h5>
+                    <p>不知道報告怎麼排版？提供符合科學主題的配色方案，提升視覺呈現力。</p>
+                    <a href="palette.html" class="btn-tool" style="text-align:center;">前往使用</a>
+                </div>
             </div>
-
-            <button onclick="generateAPA()">一鍵生成 APA 引用</button>
-            <div id="apaResult" class="result-box">尚未生成引用格式。</div>
-        </section>
+        </div>
 
     </div>
 
-    <script>
-        // 工具 1 邏輯：特徵矩陣
-        function generateMatrix() {
-            const leaf = document.getElementById('leafShape').value;
-            const rib = document.getElementById('ribLength').value;
-            const margin = document.getElementById('marginTeeth').value;
-            const resultBox = document.getElementById('matrixResult');
-
-            if (!leaf || !rib || !margin) {
-                resultBox.innerHTML = "<span style='color: red;'>請完整選擇三個特徵以建立矩陣。</span>";
-                return;
-            }
-
-            // 模擬輸出 JSON 結構化數據，方便後續擴充串接資料庫
-            const matrixData = {
-                "timestamp": new Date().toISOString(),
-                "features": {
-                    "leaf_shape": leaf,
-                    "rib_length": rib,
-                    "margin_teeth": margin
-                },
-                "status": "ready_for_labeling"
-            };
-
-            resultBox.textContent = JSON.stringify(matrixData, null, 4);
-        }
-
-        // 工具 2 邏輯：比例計算機 (8:1:1)
-        function calculateRatio() {
-            const total = parseInt(document.getElementById('totalImages').value);
-            
-            if (isNaN(total) || total <= 0) {
-                alert("請輸入有效的照片數量！");
-                return;
-            }
-
-            // 計算比例 (確保總和等於 total，處理除不盡的餘數)
-            let train = Math.floor(total * 0.8);
-            let val = Math.floor(total * 0.1);
-            let test = total - train - val; // 剩下的全歸測試集
-
-            document.getElementById('trainCount').innerText = train;
-            document.getElementById('valCount').innerText = val;
-            document.getElementById('testCount').innerText = test;
-            
-            document.getElementById('ratioResult').style.display = 'grid';
-        }
-
-        // 工具 3 邏輯：APA 格式產生器
-        function generateAPA() {
-            const author = document.getElementById('author').value.trim();
-            const year = document.getElementById('year').value.trim();
-            const title = document.getElementById('title').value.trim();
-            const source = document.getElementById('source').value.trim();
-            const resultBox = document.getElementById('apaResult');
-
-            if (!author || !year || !title || !source) {
-                resultBox.innerHTML = "<span style='color: red;'>請填寫所有欄位。</span>";
-                return;
-            }
-
-            // APA 第七版基本網頁/期刊格式：Author (Year). Title. Source.
-            // 將 Title 斜體處理以符合格式要求
-            const apaString = `${author} (${year}). <i>${title}</i>. ${source}`;
-            
-            resultBox.innerHTML = apaString;
-        }
-    </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
