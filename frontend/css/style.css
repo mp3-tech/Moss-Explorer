@@ -998,3 +998,145 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 #letter-content { width: 100%; border: none; padding: 12px; font-size: 0.9rem; line-height: 1.6; color: #444; background: #fff; resize: none; box-sizing: border-box; }
 
 @media (max-width: 992px) { .calendar-layout { grid-template-columns: 1fr; } }
+/* =========================================
+   專屬頁面樣式：海報配色建議工具 (Palette)
+========================================= */
+.palette-page {
+    margin-bottom: 60px;
+}
+
+.palette-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.palette-card {
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s ease;
+}
+
+.palette-card:hover {
+    border-color: #e0e0e0;
+}
+
+.palette-card.active {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.1);
+}
+
+.palette-card h4 {
+    margin: 0 0 15px 0;
+    color: var(--text-main);
+}
+
+.color-swatches {
+    display: flex;
+    gap: 15px;
+}
+
+.swatch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.swatch {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+
+.swatch-item:hover .swatch {
+    transform: scale(1.1);
+}
+
+.swatch-item span {
+    font-size: 0.75rem;
+    font-family: monospace;
+    color: var(--text-muted);
+}
+
+/* 模擬海報區塊 */
+.poster-board {
+    background-color: #f7faf5; /* 預設背景色 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 30px;
+    transition: background-color 0.3s ease;
+    min-height: 400px;
+}
+
+.poster-header {
+    background-color: #2e7d32; /* 預設主色 */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.poster-header h2 { margin: 0 0 10px 0; font-size: 1.5rem; }
+.poster-header p { margin: 0; font-size: 0.9rem; opacity: 0.9; }
+
+.poster-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.p-heading {
+    color: #2e7d32; /* 預設主色 */
+    border-bottom: 2px solid #81c784; /* 預設輔助色 */
+    padding-bottom: 5px;
+    margin: 0 0 10px 0;
+    transition: all 0.3s ease;
+}
+
+.p-text {
+    font-size: 0.85rem;
+    color: #333; /* 預設字體色 */
+    line-height: 1.6;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.p-graph {
+    background-color: white;
+    border: 1px solid #ccc;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #555;
+    position: relative;
+}
+
+.p-accent-box {
+    background-color: #ffb300; /* 預設強調色 */
+    color: #333;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+@media (max-width: 992px) {
+    .palette-layout { grid-template-columns: 1fr; }
+    .poster-body { grid-template-columns: 1fr; }
+}
