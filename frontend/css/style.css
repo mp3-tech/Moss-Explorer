@@ -963,3 +963,38 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
         font-size: 1.8rem;
     }
 }
+/* =========================================
+   專屬頁面樣式：館員諮詢服務月時間表 (Calendar)
+========================================= */
+.calendar-page { margin-bottom: 60px; }
+.calendar-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; align-items: start; }
+
+/* 日曆內部樣式 */
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.cal-nav-btn { background: none; border: 1px solid var(--border-color); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.full-calendar { width: 100%; border-collapse: collapse; }
+.full-calendar th { padding: 10px; color: var(--text-muted); font-size: 0.9rem; }
+.full-calendar td { padding: 15px 5px; text-align: center; border: 1px solid #f0f0f0; cursor: pointer; transition: 0.2s; position: relative; }
+.full-calendar td:hover { background-color: #f1f8e9; color: var(--primary); font-weight: bold; }
+.full-calendar td.empty { cursor: default; background-color: #fafafa; }
+.full-calendar td.empty:hover { background-color: #fafafa; }
+
+/* 日曆圓點 */
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; }
+.dot-available { background-color: var(--primary); }
+.dot-booked { border: 1px solid var(--primary); }
+.dot-today { background-color: var(--accent); }
+.calendar-legend { display: flex; justify-content: center; gap: 15px; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); }
+
+/* 日曆狀態標記 */
+.date-available::after { content: ''; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: var(--primary); border-radius: 50%; }
+.date-today { background-color: var(--accent) !important; color: white; border-radius: 4px; }
+.date-selected { background-color: var(--primary) !important; color: white !important; border-radius: 4px; }
+
+/* 信件產出框 */
+.letter-box { margin-top: 20px; border: 1px solid var(--secondary); border-radius: 8px; overflow: hidden; }
+.letter-header { background: #e8f5e9; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; font-weight: bold; color: var(--primary); }
+.btn-copy { background: var(--primary); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+#letter-content { width: 100%; border: none; padding: 12px; font-size: 0.9rem; line-height: 1.6; color: #444; background: #fff; resize: none; box-sizing: border-box; }
+
+@media (max-width: 992px) { .calendar-layout { grid-template-columns: 1fr; } }
