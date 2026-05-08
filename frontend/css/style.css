@@ -557,3 +557,75 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     line-height: 12px;
     transition: width 1s ease-out;
 }
+/* =========================================
+   專屬頁面樣式：延伸議題探索 (Issues)
+========================================= */
+.issues-page {
+    margin-bottom: 60px;
+}
+
+.issues-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.issue-card {
+    position: relative;
+    padding-top: 35px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.issue-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: var(--primary);
+}
+
+/* 浮動的分類標籤 */
+.issue-badge {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    padding: 6px 16px;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.issue-badge.env { background-color: #2e7d32; } /* 綠色 */
+.issue-badge.tech { background-color: #1565c0; } /* 藍色 */
+.issue-badge.ethics { background-color: #ef6c00; } /* 橘色 */
+
+.issue-card h3 {
+    margin: 10px 0;
+    color: var(--text-main);
+    font-size: 1.25rem;
+}
+
+.issue-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1; /* 讓卡片高度一致時，把底部的行動框往下推 */
+}
+
+.issue-action {
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #f7faf5;
+    border-left: 4px solid var(--primary);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.5;
+}
+
+.issue-action strong {
+    color: var(--primary);
+    font-size: 0.95rem;
+}
