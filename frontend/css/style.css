@@ -914,3 +914,52 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     letter-spacing: 2px;
     text-indent: 2px; /* 修正字距造成的視覺偏移 */
 }
+/* =========================================
+   專屬頁面樣式：投稿倒數計時器 (Countdown)
+========================================= */
+.countdown-page {
+    margin-bottom: 60px;
+}
+
+.countdown-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.settings-panel {
+    background-color: #fafafa;
+}
+
+.huge-timer {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-main);
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 5px;
+    padding: 20px 0;
+    background: #f5f5f5;
+    border-radius: 8px;
+    border: 1px inset #e0e0e0;
+}
+
+.huge-timer span {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: normal;
+    font-family: 'Noto Sans TC', sans-serif;
+    margin: 0 5px 0 2px;
+}
+
+@media (max-width: 768px) {
+    .countdown-layout {
+        grid-template-columns: 1fr;
+    }
+    .huge-timer {
+        font-size: 1.8rem;
+    }
+}
