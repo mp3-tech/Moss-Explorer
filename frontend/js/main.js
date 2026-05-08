@@ -414,22 +414,22 @@ document.addEventListener("DOMContentLoaded", function() {
 // --- 9. 開場動畫 (Splash Screen) 智慧控制邏輯 ---
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
-        // 使用 sessionStorage，確保使用者打開這個分頁期間只看一次動畫
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
         
         if (!hasSeenSplash) {
-            // 第一次進入：等待動畫跑完 (約 3.2 秒) 後淡出
+            // 設定為 2.5 秒後就開始淡出
             setTimeout(() => {
                 splashScreen.classList.add('hidden');
-                sessionStorage.setItem('moss_splash_seen', 'true'); // 標記為已看過
+                sessionStorage.setItem('moss_splash_seen', 'true');
                 
-                // 等待 CSS 淡出過場 (0.8s) 結束後，徹底移出畫面避免阻擋點擊
+                // 0.5 秒淡出完畢後，徹底從網頁結構中消失
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
-                }, 800); 
-            }, 3200); 
+                }, 500); 
+            }, 2500); 
         } else {
-            // 已經看過了（例如從其他分頁點回首頁），直接瞬間隱藏
+            // 如果已經看過，一載入就瞬間隱藏，絕不卡頓
             splashScreen.style.display = 'none';
+            splashScreen.classList.add('hidden');
         }
     }
