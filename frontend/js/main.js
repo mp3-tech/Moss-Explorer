@@ -138,3 +138,69 @@ document.addEventListener("DOMContentLoaded", function() {
         calculateRatio(); // 初始載入時計算一次
     }
 });
+// --- 6. 館員諮詢服務月 (Calendar) 邏輯 ---
+    const calendarBody = document.getElementById("calendar-body");
+    if (calendarBody) {
+        const selectedDateInput = document.getElementById("selected-date");
+        const btnGenLetter = document.getElementById("btn-gen-letter");
+        const letterResult = document.getElementById("letter-result");
+        const letterContent = document.getElementById("letter-content");
+        
+        // 預設預定日期 (模擬資料)
+        const bookedDates = [13, 15, 20];
+        const today = 27; // 模擬今天為 5/27
+
+        function renderCalendar() {
+            let html = "";
+            let date = 1;
+            // 2026年5月從星期五開始 (第一排前4格是空的)
+            for (let i = 0; i < 5; i++) {
+                html += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < 5) {
+                        html += "<td class='empty'></td>";
+                    } else if (date > 31) {
+                        html += "<td class='empty'></td>";
+                    } else {
+                        let className = "";
+                        if (date === today) className += " date-today";
+                        if (!bookedDates.includes(date)) className += " date-available";
+                        
+                        html += `<td class="${className}" onclick="selectDate(this, ${date})">${date}</td>`;
+                        date++;
+                    }
+                }
+                html += "</tr>";
+                if (date > 31) break;
+            }
+            calendarBody.innerHTML = html;
+        }
+
+        window.selectDate = function(el, day) {
+            // 移除其他選取狀態
+            document.querySelectorAll('#calendar-body td').forEach(td => td.classList.remove('date-selected'));
+            el.classList.add('date-selected');
+            selectedDateInput.value = `2026-05-${day.toString().padStart(2, '0')}`;
+        };
+
+        btnGenLetter.addEventListener("click", function() {
+            const date = selectedDateInput.value;
+            const school = document.getElementById("student-school").value || "[您的學校]";
+            const title = document.getElementById("project-title").value || "[您的研究題目]";
+
+            if (!date) { alert("請先選擇諮詢日期！"); return; }
+
+            const template = `館員您好：\n\n我們是來自${school}的學生，目前正在進行一項關於「${title}」的研究計畫。\n\n我們在文獻搜尋過程中遇到了一些瓶頸，希望能預約在 ${date} 進行專業諮詢。希望能針對：\n1. 如何在學術資料庫中更精準地搜尋「蘚苔植物與AI」的相關論文。\n2. 引用格式的校對建議。\n\n不知當天時間是否方便？期待您的回覆，謝謝您！`;
+
+            letterContent.value = template;
+            letterResult.style.display = "block";
+        });
+
+        document.getElementById("btn-copy-letter")?.addEventListener("click", function() {
+            letterContent.select();
+            document.execCommand("copy");
+            alert("邀請信內容已複製到剪貼簿！");
+        });
+
+        renderCalendar();
+    }
