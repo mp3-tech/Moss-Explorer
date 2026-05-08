@@ -892,3 +892,25 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     .steps-container { flex-direction: column; }
     .about-hero { padding: 25px; }
 }
+/* =========================================
+   專屬頁面樣式：研究工具箱總覽 (Tools)
+========================================= */
+.tools-page {
+    margin-bottom: 60px;
+}
+
+.tools-category {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+/* 確保工具卡片內的圖示文字置中且大小適中 */
+.tool-card .tool-icon {
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-indent: 2px; /* 修正字距造成的視覺偏移 */
+}
