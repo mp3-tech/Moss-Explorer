@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海報配色建議工具 - AI 蘚苔探險家</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
+    <div id="navbar-placeholder"></div>
+
+    <div class="container palette-page">
+        <div class="page-header">
+            <h1>🎨 海報配色建議工具 (Palette)</h1>
+            <p>告別五顏六色的災難排版！挑選一組專業的科學配色，讓評審第一眼就愛上你的研究。</p>
+        </div>
+
+        <div class="palette-layout">
+            
+            <div class="palette-options">
+                <h3 class="section-title">選擇主題配色</h3>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 20px;">點擊下方主題，右側的海報模擬器會即時套用配色。點擊色塊可以直接複製 Hex 色碼喔！</p>
+
+                <div class="card palette-card active" data-theme="moss">
+                    <h4>🌿 蘚苔生態系 (自然、生機、環保)</h4>
+                    <div class="color-swatches">
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #2e7d32;"></div><span>#2e7d32</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #81c784;"></div><span>#81c784</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #ffb300;"></div><span>#ffb300</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #f7faf5;"></div><span>#f7faf5</span></div>
+                    </div>
+                </div>
+
+                <div class="card palette-card" data-theme="tech">
+                    <h4>💻 學術科技系 (專業、冷靜、資訊)</h4>
+                    <div class="color-swatches">
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #1565c0;"></div><span>#1565c0</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #90caf9;"></div><span>#90caf9</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #ff5722;"></div><span>#ff5722</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #f0f4f8;"></div><span>#f0f4f8</span></div>
+                    </div>
+                </div>
+
+                <div class="card palette-card" data-theme="earth">
+                    <h4>🟤 大地沈穩系 (土壤、歷史、基礎)</h4>
+                    <div class="color-swatches">
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #5d4037;"></div><span>#5d4037</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #a1887f;"></div><span>#a1887f</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #8bc34a;"></div><span>#8bc34a</span></div>
+                        <div class="swatch-item" title="點擊複製"><div class="swatch" style="background: #efebe9;"></div><span>#efebe9</span></div>
+                    </div>
+                </div>
+                
+                <div id="copy-msg" style="color: var(--primary); font-size: 0.85rem; font-weight: bold; margin-top: 10px; height: 20px;"></div>
+            </div>
+
+            <div class="poster-preview-container">
+                <h3 class="section-title">海報排版模擬預覽</h3>
+                
+                <div class="poster-board" id="poster-board">
+                    <div class="poster-header" id="p-header">
+                        <h2 id="p-title">利用 AI 進行校園蘚苔辨識之初探</h2>
+                        <p>探險員：凱謙 ｜ 學校：OO高中 ｜ 指導老師：OOO老師</p>
+                    </div>
+                    
+                    <div class="poster-body">
+                        <div class="poster-col">
+                            <h4 class="p-heading">一、研究動機</h4>
+                            <p class="p-text">蘚苔植物是環境的指標，但微觀特徵難以辨識。本研究旨在建立一套標準化的影像擷取流程，並訓練卷積神經網路進行自動分類。</p>
+                            
+                            <h4 class="p-heading">二、研究方法</h4>
+                            <p class="p-text">1. 採集樣本並記錄生態環境。<br>2. 建立特徵矩陣。<br>3. 切分 8:1:1 訓練集。</p>
+                        </div>
+                        
+                        <div class="poster-col">
+                            <h4 class="p-heading">三、研究結果</h4>
+                            <div class="p-graph" id="p-graph">
+                                <div>準確率：95%</div>
+                                <div class="p-accent-box" id="p-accent">重點突破</div>
+                            </div>
+                            
+                            <h4 class="p-heading">四、結論與展望</h4>
+                            <p class="p-text">模型在自然光下表現優異，未來可進一步結合手機 App，推廣至國中小的自然科戶外教學中。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert-box" style="margin-top: 20px;">
+                    <strong>🎨 設計訣竅：</strong> 海報背景請盡量保持淺色（如預覽圖底色），主色調用於大標題，輔助色用於次標題，強調色（橘/黃）只用在最關鍵的圖表或數據上，千萬別貪多！
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
