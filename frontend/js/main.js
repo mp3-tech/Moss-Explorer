@@ -13,20 +13,27 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .catch(error => console.error("載入導覽列時發生錯誤:", error));
     }
-
-    // --- 2. 倒數計時器邏輯 ---
+// --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
     function updateCountdowns() {
         const timerScience = document.getElementById("timer-science");
         const timerEssay = document.getElementById("timer-essay");
         if (!timerScience || !timerEssay) return; 
 
         const now = new Date().getTime();
+        
+        // 嘗試從 localStorage 讀取使用者設定的時間，如果沒有，就用預設值
         const currentYear = new Date().getFullYear();
-        const scienceDate = new Date(`${currentYear}-09-01T23:59:59`).getTime();
-        const essayDate = new Date(`${currentYear}-10-15T12:00:00`).getTime();
+        const defaultSci = `${currentYear}-09-01T23:59:59`;
+        const defaultEss = `${currentYear}-10-15T12:00:00`;
+
+        const savedSciStr = localStorage.getItem("targetDateScience") || defaultSci;
+        const savedEssStr = localStorage.getItem("targetDateEssay") || defaultEss;
+
+        const scienceDate = new Date(savedSciStr).getTime();
+        const essayDate = new Date(savedEssStr).getTime();
 
         function formatTime(distance) {
-            if (distance < 0) return "已截止";
+            if (isNaN(distance) || distance < 0) return "已截止";
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -44,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
-
+    
     // --- 3. 懸浮調色盤開關邏輯 ---
     const colorBarPanel = document.getElementById('color-bar-panel');
     const openColorBtn = document.getElementById('open-color-btn');
