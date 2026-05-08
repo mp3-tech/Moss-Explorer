@@ -355,3 +355,112 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     .quest-node { padding-left: 55px; }
     .quest-header { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
+/* =========================================
+   專屬頁面樣式：微觀探險儀 (Microscope)
+========================================= */
+.microscope-page {
+    margin-bottom: 60px;
+}
+
+/* 主排版網格：左側指引 3 份，右側模擬器 2 份 */
+.micro-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.check-section {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.check-section h4 {
+    margin: 0 0 10px 0;
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.micro-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.micro-checklist li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+}
+
+/* 檢核表的未勾選方框圖示 (☐) */
+.micro-checklist li::before {
+    content: '☐'; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* 模擬記錄器樣式 */
+.form-sim {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-sim {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 8px;
+}
+
+.input-sim label {
+    color: var(--text-muted);
+    font-weight: bold;
+}
+
+.val-sim {
+    color: var(--text-main);
+    font-family: monospace;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* 模擬照片預覽區 */
+.photo-placeholder {
+    text-align: center;
+    background: #eee;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 2px dashed #ccc;
+}
+
+.photo-placeholder img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.tag-cloud {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+/* 手機與平板版適應：改為單欄排版 */
+@media (max-width: 992px) {
+    .micro-grid {
+        grid-template-columns: 1fr;
+    }
+}
