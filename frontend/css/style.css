@@ -196,3 +196,55 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 .hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
 .close-color-btn { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; padding: 4px;}
 .close-color-btn:hover { color: #333; }
+
+/* =========================================
+   專屬頁面樣式：AI 訓練資料庫比例計算機
+========================================= */
+.container {
+    max-width: 1200px;
+    margin: 40px auto 10px;
+    padding: 0 5%;
+}
+
+.page-header { text-align: center; margin-bottom: 40px; }
+.page-header h1 { color: var(--primary); margin-bottom: 10px; font-size: 2.2rem; }
+.page-header p { color: var(--text-muted); font-size: 1.1rem; }
+
+.calculator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+
+.explanation-box h3 { color: var(--text-main); margin-top: 0; display: flex; align-items: center; gap: 8px; font-size: 1.3rem; border-bottom: 2px solid #e8f5e9; padding-bottom: 12px; }
+.analogy-item { display: flex; gap: 16px; margin-top: 24px; }
+.analogy-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; flex-shrink: 0; font-weight: bold; }
+.icon-train { background: #e3f2fd; color: #1565c0; }
+.icon-valid { background: #fff3e0; color: #ef6c00; }
+.icon-test { background: #e8f5e9; color: #2e7d32; }
+
+.analogy-text h4 { margin: 0 0 4px 0; font-size: 1.05rem; }
+.analogy-text p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+.alert-box { background: #fff8e1; border-left: 4px solid var(--accent); padding: 16px; margin-top: 32px; border-radius: 0 8px 8px 0; font-size: 0.9rem; color: #555; }
+
+.calc-form { margin-bottom: 32px; }
+.input-group { margin-bottom: 24px; }
+.input-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1rem; }
+.input-group input[type="number"], .input-group select { width: 100%; padding: 12px 16px; font-size: 1.1rem; border: 2px solid var(--border-color); border-radius: 8px; box-sizing: border-box; transition: 0.2s; }
+.input-group input:focus, .input-group select:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 3px rgba(46,125,50,0.1); }
+
+.results-box { background: #fafafa; border-radius: 8px; padding: 24px; }
+.result-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--border-color); }
+.result-item:last-child { border-bottom: none; padding-bottom: 0; }
+.res-label { font-weight: bold; display: flex; align-items: center; gap: 8px;}
+.res-value { font-size: 1.4rem; font-weight: bold; font-family: monospace; }
+
+.c-train { color: #1565c0; }
+.c-valid { color: #ef6c00; }
+.c-test { color: #2e7d32; }
+
+.visual-bar { width: 100%; height: 24px; border-radius: 12px; display: flex; overflow: hidden; margin-top: 24px; }
+.bar-train { background-color: #42a5f5; transition: width 0.3s; }
+.bar-valid { background-color: #ffa726; transition: width 0.3s; }
+.bar-test { background-color: #66bb6a; transition: width 0.3s; }
+
+@media (max-width: 768px) {
+    .calculator-grid { grid-template-columns: 1fr; }
+}
