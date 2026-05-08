@@ -1,1 +1,198 @@
+/* 全域變數 */
+:root {
+    --primary: #2e7d32;
+    --secondary: #81c784;
+    --accent: #ffb300;
+    --bg-body: #f7faf5;
+    --bg-card: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+    --border-color: #e0e0e0;
+    --radius: 12px;
+}
 
+body {
+    font-family: 'Noto Sans TC', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    padding-bottom: 40px; 
+    transition: background-color 0.3s ease;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ===== 頂部導覽列與 LOGO ===== */
+header {
+    background-color: white;
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.8rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo-img { height: 45px; width: auto; object-fit: contain; display: block; }
+.brand-text { display: flex; flex-direction: column; }
+.brand-text h2 { margin: 0; font-size: 1.25rem; color: var(--text-main); line-height: 1.2; }
+.brand-text span { font-size: 0.7rem; color: var(--text-muted); }
+
+.nav-links { display: flex; gap: 1.2rem; align-items: center; flex-wrap: wrap; }
+.nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--text-main); transition: color 0.2s; }
+.nav-links a:hover { color: var(--primary); }
+
+/* --- 導覽列三層下拉選單 --- */
+.dropdown { position: relative; padding-bottom: 10px; margin-bottom: -10px; }
+.dropbtn { background: none; border: none; font-size: 0.9rem; font-weight: 600; cursor: pointer; font-family: inherit; color: var(--text-main); padding: 0; }
+.dropdown:hover .dropbtn { color: var(--primary); }
+
+.dropdown-content {
+    display: none; position: absolute; background: white; min-width: 190px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 8px; 
+    top: 100%; left: 0; padding: 8px 0; border: 1px solid var(--border-color);
+}
+.dropdown:hover .dropdown-content { display: block; }
+
+.dropdown-submenu { position: relative; }
+.submenu-content {
+    display: none; position: absolute; top: 0; left: 100%;
+    background: white; min-width: 220px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
+    border-radius: 8px; border: 1px solid var(--border-color); padding: 8px 0;
+}
+.submenu-content::before { content: ""; position: absolute; top: 0; left: -15px; width: 15px; height: 100%; }
+.dropdown-submenu:hover .submenu-content { display: block; }
+
+.dropdown-content a, .submenu-btn {
+    padding: 10px 16px; display: block; font-size: 0.85rem; width: 100%; 
+    text-align: left; border: none; background: none; cursor: pointer; 
+    color: var(--text-main); font-family: inherit; font-weight: 500; box-sizing: border-box;
+}
+.dropdown-content a:hover, .submenu-btn:hover { background: #f5f5f5; color: var(--primary) !important; }
+.submenu-btn { display: flex !important; justify-content: space-between; align-items: center; }
+.submenu-btn::after { content: "▸"; color: #999; }
+
+/* ===== 網格整體佈局：雙欄 ===== */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    padding: 24px 5%;
+    max-width: 1600px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* 通用卡片樣式 */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.section-title { font-size: 1.1rem; font-weight: bold; margin: 0 0 16px 0; color: var(--text-main); }
+
+/* ===== 中間：主要內容區 ===== */
+.main-content { display: flex; flex-direction: column; gap: 24px; }
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border-radius: var(--radius); padding: 40px; position: relative; overflow: hidden;
+    border: 1px solid #c8e6c9; display: flex; justify-content: space-between; align-items: center;
+}
+.hero-text h1 { margin: 0 0 12px 0; font-size: 2.2rem; color: var(--primary); }
+.hero-text p { margin: 0; font-size: 1.1rem; color: var(--text-main); }
+
+.btn {
+    padding: 10px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;
+    border: none; transition: 0.2s;
+}
+.btn-primary { background-color: var(--primary); color: white; }
+.btn-primary:hover { background-color: #1b5e20; }
+
+/* 工具箱網格 */
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.tool-card {
+    background-color: var(--bg-card); border: 1px solid var(--border-color);
+    border-radius: var(--radius); padding: 16px; text-align: center;
+    display: flex; flex-direction: column; align-items: center; transition: 0.2s;
+}
+.tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.06); border-color: var(--secondary); }
+.tool-icon { width: 50px; height: 50px; border-radius: 50%; background-color: #f1f8e9; margin-bottom: 12px; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--primary); }
+.tool-card h5 { margin: 0 0 8px 0; font-size: 0.9rem; height: 2.7rem; display: flex; align-items: center;}
+.tool-card p { margin: 0 0 16px 0; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; flex-grow: 1;}
+.btn-tool {
+    width: 100%; padding: 6px 0; background-color: #e8f5e9; color: var(--primary); border: none; 
+    border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+    text-decoration: none; display: inline-block;
+}
+.btn-tool:hover { background-color: var(--secondary); color: white; }
+
+/* 文章資源區 */
+.articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.article-card { border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; background: var(--bg-card);}
+.article-img { height: 120px; background-color: #e0e0e0; width: 100%; }
+.article-content { padding: 12px; }
+.article-tag { display: inline-block; padding: 2px 8px; background: #eee; border-radius: 4px; font-size: 0.7rem; color: #555; margin-bottom: 8px;}
+.article-content h5 { margin: 0 0 8px 0; font-size: 0.95rem; }
+.article-content p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
+
+/* ===== 右側：小工具與日曆 ===== */
+.right-sidebar { display: flex; flex-direction: column; gap: 24px; }
+.countdown-hint { background-color: #fff9e6; border-left: 3px solid var(--accent); padding: 8px 12px; font-size: 0.75rem; color: #666; border-radius: 4px; margin-bottom: 16px; line-height: 1.5; }
+.countdown-hint strong { color: var(--primary); }
+.countdown-row { display: flex; justify-content: space-between; text-align: center; margin-top: 12px;}
+.countdown-col h6 { margin: 0 0 4px 0; font-size: 0.85rem; color: var(--text-muted); font-weight: normal;}
+.countdown-time { font-size: 1.15rem; font-weight: bold; color: var(--primary); font-family: monospace;}
+.countdown-time span { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin: 0 2px;}
+
+/* 簡易日曆 */
+.calendar { width: 100%; text-align: center; border-collapse: collapse; font-size: 0.85rem;}
+.calendar th { color: var(--text-muted); padding-bottom: 8px; font-weight: normal;}
+.calendar td { padding: 6px 0; color: var(--text-main);}
+.cal-today { background-color: var(--primary); color: white !important; border-radius: 50%; width: 24px; height: 24px; display: inline-block; line-height: 24px;}
+.cal-event { background-color: #e8f5e9; color: var(--primary) !important; border-radius: 50%; width: 24px; height: 24px; display: inline-block; line-height: 24px; border: 1px solid var(--primary);}
+
+/* 快速連結 */
+.quick-links { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+.ql-item { cursor: pointer; transition: 0.2s; display: block; text-decoration: none;}
+.ql-item:hover .ql-icon { background: #e8f5e9; color: var(--primary); transform: translateY(-2px);}
+.ql-icon { width: 40px; height: 40px; border-radius: 8px; background: #f5f5f5; margin: 0 auto 8px auto; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; transition: 0.2s; color: var(--text-main);}
+.ql-item span { font-size: 0.75rem; color: var(--text-muted);}
+
+/* ===== 底部：懸浮調色盤按鈕與控制盤 ===== */
+.toggle-color-btn {
+    position: fixed; bottom: 24px; right: 24px; background-color: var(--primary); color: white;
+    border: none; padding: 12px 20px; border-radius: 30px; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+    cursor: pointer; font-weight: bold; font-size: 0.9rem; z-index: 999; display: flex; align-items: center; gap: 8px; transition: transform 0.2s, background-color 0.2s;
+}
+.toggle-color-btn:hover { background-color: #1b5e20; transform: translateY(-2px); }
+
+.bottom-color-bar {
+    position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--bg-card);
+    border-top: 1px solid var(--border-color); padding: 16px 5%; box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;
+    z-index: 1000; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bottom-color-bar.show { transform: translateY(0); }
+
+.color-controls { display: flex; gap: 24px; align-items: center; }
+.color-group { display: flex; flex-direction: column; gap: 4px; }
+.color-group label { font-size: 0.75rem; color: var(--text-muted); font-weight: bold;}
+.color-input-wrapper { display: flex; align-items: center; gap: 8px; background: #f5f5f5; padding: 4px 12px 4px 4px; border-radius: 20px; border: 1px solid var(--border-color);}
+
+input[type="color"] { border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; padding: 0; background: none; }
+input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
+
+.hex-value { font-size: 0.75rem; font-family: monospace; color: var(--text-main); text-transform: uppercase;}
+.close-color-btn { background: none; border: none; font-size: 1.2rem; color: #999; cursor: pointer; padding: 4px;}
+.close-color-btn:hover { color: #333; }
