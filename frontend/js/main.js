@@ -262,3 +262,85 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     }
+// --- 8. 苔蘚特徵矩陣比對器 (Matrix) 邏輯 ---
+    const matrixForm = document.getElementById("matrix-form");
+    if (matrixForm) {
+        const tbody = document.getElementById("matrix-tbody");
+        const btnExportCSV = document.getElementById("btn-export-csv");
+        let matrixData = [];
+
+        // 處理表單提交
+        matrixForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            // 取得輸入資料
+            const sample = {
+                id: document.getElementById("m-id").value,
+                growth: document.getElementById("m-growth").value,
+                color: document.getElementById("m-color").value,
+                substrate: document.getElementById("m-substrate").value,
+                capsule: document.getElementById("m-capsule").value
+            };
+
+            // 存入陣列
+            matrixData.push(sample);
+            renderMatrixTable();
+            
+            // 清空表單並將焦點放回 ID
+            matrixForm.reset();
+            document.getElementById("m-id").focus();
+        });
+
+        // 渲染表格畫面
+        function renderMatrixTable() {
+            if (matrixData.length === 0) {
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="6" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            matrixData.forEach((item, index) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="font-family: monospace; font-weight: bold; color: var(--primary);">${item.id}</td>
+                    <td>${item.growth}</td>
+                    <td>${item.color}</td>
+                    <td>${item.substrate}</td>
+                    <td>${item.capsule}</td>
+                    <td><button class="btn-delete-row" onclick="deleteMatrixRow(${index})">刪除</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 全域刪除函數
+        window.deleteMatrixRow = function(index) {
+            matrixData.splice(index, 1);
+            renderMatrixTable();
+        };
+
+        // 匯出 CSV 檔功能
+        btnExportCSV.addEventListener("click", function() {
+            if (matrixData.length === 0) {
+                alert("目前沒有資料可以匯出喔！請先新增資料。");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // 加上 BOM 確保中文不亂碼
+            csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無\n"; // 表頭
+
+            matrixData.forEach(row => {
+                const rowString = `${row.id},${row.growth},${row.color},${row.substrate},${row.capsule}`;
+                csvContent += rowString + "\n";
+            });
+
+            // 觸發下載
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "moss_feature_matrix.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
