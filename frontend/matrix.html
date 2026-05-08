@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苔蘚特徵矩陣比對器 - AI 蘚苔探險家</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
+    <div id="navbar-placeholder"></div>
+
+    <div class="container matrix-page">
+        <div class="page-header">
+            <h1>📝 苔蘚特徵矩陣比對器 (Feature Matrix)</h1>
+            <p>把大自然的模樣「翻譯」成電腦看得懂的數據！建立專屬你的訓練特徵表。</p>
+        </div>
+
+        <div class="matrix-layout">
+            
+            <div class="card input-panel">
+                <h3 class="section-title">🔍 採集特徵登錄</h3>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 20px;">請根據你在「微觀探險儀」觀察到的結果，將特徵輸入系統。</p>
+                
+                <form id="matrix-form">
+                    <div class="input-group">
+                        <label for="m-id">樣本編號 (Sample ID)</label>
+                        <input type="text" id="m-id" placeholder="例如：MOSS-001" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="m-growth">生長型態 (Growth Form)</label>
+                        <select id="m-growth" required>
+                            <option value="">請選擇...</option>
+                            <option value="墊狀 (Cushion)">墊狀 (Cushion)</option>
+                            <option value="毯狀 (Mat)">毯狀 (Mat)</option>
+                            <option value="叢生 (Tuft)">叢生 (Tuft)</option>
+                            <option value="樹狀 (Dendroid)">樹狀 (Dendroid)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="m-color">主要顏色 (Color)</label>
+                        <select id="m-color" required>
+                            <option value="">請選擇...</option>
+                            <option value="深綠 (Dark Green)">深綠 (Dark Green)</option>
+                            <option value="翠綠 (Bright Green)">翠綠 (Bright Green)</option>
+                            <option value="黃綠 (Yellow-Green)">黃綠 (Yellow-Green)</option>
+                            <option value="紅褐 (Red-Brown)">紅褐 (Red-Brown)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="m-substrate">生長基質 (Substrate)</label>
+                        <select id="m-substrate" required>
+                            <option value="">請選擇...</option>
+                            <option value="岩石 (Rock)">岩石 (Rock)</option>
+                            <option value="樹皮 (Bark)">樹皮 (Bark)</option>
+                            <option value="土壤 (Soil)">土壤 (Soil)</option>
+                            <option value="人造物 (Concrete/Brick)">人造物 (水泥/磚牆)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="m-capsule">孢蒴有無 (Capsule)</label>
+                        <select id="m-capsule" required>
+                            <option value="">請選擇...</option>
+                            <option value="有 (Present)">有 (Present)</option>
+                            <option value="無 (Absent)">無 (Absent)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">➕ 新增至特徵矩陣</button>
+                </form>
+            </div>
+
+            <div class="card data-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 class="section-title" style="margin: 0;">📊 結構化數據預覽</h3>
+                    <button class="btn" id="btn-export-csv" style="background-color: var(--secondary); color: white; padding: 6px 12px; font-size: 0.85rem;">📥 匯出 CSV 檔</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="matrix-table" id="matrix-table">
+                        <thead>
+                            <tr>
+                                <th>樣本編號</th>
+                                <th>生長型態</th>
+                                <th>顏色</th>
+                                <th>基質</th>
+                                <th>孢蒴</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matrix-tbody">
+                            <tr class="empty-row">
+                                <td colspan="6" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert-box" style="margin-top: 20px;">
+                    <strong>💡 資訊科學小教室：</strong> 電腦無法直接理解文字。當你把這些資料匯出成 CSV 後，AI 工程師會將「有」轉換為 1，「無」轉換為 0，這就是所謂的「資料編碼 (Data Encoding)」！
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
