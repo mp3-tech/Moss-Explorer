@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 蘚苔探險家 - 研究儀表板</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
@@ -14,16 +14,11 @@
                 <div class="splash-icon">🌿</div>
                 <div class="splash-scan-line"></div>
             </div>
-            
             <h1 class="splash-title">AI 蘚苔探險家</h1>
-            
             <div class="splash-subtitle-container">
                 <span class="splash-subtitle">System Initializing... Load Quest Data...</span>
             </div>
-            
-            <div class="splash-progress">
-                <div class="splash-progress-bar"></div>
-            </div>
+            <div class="splash-progress"><div class="splash-progress-bar"></div></div>
         </div>
     </div>
     <div id="navbar-placeholder"></div>
@@ -31,44 +26,49 @@
     <div class="dashboard-container">
         
         <nav class="breadcrumb">
-            <span>🏠 首頁 (研究儀表板)</span>
+            <span>🏠 首頁 (AI 科學研究儀表板)</span>
         </nav>
         
-        <section class="hero-banner">
-            <div class="hero-text">
-                <h1 style="font-size: 2.5rem; margin-bottom: 8px;">把腳下的蘚苔，變成你的 AI 科學研究</h1>
-                <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">發現腳下的森林，讓 AI 成為你的科學放大鏡！</p>
-                <div style="display: flex; gap: 15px;">
-                    <button class="btn btn-primary" onclick="window.location.href='quest.html'">探索 Quest 任務</button>
-                    <button class="btn" style="background-color: white; border: 2px solid var(--primary); color: var(--primary);" onclick="window.location.href='tools.html'">進入研究工具箱</button>
+        <section class="hero-banner tech-bg">
+            <div class="hero-split">
+                <div class="hero-text-side">
+                    <div class="tech-badge">Moss Explorer Beta 1.0</div>
+                    <h1 class="hero-title">從一片蘚苔開始，<br>展開你的 <span style="color: var(--ai-blue);">AI 科展探險</span></h1>
+                    <p class="hero-desc">結合植物觀察、影像辨識與研究工具，協助高中生打造標準化的特徵矩陣，精準完成科展與小論文。</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="window.location.href='quest.html'">🚀 開始研究 (Quest)</button>
+                        <button class="btn btn-outline" onclick="window.location.href='tools.html'">進入研究工具箱</button>
+                    </div>
+                </div>
+                
+                <div class="hero-visual-side">
+                    <div class="ai-scanner-box">
+                        <img src="https://images.unsplash.com/photo-1611269154421-4e27233ac5c7?auto=format&fit=crop&w=600&q=80" alt="Moss Detection" class="moss-target">
+                        <div class="scanner-grid"></div>
+                        <div class="scanner-line"></div>
+                        <div class="ai-tag tag-top-left">🔍 Target Detected</div>
+                        <div class="ai-tag tag-bottom-right" style="color: var(--ai-blue); border-color: var(--ai-blue);">Probability: 98.5%</div>
+                        <div class="bounding-box"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="top-widgets">
-            <div class="card widget-card">
-                <div class="widget-icon">⏳</div>
-                <div class="widget-info">
-                    <h4 class="text-muted" style="margin:0 0 5px 0; font-size: 0.85rem;">科展截稿倒數</h4>
-                    <div id="timer-science" style="font-weight: bold; color: var(--primary); font-size: 1.1rem; font-family: monospace;">讀取中...</div>
-                </div>
+        <section class="platform-features">
+            <div class="feature-col">
+                <div class="f-icon">🤖</div>
+                <h4>AI 影像辨識</h4>
+                <p>將微觀特徵轉化為數據，快速分析蘚苔矩陣特徵。</p>
             </div>
-            <div class="card widget-card">
-                <div class="widget-icon">📅</div>
-                <div class="widget-info">
-                    <h4 class="text-muted" style="margin:0 0 5px 0; font-size: 0.85rem;">館員諮詢預約</h4>
-                    <div style="font-weight: bold; color: var(--primary); font-size: 0.9rem;"><a href="calendar.html" style="text-decoration: underline;">查看 5 月可用時段</a></div>
-                </div>
+            <div class="feature-col">
+                <div class="f-icon">🗺️</div>
+                <h4>研究流程引導</h4>
+                <p>依照 5 大 Quest 步驟，從發現問題到科展展示無縫接軌。</p>
             </div>
-            <div class="card widget-card">
-                <div class="widget-icon">📌</div>
-                <div class="widget-info">
-                    <h4 class="text-muted" style="margin:0 0 5px 0; font-size: 0.85rem;">快速研究入口</h4>
-                    <div style="display: flex; gap: 10px; font-size: 0.8rem;">
-                        <a href="matrix.html" style="background: #e8f5e9; padding: 2px 8px; border-radius: 4px; color: var(--primary);">特徵矩陣</a>
-                        <a href="resources.html" style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px; color: #1565c0;">文獻資源</a>
-                    </div>
-                </div>
+            <div class="feature-col">
+                <div class="f-icon">🛠️</div>
+                <h4>科展輔助工具</h4>
+                <p>整合截稿倒數、資料庫比例計算與海報配色調校。</p>
             </div>
         </section>
 
@@ -76,44 +76,51 @@
             <h3 class="section-title">研究導航路徑 (Quest)</h3>
             <div class="horizontal-quest-track">
                 <a href="microscope.html" class="h-quest-node">
-                    <div class="h-quest-marker">1</div>
+                    <div class="h-quest-marker active-node">1</div>
                     <span class="h-quest-title">發現研究問題</span>
+                    <span class="h-quest-sub">鎖定探險目標</span>
                 </a>
                 <div class="h-quest-line"></div>
                 <a href="resources.html" class="h-quest-node">
-                    <div class="h-quest-marker" style="background:#f5f5f5; color:#999;">2</div>
-                    <span class="h-quest-title">蒐集與閱讀文獻</span>
+                    <div class="h-quest-marker">2</div>
+                    <span class="h-quest-title">文獻蒐集與閱讀</span>
+                    <span class="h-quest-sub">建立學術基礎</span>
                 </a>
                 <div class="h-quest-line"></div>
                 <a href="ratio-calculator.html" class="h-quest-node">
-                    <div class="h-quest-marker" style="background:#f5f5f5; color:#999;">3</div>
-                    <span class="h-quest-title">建立 AI 訓練資料</span>
+                    <div class="h-quest-marker">3</div>
+                    <span class="h-quest-title">建立 AI 訓練集</span>
+                    <span class="h-quest-sub">標註特徵矩陣</span>
                 </a>
                 <div class="h-quest-line"></div>
                 <a href="ai-logic.html" class="h-quest-node">
-                    <div class="h-quest-marker" style="background:#f5f5f5; color:#999;">4</div>
+                    <div class="h-quest-marker">4</div>
                     <span class="h-quest-title">分析結果與驗證</span>
+                    <span class="h-quest-sub">解讀 AI 數據</span>
                 </a>
                 <div class="h-quest-line"></div>
                 <a href="countdown.html" class="h-quest-node">
-                    <div class="h-quest-marker" style="background:#f5f5f5; color:#999;">5</div>
+                    <div class="h-quest-marker">5</div>
                     <span class="h-quest-title">完成科展展示</span>
+                    <span class="h-quest-sub">排版與海報產出</span>
                 </a>
             </div>
         </section>
 
         <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
             <div class="card">
-                <h3 class="section-title" style="color: #1565c0; border-bottom: 2px solid #e3f2fd; padding-bottom: 8px;">🧠 AI 研究工具</h3>
+                <h3 class="section-title" style="color: var(--ai-blue); border-bottom: 2px solid #e3f2fd; padding-bottom: 8px;">🧠 AI 研究工具</h3>
                 <div class="tools-grid" style="grid-template-columns: 1fr 1fr;">
                     <div class="tool-card">
-                        <div class="tool-icon" style="color: #1565c0; background: #e3f2fd;">矩陣</div>
+                        <div class="tool-icon" style="color: var(--ai-blue); background: #e3f2fd;">矩陣</div>
                         <h5>特徵矩陣比對</h5>
+                        <p class="tool-desc">建立蘚苔標準分類比較表</p>
                         <a href="matrix.html" class="btn-tool" style="text-align:center;">進入工具</a>
                     </div>
                     <div class="tool-card">
-                        <div class="tool-icon" style="color: #1565c0; background: #e3f2fd;">比例</div>
+                        <div class="tool-icon" style="color: var(--ai-blue); background: #e3f2fd;">比例</div>
                         <h5>AI 資料比例</h5>
+                        <p class="tool-desc">快速計算訓練與驗證集配置</p>
                         <a href="ratio-calculator.html" class="btn-tool" style="text-align:center;">進入工具</a>
                     </div>
                 </div>
@@ -124,18 +131,21 @@
                 <div class="tools-grid" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="tool-card">
                         <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">⏳</div>
-                        <h5 style="font-size: 0.8rem;">倒數計時</h5>
-                        <a href="countdown.html" class="btn-tool" style="text-align:center;">進入</a>
+                        <h5 style="font-size: 0.85rem;">倒數計時</h5>
+                        <p class="tool-desc" style="font-size: 0.7rem;">科展時程管理</p>
+                        <a href="countdown.html" class="btn-tool" style="text-align:center; font-size:0.75rem;">進入</a>
                     </div>
                     <div class="tool-card">
                         <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">📅</div>
-                        <h5 style="font-size: 0.8rem;">館員諮詢</h5>
-                        <a href="calendar.html" class="btn-tool" style="text-align:center;">進入</a>
+                        <h5 style="font-size: 0.85rem;">館員諮詢</h5>
+                        <p class="tool-desc" style="font-size: 0.7rem;">文獻搜尋指導</p>
+                        <a href="calendar.html" class="btn-tool" style="text-align:center; font-size:0.75rem;">進入</a>
                     </div>
                     <div class="tool-card">
                         <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">🎨</div>
-                        <h5 style="font-size: 0.8rem;">海報配色</h5>
-                        <a href="palette.html" class="btn-tool" style="text-align:center;">進入</a>
+                        <h5 style="font-size: 0.85rem;">海報配色</h5>
+                        <p class="tool-desc" style="font-size: 0.7rem;">一鍵套用學術風</p>
+                        <a href="palette.html" class="btn-tool" style="text-align:center; font-size:0.75rem;">進入</a>
                     </div>
                 </div>
             </div>
@@ -145,23 +155,23 @@
             <h3 class="section-title">最新研究議題</h3>
             <div class="articles-grid">
                 <div class="article-card">
-                    <div class="article-img" style="background: linear-gradient(45deg, #2e7d32, #81c784);"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
                     <div class="article-content">
-                        <span class="article-tag">環境監測</span>
-                        <h5>苔蘚與空汙：生態指標的應用</h5>
+                        <span class="article-tag" style="background:#e8f5e9; color:var(--primary);">環境監測</span>
+                        <h5>蘚苔與空汙：生態指標的應用與分析</h5>
                     </div>
                 </div>
                 <div class="article-card">
-                    <div class="article-img" style="background: linear-gradient(45deg, #1565c0, #64b5f6);"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
                     <div class="article-content">
-                        <span class="article-tag">AI 應用</span>
-                        <h5>CNN 影像辨識在植物研究的應用</h5>
+                        <span class="article-tag" style="background:#e3f2fd; color:var(--ai-blue);">AI 應用</span>
+                        <h5>CNN 影像辨識在微觀植物研究的應用</h5>
                     </div>
                 </div>
                 <div class="article-card">
-                    <div class="article-img" style="background: linear-gradient(45deg, #ef6c00, #ffb74d);"></div>
+                    <div class="article-img" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80'); background-size: cover; background-position: center;"></div>
                     <div class="article-content">
-                        <span class="article-tag">科展技巧</span>
+                        <span class="article-tag" style="background:#fff3e0; color:#ef6c00;">實驗技巧</span>
                         <h5>實驗設計的關鍵：控制變因與資料集偏差</h5>
                     </div>
                 </div>
@@ -185,6 +195,6 @@
         </div>
     </div>
 
-    <script src="js/main.js?v=3"></script>
+    <script src="js/main.js?v=4"></script>
 </body>
 </html>
