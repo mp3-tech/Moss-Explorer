@@ -16,23 +16,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
     function updateCountdowns() {
-        const timerScience = document.getElementById("timer-science");
-        const timerEssay = document.getElementById("timer-essay");
-        if (!timerScience || !timerEssay) return; 
-
         const now = new Date().getTime();
-        
-        // 嘗試從 localStorage 讀取使用者設定的時間，如果沒有，就用預設值
         const currentYear = new Date().getFullYear();
-        const defaultSci = `${currentYear}-09-01T23:59:59`;
-        const defaultEss = `${currentYear}-10-15T12:00:00`;
-
-        const savedSciStr = localStorage.getItem("targetDateScience") || defaultSci;
-        const savedEssStr = localStorage.getItem("targetDateEssay") || defaultEss;
-
-        const scienceDate = new Date(savedSciStr).getTime();
-        const essayDate = new Date(savedEssStr).getTime();
-
+        
         function formatTime(distance) {
             if (isNaN(distance) || distance < 0) return "已截止";
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -47,8 +33,19 @@ document.addEventListener("DOMContentLoaded", function() {
             return `${days}<span>天</span>${hrStr}<span>時</span>${minStr}<span>分</span>${secStr}<span>秒</span>`;
         }
 
-        timerScience.innerHTML = formatTime(scienceDate - now);
-        timerEssay.innerHTML = formatTime(essayDate - now);
+        // 獨立更新：科學展覽會倒數
+        const timerScience = document.getElementById("timer-science");
+        if (timerScience) {
+            const savedSciStr = localStorage.getItem("targetDateScience") || `${currentYear}-09-01T23:59:59`;
+            timerScience.innerHTML = formatTime(new Date(savedSciStr).getTime() - now);
+        }
+
+        // 獨立更新：小論文倒數 (若該頁面沒有此區塊也不會當機)
+        const timerEssay = document.getElementById("timer-essay");
+        if (timerEssay) {
+            const savedEssStr = localStorage.getItem("targetDateEssay") || `${currentYear}-10-15T12:00:00`;
+            timerEssay.innerHTML = formatTime(new Date(savedEssStr).getTime() - now);
+        }
     }
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
@@ -103,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         totalInput.addEventListener('input', calculateRatio);
         ratioSelect.addEventListener('change', calculateRatio);
-        calculateRatio(); // 初始載入時計算一次
+        calculateRatio(); 
     }
 
     // --- 6. 館員諮詢服務月 (Calendar) 邏輯 ---
@@ -114,14 +111,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const letterResult = document.getElementById("letter-result");
         const letterContent = document.getElementById("letter-content");
         
-        // 預設預定日期 (模擬資料)
         const bookedDates = [13, 15, 20];
-        const today = 27; // 模擬今天為 5/27
+        const today = 27; 
 
         function renderCalendar() {
             let html = "";
             let date = 1;
-            // 2026年5月從星期五開始 (第一排前4格是空的)
             for (let i = 0; i < 5; i++) {
                 html += "<tr>";
                 for (let j = 0; j < 7; j++) {
@@ -145,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         window.selectDate = function(el, day) {
-            // 移除其他選取狀態
             document.querySelectorAll('#calendar-body td').forEach(td => td.classList.remove('date-selected'));
             el.classList.add('date-selected');
             selectedDateInput.value = `2026-05-${day.toString().padStart(2, '0')}`;
@@ -190,17 +184,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const pAccent = document.getElementById('p-accent');
         const copyMsg = document.getElementById('copy-msg');
 
-        // 切換主題預覽
         paletteCards.forEach(card => {
             card.addEventListener('click', function() {
-                // 更新按鈕 active 狀態
                 paletteCards.forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
 
-                // 取得對應主題顏色
                 const theme = themeData[this.getAttribute('data-theme')];
 
-                // 更新海報預覽顏色
                 posterBoard.style.backgroundColor = theme.bg;
                 pHeader.style.backgroundColor = theme.primary;
                 pAccent.style.backgroundColor = theme.accent;
@@ -216,14 +206,12 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
-        // 點擊色塊複製 Hex 碼
         const swatches = document.querySelectorAll('.swatch-item');
         swatches.forEach(swatch => {
             swatch.addEventListener('click', function(e) {
-                e.stopPropagation(); // 避免觸發卡片切換
+                e.stopPropagation(); 
                 const hexCode = this.querySelector('span').innerText;
                 
-                // 複製到剪貼簿
                 navigator.clipboard.writeText(hexCode).then(() => {
                     copyMsg.innerText = `已複製色碼：${hexCode} 📋`;
                     setTimeout(() => { copyMsg.innerText = ''; }, 2000);
@@ -239,11 +227,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const btnExportCSV = document.getElementById("btn-export-csv");
         let matrixData = [];
 
-        // 處理表單提交
         matrixForm.addEventListener("submit", function(e) {
             e.preventDefault();
 
-            // 取得輸入資料
             const sample = {
                 id: document.getElementById("m-id").value,
                 growth: document.getElementById("m-growth").value,
@@ -252,16 +238,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 capsule: document.getElementById("m-capsule").value
             };
 
-            // 存入陣列
             matrixData.push(sample);
             renderMatrixTable();
             
-            // 清空表單並將焦點放回 ID
             matrixForm.reset();
             document.getElementById("m-id").focus();
         });
 
-        // 渲染表格畫面
         function renderMatrixTable() {
             if (matrixData.length === 0) {
                 tbody.innerHTML = `<tr class="empty-row"><td colspan="6" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td></tr>`;
@@ -283,28 +266,25 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
 
-        // 全域刪除函數
         window.deleteMatrixRow = function(index) {
             matrixData.splice(index, 1);
             renderMatrixTable();
         };
 
-        // 匯出 CSV 檔功能
         btnExportCSV.addEventListener("click", function() {
             if (matrixData.length === 0) {
                 alert("目前沒有資料可以匯出喔！請先新增資料。");
                 return;
             }
 
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; // 加上 BOM 確保中文不亂碼
-            csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無\n"; // 表頭
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無\n"; 
 
             matrixData.forEach(row => {
                 const rowString = `${row.id},${row.growth},${row.color},${row.substrate},${row.capsule}`;
                 csvContent += rowString + "\n";
             });
 
-            // 觸發下載
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
@@ -315,27 +295,28 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- 9. 開場動畫 (Splash Screen) 智慧控制邏輯 ---
+    // --- 9. 開場動畫 (Splash Screen) 終極防呆邏輯 ---
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
         
         if (!hasSeenSplash) {
-            // 設定為 2.5 秒後就開始淡出
+            // 第一次進來，強制 2.5 秒後執行隱藏動作
             setTimeout(() => {
-                splashScreen.classList.add('hidden');
+                splashScreen.style.opacity = '0';
+                splashScreen.style.visibility = 'hidden';
+                splashScreen.style.pointerEvents = 'none'; // 滑鼠穿透，防卡死
                 sessionStorage.setItem('moss_splash_seen', 'true');
                 
-                // 0.5 秒淡出完畢後，徹底從網頁結構中消失
+                // 動畫結束後徹底移除
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                 }, 500); 
             }, 2500); 
         } else {
-            // 如果已經看過，一載入就瞬間隱藏，絕不卡頓
+            // 已經看過，瞬間消失
             splashScreen.style.display = 'none';
-            splashScreen.classList.add('hidden');
         }
     }
 
-}); // <-- 確保整個檔案的結尾有這行，把所有功能包起來！
+});
