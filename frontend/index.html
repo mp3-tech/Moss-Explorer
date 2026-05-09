@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 蘚苔探險家 - 研究儀表板</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -20,33 +20,7 @@
             <div class="splash-subtitle-container">
                 <span class="splash-subtitle">System Initializing... Load Quest Data...</span>
             </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const splash = document.getElementById('splash-screen');
-            if (splash) {
-                const hasSeen = sessionStorage.getItem('moss_splash_seen');
-                if (!hasSeen) {
-                    // 第一次進來，2.5秒後開始隱藏
-                    setTimeout(function() {
-                        splash.style.opacity = '0';
-                        splash.style.visibility = 'hidden';
-                        splash.style.pointerEvents = 'none';
-                        sessionStorage.setItem('moss_splash_seen', 'true');
-                        
-                        // 0.5秒後徹底移除
-                        setTimeout(function() { 
-                            splash.style.display = 'none'; 
-                        }, 500);
-                    }, 2500);
-                } else {
-                    // 已經看過，瞬間消失
-                    splash.style.display = 'none';
-                }
-            }
-        });
-    </script>
-
-    <div id="navbar-placeholder"></div>
+            
             <div class="splash-progress">
                 <div class="splash-progress-bar"></div>
             </div>
@@ -149,19 +123,19 @@
                 <h3 class="section-title" style="color: #ef6c00; border-bottom: 2px solid #fff3e0; padding-bottom: 8px;">🏆 科展輔助工具</h3>
                 <div class="tools-grid" style="grid-template-columns: 1fr 1fr 1fr;">
                     <div class="tool-card">
-                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0; width:40px; height:40px; font-size:1rem;">⏳</div>
+                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">⏳</div>
                         <h5 style="font-size: 0.8rem;">倒數計時</h5>
-                        <a href="countdown.html" class="btn-tool" style="text-align:center; font-size: 0.75rem;">進入</a>
+                        <a href="countdown.html" class="btn-tool" style="text-align:center;">進入</a>
                     </div>
                     <div class="tool-card">
-                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0; width:40px; height:40px; font-size:1rem;">📅</div>
+                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">📅</div>
                         <h5 style="font-size: 0.8rem;">館員諮詢</h5>
-                        <a href="calendar.html" class="btn-tool" style="text-align:center; font-size: 0.75rem;">進入</a>
+                        <a href="calendar.html" class="btn-tool" style="text-align:center;">進入</a>
                     </div>
                     <div class="tool-card">
-                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0; width:40px; height:40px; font-size:1rem;">🎨</div>
+                        <div class="tool-icon" style="color: #ef6c00; background: #fff3e0;">🎨</div>
                         <h5 style="font-size: 0.8rem;">海報配色</h5>
-                        <a href="palette.html" class="btn-tool" style="text-align:center; font-size: 0.75rem;">進入</a>
+                        <a href="palette.html" class="btn-tool" style="text-align:center;">進入</a>
                     </div>
                 </div>
             </div>
@@ -201,7 +175,7 @@
     <div class="bottom-color-bar" id="color-bar-panel">
         <div style="display:flex; align-items:center; gap: 16px;">
             <h3 style="margin:0; font-size:1rem; display:flex; align-items:center; gap:8px;">🎨 研究海報配色實驗室</h3>
-            <span style="font-size:0.8rem; color:var(--text-muted);">模擬科展海報配色，即時預覽研究成果展示效果。</span>
+            <span style="font-size:0.8rem; color:var(--text-muted);">模擬科展海報配色，即時預覽展示效果。</span>
         </div>
         <div class="color-controls">
             <div class="color-group"><label>主色調</label><div class="color-input-wrapper"><input type="color" id="cp-primary" value="#2e7d32"><span class="hex-value" id="hex-primary">#2e7d32</span></div></div>
@@ -211,6 +185,6 @@
         </div>
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.js?v=3"></script>
 </body>
 </html>
