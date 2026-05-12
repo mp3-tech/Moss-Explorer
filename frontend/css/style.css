@@ -162,7 +162,7 @@ header {
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
-.logo-img { height: 45px; width: auto; object-fit: contain; display: block; }
+.logo-img { height: 45px; width: auto; object-fit: contain; display: block; border-radius: 12px; }
 .brand-text { display: flex; flex-direction: column; }
 .brand-text h2 { margin: 0; font-size: 1.25rem; color: var(--text-main); line-height: 1.2; }
 .brand-text span { font-size: 0.7rem; color: var(--text-muted); }
@@ -1028,4 +1028,38 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     .hero-text-side, .hero-visual-side { width: 100%; justify-content: center; }
     .hero-title { font-size: 2.2rem !important; }
     .platform-features { grid-template-columns: 1fr; }
+}
+
+/* =========================================
+   23. 圖片佔位符 (Image Placeholders)
+   — 等待替換為自訂圖片時顯示
+========================================= */
+.img-placeholder {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1a3a1a 0%, #2e7d32 60%, #1b5e20 100%);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    gap: 10px; cursor: default;
+}
+.img-placeholder-card {
+    height: 120px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    gap: 6px;
+    border-bottom: 2px dashed #a5d6a7;
+}
+.img-placeholder-icon { font-size: 2rem; line-height: 1; }
+.img-placeholder-label {
+    font-size: 0.72rem;
+    font-family: monospace;
+    color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.25);
+    padding: 2px 8px; border-radius: 4px;
+    letter-spacing: 0.03em;
+}
+.img-placeholder-card .img-placeholder-icon { font-size: 1.5rem; }
+.img-placeholder-card .img-placeholder-label {
+    color: #558b2f;
+    background: rgba(0,0,0,0.06);
 }
