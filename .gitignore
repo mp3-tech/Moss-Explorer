@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ===== 本專案專用 =====
+# 爬蟲輸出（手動複製到 frontend/data/ 後不需要版控）
+moss_scraper/output/
+
+# Supabase 金鑰（絕對不能公開）
+.env
+moss_scraper/.env
