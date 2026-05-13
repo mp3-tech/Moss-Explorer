@@ -172,11 +172,22 @@
             <!-- 結果狀態 -->
             <div id="db-status" style="font-size:0.85rem; color:#888; margin-bottom:8px;">載入中...</div>
 
+            <!-- 比對列（選取後顯示） -->
+            <div id="compare-bar" style="display:none; background:#e8f5e9; border:1.5px solid #a5d6a7; border-radius:10px; padding:12px 16px; margin-bottom:12px; display:none; align-items:center; gap:12px; flex-wrap:wrap;">
+                <span style="font-size:0.88rem; color:#2e7d32; font-weight:600;">🔬 已選取比對：</span>
+                <span id="compare-a-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">—</span>
+                <span style="color:#aaa;">vs</span>
+                <span id="compare-b-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">—</span>
+                <button class="btn btn-primary" id="btn-do-compare" style="padding:5px 16px; font-size:0.85rem;" disabled>開始比對</button>
+                <button class="btn" id="btn-clear-compare" style="padding:5px 12px; font-size:0.85rem;">清除</button>
+            </div>
+
             <!-- 結果表格 -->
             <div style="overflow-x:auto;">
                 <table class="matrix-table" id="db-table" style="display:none;">
                     <thead>
                         <tr>
+                            <th>加入比對</th>
                             <th>樣本編號</th>
                             <th>學名</th>
                             <th>類群</th>
@@ -192,10 +203,36 @@
         </div>
     </div>
 
-    <script>
-    let allData = [];  // 存放全部 600 筆
+    <!-- 比對結果 Modal -->
+    <div id="compare-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center; padding:16px;">
+        <div style="background:#fff; border-radius:16px; max-width:720px; width:100%; max-height:88vh; overflow-y:auto; padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.2);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0; font-family:var(--font-serif); color:#1b5e20;">🔬 特徵比對結果</h3>
+                <button id="btn-close-modal" style="background:none; border:none; font-size:1.4rem; cursor:pointer; color:#888; line-height:1;">✕</button>
+            </div>
+            <div id="compare-result-body"></div>
+        </div>
+    </div>
 
-    // 頁面載入時就讀取 JSON
+    <script>
+    let allData    = [];
+    let compareA   = null;
+    let compareB   = null;
+
+    const FIELDS = [
+        { key: '苔蘚類群', label: '苔蘚類群' },
+        { key: '生長型態', label: '生長型態' },
+        { key: '生長基質', label: '生長基質' },
+        { key: '孢蒴有無', label: '孢蒴有無' },
+        { key: '觀測地點', label: '觀測地點' },
+    ];
+    const UNKNOWN = ['未知', '未記錄', '', null, undefined];
+
+    function isUnknown(v) {
+        return UNKNOWN.includes(v) || (typeof v === 'string' && v.trim() === '');
+    }
+
+    // ── 載入 JSON ────────────────────────────────────────────────────
     fetch('data/moss_matrix.json')
         .then(r => r.json())
         .then(data => {
@@ -208,6 +245,7 @@
                 '❌ 找不到資料檔，請確認 data/moss_matrix.json 是否放在正確位置。';
         });
 
+    // ── 查詢 ─────────────────────────────────────────────────────────
     document.getElementById('btn-db-query').addEventListener('click', () => {
         const status = document.getElementById('db-status');
         const table  = document.getElementById('db-table');
@@ -219,15 +257,14 @@
         const capsule   = document.getElementById('filter-capsule').value;
         const keyword   = document.getElementById('filter-keyword').value.trim().toLowerCase();
 
-        // 在本地直接篩選
         const result = allData.filter(row => {
             if (group     && row['苔蘚類群'] !== group)     return false;
             if (growth    && row['生長型態'] !== growth)    return false;
             if (substrate && row['生長基質'] !== substrate) return false;
             if (capsule   && row['孢蒴有無'] !== capsule)   return false;
             if (keyword) {
-                const haystack = (row['學名'] + row['觀測地點'] + row['中文俗名']).toLowerCase();
-                if (!haystack.includes(keyword)) return false;
+                const hay = (row['學名'] + row['觀測地點'] + row['中文俗名']).toLowerCase();
+                if (!hay.includes(keyword)) return false;
             }
             return true;
         });
@@ -244,9 +281,25 @@
         table.style.display = 'table';
 
         result.forEach(row => {
+            const sampleId = row['樣本編號'] || '';
+            const isA = compareA && compareA['樣本編號'] === sampleId;
+            const isB = compareB && compareB['樣本編號'] === sampleId;
+
             const tr = document.createElement('tr');
+            if (isA) tr.style.background = '#e8f5e9';
+            if (isB) tr.style.background = '#e3f2fd';
+
             tr.innerHTML = `
-                <td>${row['樣本編號']  || ''}</td>
+                <td style="text-align:center; white-space:nowrap;">
+                    <button class="btn-compare-pick"
+                        data-id="${sampleId}"
+                        style="font-size:0.78rem; padding:3px 10px; border-radius:8px; border:1.5px solid #a5d6a7;
+                               background:${isA ? '#2e7d32' : isB ? '#1565c0' : 'transparent'};
+                               color:${(isA || isB) ? '#fff' : '#2e7d32'}; cursor:pointer; white-space:nowrap;">
+                        ${isA ? '✓ 樣本A' : isB ? '✓ 樣本B' : '＋ 加入比對'}
+                    </button>
+                </td>
+                <td>${sampleId}</td>
                 <td><em>${row['學名'] || ''}</em></td>
                 <td>${row['苔蘚類群'] || ''}</td>
                 <td>${row['生長型態'] || ''}</td>
@@ -256,6 +309,140 @@
             `;
             tbody.appendChild(tr);
         });
+
+        // 綁定每列的加入比對按鈕
+        tbody.querySelectorAll('.btn-compare-pick').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id  = btn.getAttribute('data-id');
+                const row = allData.find(r => r['樣本編號'] === id);
+                if (!row) return;
+
+                // 如果已選過就取消
+                if (compareA && compareA['樣本編號'] === id) {
+                    compareA = null;
+                } else if (compareB && compareB['樣本編號'] === id) {
+                    compareB = null;
+                } else if (!compareA) {
+                    compareA = row;
+                } else if (!compareB) {
+                    compareB = row;
+                } else {
+                    // 已滿兩個：替換最早選的（A）
+                    compareA = compareB;
+                    compareB = row;
+                }
+                updateCompareBar();
+                // 重新渲染這次查詢結果（更新按鈕顏色）
+                document.getElementById('btn-db-query').click();
+            });
+        });
+    });
+
+    // ── 更新比對列 ───────────────────────────────────────────────────
+    function updateCompareBar() {
+        const bar    = document.getElementById('compare-bar');
+        const aLabel = document.getElementById('compare-a-label');
+        const bLabel = document.getElementById('compare-b-label');
+        const doBtn  = document.getElementById('btn-do-compare');
+
+        aLabel.textContent = compareA ? `A：${compareA['學名'] || compareA['樣本編號']}` : '尚未選取';
+        bLabel.textContent = compareB ? `B：${compareB['學名'] || compareB['樣本編號']}` : '尚未選取';
+        doBtn.disabled     = !(compareA && compareB);
+        bar.style.display  = (compareA || compareB) ? 'flex' : 'none';
+    }
+
+    // ── 清除比對 ─────────────────────────────────────────────────────
+    document.getElementById('btn-clear-compare').addEventListener('click', () => {
+        compareA = null; compareB = null;
+        updateCompareBar();
+        document.getElementById('btn-db-query').click();
+    });
+
+    // ── 執行比對 ─────────────────────────────────────────────────────
+    document.getElementById('btn-do-compare').addEventListener('click', () => {
+        if (!compareA || !compareB) return;
+
+        let html = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; font-size:0.88rem;">
+            <div style="background:#e8f5e9; border-radius:8px; padding:10px 14px;">
+                <strong style="color:#2e7d32;">樣本 A</strong><br>
+                <em>${compareA['學名'] || '—'}</em><br>
+                <span style="color:#666; font-size:0.8rem;">${compareA['樣本編號']}</span>
+            </div>
+            <div style="background:#e3f2fd; border-radius:8px; padding:10px 14px;">
+                <strong style="color:#1565c0;">樣本 B</strong><br>
+                <em>${compareB['學名'] || '—'}</em><br>
+                <span style="color:#666; font-size:0.8rem;">${compareB['樣本編號']}</span>
+            </div>
+        </div>
+        <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+                <tr style="background:#f5f5f5;">
+                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:18%;">特徵</th>
+                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#2e7d32;">樣本 A</th>
+                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#1565c0;">樣本 B</th>
+                    <th style="padding:8px 12px; text-align:center; border-bottom:2px solid #eee; width:26%;">比對結果</th>
+                </tr>
+            </thead>
+            <tbody>`;
+
+        let canCompareCount = 0;
+        let matchCount      = 0;
+
+        FIELDS.forEach(f => {
+            const vA = compareA[f.key];
+            const vB = compareB[f.key];
+            const uA = isUnknown(vA);
+            const uB = isUnknown(vB);
+
+            let resultCell = '';
+            let rowBg      = '';
+
+            if (uA || uB) {
+                resultCell = `<span style="color:#f57c00; font-size:0.82rem;">⚠️ 無法比對<br><span style="font-size:0.75rem; color:#aaa;">${uA ? 'A 未記錄' : ''}${uA && uB ? '、' : ''}${uB ? 'B 未記錄' : ''}</span></span>`;
+                rowBg      = '#fffde7';
+            } else if (vA === vB) {
+                resultCell = `<span style="color:#2e7d32; font-weight:600;">✅ 相同</span>`;
+                rowBg      = '#f1f8f1';
+                canCompareCount++; matchCount++;
+            } else {
+                resultCell = `<span style="color:#c62828; font-weight:600;">❌ 不同</span>`;
+                rowBg      = '#fff5f5';
+                canCompareCount++;
+            }
+
+            html += `
+            <tr style="background:${rowBg}; border-bottom:1px solid #f0f0f0;">
+                <td style="padding:9px 12px; font-weight:600; color:#555;">${f.label}</td>
+                <td style="padding:9px 12px; color:${uA ? '#bbb' : '#333'};">${uA ? '未記錄' : vA}</td>
+                <td style="padding:9px 12px; color:${uB ? '#bbb' : '#333'};">${uB ? '未記錄' : vB}</td>
+                <td style="padding:9px 12px; text-align:center;">${resultCell}</td>
+            </tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        // 總結
+        const pct = canCompareCount > 0 ? Math.round(matchCount / canCompareCount * 100) : null;
+        const unknownCount = FIELDS.length - canCompareCount;
+        html += `
+        <div style="margin-top:16px; padding:12px 16px; background:#f5f5f5; border-radius:10px; font-size:0.88rem; display:flex; gap:20px; flex-wrap:wrap;">
+            <span>📊 可比對欄位：<strong>${canCompareCount} / ${FIELDS.length}</strong></span>
+            ${unknownCount > 0 ? `<span style="color:#f57c00;">⚠️ 無法比對：<strong>${unknownCount} 欄</strong>（資料未記錄）</span>` : ''}
+            ${pct !== null ? `<span>相符率：<strong style="color:${pct >= 60 ? '#2e7d32' : '#c62828'}">${pct}%</strong>（${matchCount}/${canCompareCount} 欄相同）</span>` : ''}
+        </div>`;
+
+        document.getElementById('compare-result-body').innerHTML = html;
+        document.getElementById('compare-modal').style.display = 'flex';
+    });
+
+    // ── 關閉 Modal ───────────────────────────────────────────────────
+    document.getElementById('btn-close-modal').addEventListener('click', () => {
+        document.getElementById('compare-modal').style.display = 'none';
+    });
+    document.getElementById('compare-modal').addEventListener('click', e => {
+        if (e.target === e.currentTarget)
+            e.currentTarget.style.display = 'none';
     });
     </script>
 </body>
