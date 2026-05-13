@@ -112,5 +112,151 @@
     </div>
 
     <script src="js/main.js"></script>
+
+    <!-- ===== 本地 JSON 查詢區 ===== -->
+    <div class="container" style="margin-top: 40px;">
+        <div class="card">
+            <h3 class="section-title">🔎 從資料庫查詢苔蘚特徵</h3>
+            <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;">
+                資料來源：GBIF 苔蘚植物三大類群，共 600 筆觀測紀錄。
+            </p>
+
+            <!-- 篩選列 -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:16px;">
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">苔蘚類群</label>
+                    <select id="filter-group" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>蘚類 Bryophyta</option>
+                        <option>苔類 Marchantiophyta</option>
+                        <option>角苔類 Anthocerotophyta</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">生長型態</label>
+                    <select id="filter-growth" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>墊狀 (Cushion)</option>
+                        <option>毯狀 (Mat)</option>
+                        <option>叢生 (Tuft)</option>
+                        <option>樹狀 (Dendroid)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">生長基質</label>
+                    <select id="filter-substrate" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>岩石 (Rock)</option>
+                        <option>樹皮 (Bark)</option>
+                        <option>土壤 (Soil)</option>
+                        <option>人造物 (Concrete/Brick)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">孢蒴有無</label>
+                    <select id="filter-capsule" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>有 (Present)</option>
+                        <option>無 (Absent)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">關鍵字搜尋</label>
+                    <input type="text" id="filter-keyword" placeholder="學名或地點..." style="width:100%; margin-top:4px;">
+                </div>
+                <div style="display:flex; align-items:flex-end;">
+                    <button class="btn btn-primary" id="btn-db-query" style="width:100%;">查詢</button>
+                </div>
+            </div>
+
+            <!-- 結果狀態 -->
+            <div id="db-status" style="font-size:0.85rem; color:#888; margin-bottom:8px;">載入中...</div>
+
+            <!-- 結果表格 -->
+            <div style="overflow-x:auto;">
+                <table class="matrix-table" id="db-table" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>樣本編號</th>
+                            <th>學名</th>
+                            <th>類群</th>
+                            <th>生長型態</th>
+                            <th>基質</th>
+                            <th>孢蒴</th>
+                            <th>地點</th>
+                        </tr>
+                    </thead>
+                    <tbody id="db-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let allData = [];  // 存放全部 600 筆
+
+    // 頁面載入時就讀取 JSON
+    fetch('data/moss_matrix.json')
+        .then(r => r.json())
+        .then(data => {
+            allData = data;
+            document.getElementById('db-status').textContent =
+                `✅ 已載入 ${data.length} 筆資料，請選擇條件後按查詢。`;
+        })
+        .catch(() => {
+            document.getElementById('db-status').textContent =
+                '❌ 找不到資料檔，請確認 data/moss_matrix.json 是否放在正確位置。';
+        });
+
+    document.getElementById('btn-db-query').addEventListener('click', () => {
+        const status = document.getElementById('db-status');
+        const table  = document.getElementById('db-table');
+        const tbody  = document.getElementById('db-tbody');
+
+        const group     = document.getElementById('filter-group').value;
+        const growth    = document.getElementById('filter-growth').value;
+        const substrate = document.getElementById('filter-substrate').value;
+        const capsule   = document.getElementById('filter-capsule').value;
+        const keyword   = document.getElementById('filter-keyword').value.trim().toLowerCase();
+
+        // 在本地直接篩選
+        const result = allData.filter(row => {
+            if (group     && row['苔蘚類群'] !== group)     return false;
+            if (growth    && row['生長型態'] !== growth)    return false;
+            if (substrate && row['生長基質'] !== substrate) return false;
+            if (capsule   && row['孢蒴有無'] !== capsule)   return false;
+            if (keyword) {
+                const haystack = (row['學名'] + row['觀測地點'] + row['中文俗名']).toLowerCase();
+                if (!haystack.includes(keyword)) return false;
+            }
+            return true;
+        });
+
+        tbody.innerHTML = '';
+        table.style.display = 'none';
+
+        if (result.length === 0) {
+            status.textContent = '查無符合條件的資料，請調整篩選條件。';
+            return;
+        }
+
+        status.textContent = `✅ 找到 ${result.length} 筆（共 ${allData.length} 筆中）`;
+        table.style.display = 'table';
+
+        result.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${row['樣本編號']  || ''}</td>
+                <td><em>${row['學名'] || ''}</em></td>
+                <td>${row['苔蘚類群'] || ''}</td>
+                <td>${row['生長型態'] || ''}</td>
+                <td>${row['生長基質'] || ''}</td>
+                <td>${row['孢蒴有無'] || ''}</td>
+                <td>${row['觀測地點'] || ''}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    });
+    </script>
 </body>
 </html>
