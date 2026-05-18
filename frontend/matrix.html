@@ -23,16 +23,13 @@
         <div class="matrix-layout">
             <div class="card input-panel">
                 <h3 class="section-title">🔍 採集特徵登錄</h3>
-                <p class="text-muted" style="font-size:0.85rem; margin-bottom:20px;">請根據你在「微觀探險儀」觀察到的結果，將特徵輸入系統。</p>
-
+                <p class="text-muted" style="font-size:0.85rem; margin-bottom:20px;">
+                    根據肉眼或放大鏡觀察到的特徵填寫，<strong>不需要知道學名</strong>。
+                </p>
                 <form id="matrix-form">
                     <div class="input-group">
                         <label for="m-id">樣本編號 (Sample ID)</label>
                         <input type="text" id="m-id" placeholder="例如：MOSS-001" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-sciname">學名 (Scientific Name)</label>
-                        <input type="text" id="m-sciname" placeholder="例如：Sphagnum palustre">
                     </div>
                     <div class="input-group">
                         <label for="m-growth">生長型態 (Growth Form)</label>
@@ -81,9 +78,12 @@
             </div>
 
             <div class="card data-panel">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:8px;">
                     <h3 class="section-title" style="margin:0;">📊 結構化數據預覽</h3>
-                    <button class="btn" id="btn-export-csv" style="background-color:var(--secondary); color:white; padding:6px 12px; font-size:0.85rem;">📥 匯出 CSV 檔</button>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn" id="btn-export-csv" style="background-color:var(--secondary); color:white; padding:6px 12px; font-size:0.85rem;">📥 匯出 CSV</button>
+                        <button class="btn" id="btn-export-json" style="background-color:#1565c0; color:white; padding:6px 12px; font-size:0.85rem;">📥 匯出 JSON</button>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
@@ -91,18 +91,17 @@
                         <thead>
                             <tr>
                                 <th>樣本編號</th>
-                                <th>學名</th>
                                 <th>生長型態</th>
                                 <th>顏色</th>
                                 <th>基質</th>
                                 <th>孢蒴</th>
-                                <th>地點</th>
+                                <th>觀測地點</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody id="matrix-tbody">
                             <tr class="empty-row">
-                                <td colspan="8" style="text-align:center; color:#999;">尚未加入任何特徵資料，請由左方表單新增。</td>
+                                <td colspan="7" style="text-align:center; color:#999;">尚未加入任何特徵資料，請由左方表單新增。</td>
                             </tr>
                         </tbody>
                     </table>
@@ -117,16 +116,15 @@
 
     <script src="js/main.js"></script>
 
-    <!-- ===== 下半：GBIF 查詢 ===== -->
+    <!-- ===== 下半：eFloras 查詢 ===== -->
     <div class="container" style="margin-top:40px;">
         <div class="card">
-            <h3 class="section-title">🔎 從 GBIF 資料庫查詢苔蘚</h3>
+            <h3 class="section-title">🔎 從資料庫查詢苔蘚特徵</h3>
             <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;">
                 資料來源：eFloras (Flora of North America)，共 30 筆學術形態紀錄。
-                <br><small style="color:#f57c00;">⚠️ 注意：GBIF 資料僅提供「學名、類群、地點」，生長型態／基質／孢蒴為現場採集欄位，GBIF 不記錄，比對時會標示「無法比對」。</small>
             </p>
 
-            <!-- 篩選列：只保留 GBIF 實際有資料的欄位 -->
+            <!-- 篩選列 -->
             <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:16px;">
                 <div>
                     <label style="font-size:0.8rem; color:#666;">苔蘚類群</label>
@@ -138,8 +136,36 @@
                     </select>
                 </div>
                 <div>
-                    <label style="font-size:0.8rem; color:#666;">關鍵字（學名或地點）</label>
-                    <input type="text" id="filter-keyword" placeholder="例如：Sphagnum 或 台北" style="width:100%; margin-top:4px;">
+                    <label style="font-size:0.8rem; color:#666;">生長型態</label>
+                    <select id="filter-growth" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>墊狀 (Cushion)</option>
+                        <option>毯狀 (Mat)</option>
+                        <option>叢生 (Tuft)</option>
+                        <option>樹狀 (Dendroid)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">生長基質</label>
+                    <select id="filter-substrate" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>岩石 (Rock)</option>
+                        <option>樹皮 (Bark)</option>
+                        <option>土壤 (Soil)</option>
+                        <option>人造物 (Concrete/Brick)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">孢蒴有無</label>
+                    <select id="filter-capsule" style="width:100%; margin-top:4px;">
+                        <option value="">全部</option>
+                        <option>有 (Present)</option>
+                        <option>無 (Absent)</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:#666;">關鍵字（學名或中文）</label>
+                    <input type="text" id="filter-keyword" placeholder="例如：Sphagnum 或 水苔" style="width:100%; margin-top:4px;">
                 </div>
                 <div style="display:flex; align-items:flex-end;">
                     <button class="btn btn-primary" id="btn-db-query" style="width:100%;">查詢</button>
@@ -159,13 +185,14 @@
                 <button class="btn" id="btn-clear-compare" style="padding:5px 12px; font-size:0.85rem;">清除</button>
             </div>
 
-            <!-- 結果表格：欄位與上方手動表格一致 -->
+            <!-- 結果表格 -->
             <div style="overflow-x:auto;">
                 <table class="matrix-table" id="db-table" style="display:none;">
                     <thead>
                         <tr>
                             <th>加入比對</th>
                             <th>樣本編號</th>
+                            <th>中文俗名</th>
                             <th>學名</th>
                             <th>類群</th>
                             <th>生長型態</th>
@@ -197,50 +224,54 @@
     let compareA = null;
     let compareB = null;
 
-    // 比對欄位定義（key = JSON 欄位名稱）
     const COMPARE_FIELDS = [
         { key: '苔蘚類群', label: '苔蘚類群' },
-        { key: '學名',     label: '學名'     },
         { key: '生長型態', label: '生長型態' },
         { key: '主要顏色', label: '主要顏色' },
         { key: '生長基質', label: '生長基質' },
         { key: '孢蒴有無', label: '孢蒴有無' },
         { key: '觀測地點', label: '觀測地點' },
     ];
-    const UNKNOWN_VALS = new Set(['未知', '未記錄', '', null, undefined]);
+    const UNKNOWN_VALS = new Set(['未知', '未記錄', '', null, undefined, '無 (Absent) / 未記錄']);
 
     function isUnknown(v) {
         return UNKNOWN_VALS.has(v) || (typeof v === 'string' && v.trim() === '');
     }
 
-    // ── 載入 JSON ─────────────────────────────────────────────────────
+    // ── 載入 JSON ──────────────────────────────────────────────────────
     fetch('data/moss_matrix.json')
         .then(r => r.json())
         .then(data => {
             allData = data;
             document.getElementById('db-status').textContent =
-                `✅ 已載入 ${data.length} 筆資料，請輸入條件後按查詢。`;
+                `✅ 已載入 ${data.length} 筆資料，請選擇條件後按查詢。`;
         })
         .catch(() => {
             document.getElementById('db-status').textContent =
                 '❌ 找不到資料檔，請確認 frontend/data/moss_matrix.json 是否已放置。';
         });
 
-    // ── 查詢 ──────────────────────────────────────────────────────────
+    // ── 查詢 ────────────────────────────────────────────────────────────
     document.getElementById('btn-db-query').addEventListener('click', renderResults);
 
     function renderResults() {
-        const status  = document.getElementById('db-status');
-        const table   = document.getElementById('db-table');
-        const tbody   = document.getElementById('db-tbody');
+        const status = document.getElementById('db-status');
+        const table  = document.getElementById('db-table');
+        const tbody  = document.getElementById('db-tbody');
 
-        const group   = document.getElementById('filter-group').value;
-        const keyword = document.getElementById('filter-keyword').value.trim().toLowerCase();
+        const group     = document.getElementById('filter-group').value;
+        const growth    = document.getElementById('filter-growth').value;
+        const substrate = document.getElementById('filter-substrate').value;
+        const capsule   = document.getElementById('filter-capsule').value;
+        const keyword   = document.getElementById('filter-keyword').value.trim().toLowerCase();
 
         const result = allData.filter(row => {
-            if (group && row['苔蘚類群'] !== group) return false;
+            if (group     && row['苔蘚類群'] !== group)     return false;
+            if (growth    && row['生長型態'] !== growth)    return false;
+            if (substrate && row['生長基質'] !== substrate) return false;
+            if (capsule   && row['孢蒴有無'] !== capsule)   return false;
             if (keyword) {
-                const hay = ((row['學名'] || '') + (row['觀測地點'] || '') + (row['中文俗名'] || '')).toLowerCase();
+                const hay = ((row['學名'] || '') + (row['中文俗名'] || '') + (row['觀測地點'] || '')).toLowerCase();
                 if (!hay.includes(keyword)) return false;
             }
             return true;
@@ -266,13 +297,7 @@
             if (isA) tr.style.background = '#e8f5e9';
             if (isB) tr.style.background = '#e3f2fd';
 
-            // GBIF 沒有這三欄，顯示「—」
-            const growthVal    = row['生長型態'] || '';
-            const colorVal     = row['主要顏色'] || '';
-            const substrateVal = row['生長基質'] || '';
-            const capsuleVal   = row['孢蒴有無'] || '';
-
-            function displayVal(v) {
+            function dv(v) {
                 return isUnknown(v)
                     ? `<span style="color:#bbb; font-size:0.8rem;">未記錄</span>`
                     : v;
@@ -290,18 +315,18 @@
                     </button>
                 </td>
                 <td style="font-family:monospace; font-size:0.82rem;">${sid}</td>
+                <td>${row['中文俗名'] || '—'}</td>
                 <td><em>${row['學名'] || ''}</em></td>
                 <td>${row['苔蘚類群'] || ''}</td>
-                <td>${displayVal(growthVal)}</td>
-                <td>${displayVal(colorVal)}</td>
-                <td>${displayVal(substrateVal)}</td>
-                <td>${displayVal(capsuleVal)}</td>
+                <td>${dv(row['生長型態'])}</td>
+                <td>${dv(row['主要顏色'])}</td>
+                <td>${dv(row['生長基質'])}</td>
+                <td>${dv(row['孢蒴有無'])}</td>
                 <td>${row['觀測地點'] || ''}</td>
             `;
             tbody.appendChild(tr);
         });
 
-        // 綁定「加入比對」按鈕
         tbody.querySelectorAll('.btn-compare-pick').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id  = btn.getAttribute('data-id');
@@ -320,14 +345,14 @@
         });
     }
 
-    // ── 比對列更新 ────────────────────────────────────────────────────
+    // ── 比對列 ──────────────────────────────────────────────────────────
     function updateCompareBar() {
         const bar   = document.getElementById('compare-bar');
         const doBtn = document.getElementById('btn-do-compare');
         document.getElementById('compare-a-label').textContent =
-            compareA ? `A：${compareA['學名'] || compareA['樣本編號']}` : '尚未選取';
+            compareA ? `A：${compareA['中文俗名'] || compareA['學名'] || compareA['樣本編號']}` : '尚未選取';
         document.getElementById('compare-b-label').textContent =
-            compareB ? `B：${compareB['學名'] || compareB['樣本編號']}` : '尚未選取';
+            compareB ? `B：${compareB['中文俗名'] || compareB['學名'] || compareB['樣本編號']}` : '尚未選取';
         doBtn.disabled    = !(compareA && compareB);
         bar.style.display = (compareA || compareB) ? 'flex' : 'none';
     }
@@ -338,7 +363,7 @@
         renderResults();
     });
 
-    // ── 執行比對 ──────────────────────────────────────────────────────
+    // ── 執行比對 ────────────────────────────────────────────────────────
     document.getElementById('btn-do-compare').addEventListener('click', () => {
         if (!compareA || !compareB) return;
 
@@ -346,13 +371,15 @@
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; font-size:0.88rem;">
             <div style="background:#e8f5e9; border-radius:8px; padding:10px 14px;">
                 <strong style="color:#2e7d32;">樣本 A</strong><br>
-                <em>${compareA['學名'] || '—'}</em><br>
-                <span style="color:#666; font-size:0.8rem;">${compareA['樣本編號']}</span>
+                ${compareA['中文俗名'] ? `<strong>${compareA['中文俗名']}</strong><br>` : ''}
+                <em style="font-size:0.85rem;">${compareA['學名'] || '—'}</em><br>
+                <span style="color:#666; font-size:0.78rem;">${compareA['樣本編號']}</span>
             </div>
             <div style="background:#e3f2fd; border-radius:8px; padding:10px 14px;">
                 <strong style="color:#1565c0;">樣本 B</strong><br>
-                <em>${compareB['學名'] || '—'}</em><br>
-                <span style="color:#666; font-size:0.8rem;">${compareB['樣本編號']}</span>
+                ${compareB['中文俗名'] ? `<strong>${compareB['中文俗名']}</strong><br>` : ''}
+                <em style="font-size:0.85rem;">${compareB['學名'] || '—'}</em><br>
+                <span style="color:#666; font-size:0.78rem;">${compareB['樣本編號']}</span>
             </div>
         </div>
         <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
@@ -377,8 +404,7 @@
             let resultCell, rowBg;
             if (uA || uB) {
                 const reason = [uA ? 'A 未記錄' : '', uB ? 'B 未記錄' : ''].filter(Boolean).join('、');
-                resultCell = `<span style="color:#f57c00; font-size:0.82rem;">⚠️ 無法比對<br>
-                              <span style="font-size:0.75rem; color:#aaa;">${reason}</span></span>`;
+                resultCell = `<span style="color:#f57c00; font-size:0.82rem;">⚠️ 無法比對<br><span style="font-size:0.75rem; color:#aaa;">${reason}</span></span>`;
                 rowBg = '#fffde7';
             } else if (vA === vB) {
                 resultCell = `<span style="color:#2e7d32; font-weight:600;">✅ 相同</span>`;
@@ -417,7 +443,7 @@
         document.getElementById('compare-modal').style.display = 'flex';
     });
 
-    // ── 關閉 Modal ────────────────────────────────────────────────────
+    // ── 關閉 Modal ──────────────────────────────────────────────────────
     document.getElementById('btn-close-modal').addEventListener('click', () => {
         document.getElementById('compare-modal').style.display = 'none';
     });
