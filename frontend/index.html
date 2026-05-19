@@ -332,68 +332,79 @@
 
         /* ── Countdown section ── */
         .idx-timers-wrap {
-            padding: 0 24px 48px;
+            padding: 0 40px 48px;
         }
         .idx-timers {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            max-width: 880px;
+            gap: 14px;
+            max-width: 1060px;
             margin: 0 auto;
         }
         @media (max-width: 600px) {
             .idx-timers { grid-template-columns: 1fr; }
+            .idx-timers-wrap { padding: 0 24px 40px; }
         }
         .idx-timer-card {
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255,255,255,0.9);
-            border-radius: 14px;
-            padding: 20px 24px;
+            border-radius: 12px;
+            padding: 14px 20px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
             transition: background 0.5s, border-color 0.5s;
-        }
-        .idx-timer-card h4 {
-            margin: 0 0 10px;
-            font-size: 0.85rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 8px;
+            gap: 16px;
         }
-        .timer-label { flex: 1; font-weight: 600; }
+        .idx-timer-card h4 {
+            margin: 0;
+            font-size: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .timer-label { font-weight: 600; white-space: nowrap; }
         .btn-timer-link {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--primary, #2e7d32);
             background: color-mix(in srgb, var(--primary, #2e7d32) 10%, white);
             border: 1px solid color-mix(in srgb, var(--primary, #2e7d32) 22%, transparent);
             border-radius: 20px;
-            padding: 3px 11px;
+            padding: 2px 10px;
             text-decoration: none;
             white-space: nowrap;
             transition: background 0.18s, color 0.18s;
-            flex-shrink: 0;
             font-weight: 600;
+            align-self: flex-start;
         }
         .btn-timer-link:hover {
             background: var(--primary, #2e7d32);
             color: #fff;
         }
+        .idx-timer-divider {
+            width: 1px;
+            height: 36px;
+            background: #e0e0e0;
+            flex-shrink: 0;
+        }
         .idx-huge-timer {
-            font-size: 1.55rem;
+            font-size: 1.45rem;
             font-weight: 800;
             letter-spacing: 0.01em;
             color: #1a1a1a;
-            line-height: 1.2;
+            line-height: 1;
+            flex: 1;
         }
         .idx-huge-timer span {
-            font-size: 0.65rem;
+            font-size: 0.62rem;
             font-weight: 500;
-            color: #999;
-            margin-right: 4px;
+            color: #aaa;
+            margin-right: 3px;
         }
-        .timer-expired { color: #c62828; font-size: 0.9rem; font-weight: 600; }
+        .timer-expired { color: #c62828; font-size: 0.85rem; font-weight: 600; }
 
         /* ========================================================
            WEB COLOR LAB
@@ -632,6 +643,7 @@
                         <span class="timer-label" style="color:#1565c0;">科學展覽會 剩餘時間</span>
                         <a href="countdown.html" class="btn-timer-link">設定時間</a>
                     </h4>
+                    <div class="idx-timer-divider"></div>
                     <div class="idx-huge-timer" id="idx-sci"></div>
                 </div>
                 <div class="idx-timer-card">
@@ -639,6 +651,7 @@
                         <span class="timer-label" style="color:#ef6c00;">中學生小論文 剩餘時間</span>
                         <a href="countdown.html" class="btn-timer-link">設定時間</a>
                     </h4>
+                    <div class="idx-timer-divider"></div>
                     <div class="idx-huge-timer" id="idx-ess"></div>
                 </div>
             </div>
