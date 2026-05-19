@@ -6,31 +6,62 @@
     <title>研究導航路徑 - AI 蘚苔探險家</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* ── Quest Grid Layout ── */
 
-        /* 6-column base grid for precise alignment */
-        .quest-grid {
+        /* ═══════════════════════════════════════
+           5-col grid:  card │ arrow │ card │ arrow │ card
+           arrow lanes are 88px wide
+        ═══════════════════════════════════════ */
+        .quest-stage {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 20px 40px;
+            grid-template-columns: 1fr 88px 1fr 88px 1fr;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* Row-1 card positions */
+        .qc1 { grid-column: 1; }
+        .qc2 { grid-column: 3; }
+        .qc3 { grid-column: 5; }
+
+        /* Arrow lane cells in row 1 */
+        .qarr-12 { grid-column: 2; }
+        .qarr-23 { grid-column: 4; }
+
+        /* ── Row-2 wrapper (Q4 & Q5) ── */
+        .quest-row2 {
+            display: grid;
+            /* same 5-col proportions but Q4 sits under col2 and Q5 under col4 */
+            grid-template-columns: 1fr 88px 1fr 88px 1fr;
+            align-items: center;
+            gap: 0;
+            margin-top: 0; /* gap controlled by bend-row SVG */
+        }
+
+        /* Q4 spans cols 2-3 (centred on the arrow lane between Q1 and Q2) */
+        .qc4 { grid-column: 2 / 4; }
+        /* Q5 spans cols 4-5 (centred on the arrow lane between Q2 and Q3) */
+        .qc5 { grid-column: 4 / 6; }
+
+        /* Arrow 4→5 in between */
+        .qarr-45 { grid-column: 3 / 4; display: flex; align-items: center; justify-content: center; }
+
+        /* ── Bend SVG row (between row1 and row2) ── */
+        .quest-bend-row {
             position: relative;
+            height: 72px;
+            /* same 5-col grid so SVG coordinates map correctly */
+            display: grid;
+            grid-template-columns: 1fr 88px 1fr 88px 1fr;
+        }
+        #bend-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
         }
 
-        /* Row 1: Q1·Q2·Q3 each span 2 cols */
-        .qcard-1 { grid-column: 1 / 3; }
-        .qcard-2 { grid-column: 3 / 5; }
-        .qcard-3 { grid-column: 5 / 7; }
-
-        /* Row 2: Q4 spans cols 2-4, Q5 spans cols 4-6 */
-        .qcard-4 { grid-column: 2 / 4; }
-        .qcard-5 { grid-column: 4 / 6; }
-
-        /* Space between row 1 and row 2 for the bent arrow */
-        #quest-wrap > .quest-grid + .quest-grid {
-            margin-top: 56px;
-        }
-
-        /* ── Card ── */
+        /* ── Cards ── */
         .qcard {
             background: #fff;
             border: 1px solid var(--border-color, #e8e8e8);
@@ -39,7 +70,6 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            position: relative;
             transition: box-shadow 0.2s, transform 0.2s;
         }
         .qcard:hover {
@@ -57,17 +87,12 @@
             font-weight: 800;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(46,125,50,0.35);
+            box-shadow: 0 2px 8px rgba(46,125,50,0.3);
         }
-
         .qcard-header {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .qcard-titles {
-            flex: 1; min-width: 0;
         }
         .qcard-titles h3 {
             margin: 0 0 2px;
@@ -83,7 +108,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         .qcard p {
             margin: 0;
             font-size: 0.84rem;
@@ -91,7 +115,6 @@
             line-height: 1.65;
             flex: 1;
         }
-
         .qcard-actions {
             display: flex;
             gap: 8px;
@@ -99,6 +122,37 @@
             margin-top: 4px;
         }
 
+        /* ── Arrow lane visuals ── */
+        .arrow-lane {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 60px;
+        }
+        .arrow-h {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 8px;
+            gap: 0;
+        }
+        .arrow-h-line {
+            flex: 1;
+            height: 2.5px;
+            background: var(--primary, #2e7d32);
+            opacity: 0.5;
+        }
+        .arrow-h-head {
+            width: 0; height: 0;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 10px solid var(--primary, #2e7d32);
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        /* ── Buttons ── */
         .qbtn {
             font-size: 0.78rem;
             font-weight: 600;
@@ -111,36 +165,20 @@
             display: inline-block;
         }
         .qbtn:hover { opacity: 0.85; transform: translateY(-1px); }
-        .qbtn-primary {
-            background: var(--primary, #2e7d32);
-            color: #fff;
-        }
-        .qbtn-accent {
-            background: var(--accent, #ffb300);
-            color: #333;
-        }
-        .qbtn-teal {
-            background: var(--secondary, #81c784);
-            color: #fff;
-        }
-        .qbtn-warm {
-            background: #ff7043;
-            color: #fff;
-        }
-
-        /* ── Down connectors — replaced by JS SVG ── */
-        .quest-down-connectors { display: none; }
+        .qbtn-primary { background: var(--primary, #2e7d32); color: #fff; }
+        .qbtn-accent  { background: var(--accent, #ffb300);  color: #333; }
+        .qbtn-teal    { background: var(--secondary, #81c784); color: #fff; }
+        .qbtn-warm    { background: #ff7043; color: #fff; }
 
         /* ── Responsive ── */
         @media (max-width: 860px) {
-            .quest-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            .qcard-1, .qcard-2, .qcard-3,
-            .qcard-4, .qcard-5 { grid-column: auto; }
-            #quest-wrap > .quest-grid + .quest-grid { margin-top: 0; }
-            #quest-svg { display: none; }
+            .quest-stage,
+            .quest-row2,
+            .quest-bend-row { display: block; }
+            .qc1,.qc2,.qc3,.qc4,.qc5 { grid-column: auto; margin-bottom: 16px; }
+            .quest-bend-row,
+            .arrow-lane,
+            .qarr-45 { display: none; }
         }
     </style>
 </head>
@@ -157,13 +195,10 @@
             <p>不知道科展從何開始？跟著探險任務指南，一步步完成你的 AI 蘚苔圖鑑！</p>
         </div>
 
-        <div id="quest-wrap">
+        <!-- ── Row 1: Q1 → Q2 → Q3 ── -->
+        <div class="quest-stage" id="row1">
 
-        <!-- Row 1: Quest 1 · 2 · 3 -->
-        <div class="quest-grid">
-
-            <!-- Q1 -->
-            <div class="qcard qcard-1" id="qc1">
+            <div class="qcard qc1" id="qc1">
                 <div class="qcard-header">
                     <div class="qnum">1</div>
                     <div class="qcard-titles">
@@ -171,14 +206,21 @@
                         <span class="qcard-sub">選擇主題</span>
                     </div>
                 </div>
-                <p>所有科學發現都始於精準的提問。學會對生活中的理所當然保持懷疑，例如觀察牆角被忽略的蘚苔，從中提取出具備探討價值的問題意識。</p>
+                <p>所有科學發現都始於精準的提問。學會對生活中的理所當然保持懷疑，從中提取出具備探討價值的問題意識。</p>
                 <div class="qcard-actions">
                     <a href="microscope.html" class="qbtn qbtn-primary">打開微觀探險儀</a>
                 </div>
             </div>
 
-            <!-- Q2 -->
-            <div class="qcard qcard-2" id="qc2">
+            <!-- Arrow 1 → 2 -->
+            <div class="arrow-lane qarr-12">
+                <div class="arrow-h">
+                    <div class="arrow-h-line"></div>
+                    <div class="arrow-h-head"></div>
+                </div>
+            </div>
+
+            <div class="qcard qc2" id="qc2">
                 <div class="qcard-header">
                     <div class="qnum">2</div>
                     <div class="qcard-titles">
@@ -186,14 +228,21 @@
                         <span class="qcard-sub">文獻探討</span>
                     </div>
                 </div>
-                <p>科學研究不應是閉門造車。透過檢索資料庫、期刊雜誌釐清既有的研究路徑，才能定位專屬研究的獨特性與出發點。</p>
+                <p>科學研究不應是閉門造車。透過檢索資料庫、期刊雜誌釐清既有的研究路徑，定位專屬研究的獨特性。</p>
                 <div class="qcard-actions">
                     <a href="matrix.html" class="qbtn qbtn-primary">使用特徵矩陣比對器</a>
                 </div>
             </div>
 
-            <!-- Q3 -->
-            <div class="qcard qcard-3" id="qc3">
+            <!-- Arrow 2 → 3 -->
+            <div class="arrow-lane qarr-23">
+                <div class="arrow-h">
+                    <div class="arrow-h-line"></div>
+                    <div class="arrow-h-head"></div>
+                </div>
+            </div>
+
+            <div class="qcard qc3" id="qc3">
                 <div class="qcard-header">
                     <div class="qnum">3</div>
                     <div class="qcard-titles">
@@ -201,29 +250,23 @@
                         <span class="qcard-sub">實驗設計與數據蒐集</span>
                     </div>
                 </div>
-                <p>將混亂的原始數據轉化為直觀圖表。分析 AI 的辨識結果，藉此判斷證據是否能支撐最初的科學假設。</p>
+                <p>將混亂的原始數據轉化為直觀圖表，分析 AI 的辨識結果，判斷證據是否支撐最初的科學假設。</p>
                 <div class="qcard-actions">
                     <a href="ratio-calculator.html" class="qbtn qbtn-primary">啟動比例計算機</a>
                 </div>
             </div>
 
-        </div><!-- end quest-grid row 1 -->
+        </div><!-- end row 1 -->
 
-        <!-- Down connectors: under col 2 (→Q4) and col 5 (→Q5) of the 6-col grid -->
-        <div class="quest-down-connectors">
-            <div></div>
-            <div class="qdown"><div class="qdown-line"></div></div>
-            <div></div>
-            <div></div>
-            <div class="qdown"><div class="qdown-line"></div></div>
-            <div></div>
+        <!-- ── Bend connector row (Q3 → Q4 curve) ── -->
+        <div class="quest-bend-row" id="bend-row">
+            <svg id="bend-svg" preserveAspectRatio="none"></svg>
         </div>
 
-        <!-- Row 2: Quest 4 · 5 spread from centre -->
-        <div class="quest-grid" style="margin-top:0;">
+        <!-- ── Row 2: Q4 → Q5 ── -->
+        <div class="quest-row2" id="row2">
 
-            <!-- Q4 -->
-            <div class="qcard qcard-4" id="qc4">
+            <div class="qcard qc4" id="qc4">
                 <div class="qcard-header">
                     <div class="qnum">4</div>
                     <div class="qcard-titles">
@@ -231,14 +274,21 @@
                         <span class="qcard-sub">結論與展望</span>
                     </div>
                 </div>
-                <p>研究的結束是下一個發現的開始。這不僅考驗排版與邏輯，更是訓練如何將複雜的科學發現，清晰且具說服力地傳達給他人。</p>
+                <p>研究的結束是下一個發現的開始。訓練如何將複雜的科學發現，清晰且具說服力地傳達給他人。</p>
                 <div class="qcard-actions">
                     <a href="ai-logic.html" class="qbtn qbtn-primary">探索 AI 運作邏輯</a>
                 </div>
             </div>
 
-            <!-- Q5 -->
-            <div class="qcard qcard-5" id="qc5">
+            <!-- Arrow 4 → 5 -->
+            <div class="qarr-45">
+                <div class="arrow-h">
+                    <div class="arrow-h-line"></div>
+                    <div class="arrow-h-head"></div>
+                </div>
+            </div>
+
+            <div class="qcard qc5" id="qc5">
                 <div class="qcard-header">
                     <div class="qnum">5</div>
                     <div class="qcard-titles">
@@ -246,7 +296,7 @@
                         <span class="qcard-sub">說明板與口頭發表</span>
                     </div>
                 </div>
-                <p>透過說明板與口頭發表呈現研究成果。訓練如何在短時間內將複雜的科學原理，清晰且具說服力地傳達給評審與觀眾。</p>
+                <p>透過說明板與口頭發表呈現研究成果，在短時間內清晰且具說服力地傳達科學原理給評審與觀眾。</p>
                 <div class="qcard-actions">
                     <a href="countdown.html" class="qbtn qbtn-accent">確認截稿倒數</a>
                     <a href="calendar.html" class="qbtn qbtn-teal">預約館員諮詢</a>
@@ -254,110 +304,63 @@
                 </div>
             </div>
 
-        </div><!-- end quest-grid row 2 -->
-
-        </div><!-- end quest-wrap -->
+        </div><!-- end row 2 -->
 
     </div>
 
     <script src="js/main.js"></script>
     <script>
     (function () {
-        const PRIMARY = getComputedStyle(document.documentElement)
-            .getPropertyValue('--primary').trim() || '#2e7d32';
+        function drawBend() {
+            const svg   = document.getElementById('bend-svg');
+            const row1  = document.getElementById('row1');
+            const row2  = document.getElementById('row2');
+            const bend  = document.getElementById('bend-row');
+            const qc3   = document.getElementById('qc3');
+            const qc4   = document.getElementById('qc4');
+            if (!svg || !qc3 || !qc4) return;
 
-        function drawArrows() {
-            // Remove old SVG if re-drawing
-            const old = document.getElementById('quest-svg');
-            if (old) old.remove();
-
-            const wrap = document.getElementById('quest-wrap');
-            const ids  = ['qc1','qc2','qc3','qc4','qc5'];
-            const els  = ids.map(id => document.getElementById(id));
-            if (els.some(e => !e)) return;
-
-            const wRect = wrap.getBoundingClientRect();
-            const rects = els.map(el => {
-                const r = el.getBoundingClientRect();
-                return {
-                    l: r.left  - wRect.left,
-                    t: r.top   - wRect.top,
-                    r: r.right - wRect.left,
-                    b: r.bottom- wRect.top,
-                    cx: (r.left + r.right)  / 2 - wRect.left,
-                    cy: (r.top  + r.bottom) / 2 - wRect.top,
-                };
-            });
-
-            const W = wRect.width;
-            const H = wRect.height;
             const color = getComputedStyle(document.documentElement)
                 .getPropertyValue('--primary').trim() || '#2e7d32';
 
-            const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-            svg.id = 'quest-svg';
-            svg.setAttribute('width',  W);
-            svg.setAttribute('height', H);
-            svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:0;';
+            const bendRect = bend.getBoundingClientRect();
+            const q3Rect   = qc3.getBoundingClientRect();
+            const q4Rect   = qc4.getBoundingClientRect();
 
-            // Arrow marker
+            const W = bendRect.width;
+            const H = bendRect.height;
+
+            // start: bottom-centre of Q3
+            const sx = q3Rect.left + q3Rect.width / 2 - bendRect.left;
+            const sy = 0; // top of bend row = bottom of Q3
+
+            // end: top-centre of Q4
+            const ex = q4Rect.left + q4Rect.width / 2 - bendRect.left;
+            const ey = H; // bottom of bend row = top of Q4
+
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
             svg.innerHTML = `
-              <defs>
-                <marker id="arr" markerWidth="10" markerHeight="8"
-                        refX="9" refY="4" orient="auto">
-                  <polygon points="0 0, 10 4, 0 8"
-                           fill="${color}" fill-opacity="0.7"/>
-                </marker>
-              </defs>`;
-
-            const STROKE = `stroke:${color};stroke-opacity:0.6;stroke-width:2.5;
-                            fill:none;marker-end:url(#arr);`;
-
-            function line(x1,y1,x2,y2) {
-                const p = document.createElementNS('http://www.w3.org/2000/svg','line');
-                p.setAttribute('x1',x1); p.setAttribute('y1',y1);
-                p.setAttribute('x2',x2); p.setAttribute('y2',y2);
-                p.setAttribute('style', STROKE);
-                svg.appendChild(p);
-            }
-            function path(d) {
-                const p = document.createElementNS('http://www.w3.org/2000/svg','path');
-                p.setAttribute('d', d);
-                p.setAttribute('style', STROKE);
-                svg.appendChild(p);
-            }
-
-            const [q1,q2,q3,q4,q5] = rects;
-            const GAP = 16; // gap between card edge and arrow tip
-
-            // 1 → 2  (horizontal right)
-            line(q1.r + GAP, q1.cy,  q2.l - GAP, q2.cy);
-
-            // 2 → 3  (horizontal right)
-            line(q2.r + GAP, q2.cy,  q3.l - GAP, q3.cy);
-
-            // 3 → 4  (down from Q3 bottom, sweep left to Q4 top)
-            // smooth cubic bezier: out from Q3 bottom, in to Q4 top
-            {
-                const sx = q3.cx, sy = q3.b + GAP;
-                const ex = q4.cx, ey = q4.t - GAP;
-                const midY = (sy + ey) / 2;
-                path(`M ${sx} ${sy} C ${sx} ${midY}, ${ex} ${midY}, ${ex} ${ey}`);
-            }
-
-            // 4 → 5  (horizontal right)
-            line(q4.r + GAP, q4.cy,  q5.l - GAP, q5.cy);
-
-            wrap.style.position = 'relative';
-            wrap.insertBefore(svg, wrap.firstChild);
+                <defs>
+                    <marker id="bendarr" markerWidth="10" markerHeight="8"
+                            refX="9" refY="4" orient="auto">
+                        <polygon points="0 0, 10 4, 0 8"
+                                 fill="${color}" fill-opacity="0.65"/>
+                    </marker>
+                </defs>
+                <path d="M ${sx} ${sy}
+                         C ${sx} ${sy + H * 0.6},
+                           ${ex} ${ey - H * 0.6},
+                           ${ex} ${ey}"
+                      stroke="${color}"
+                      stroke-width="2.5"
+                      stroke-opacity="0.55"
+                      fill="none"
+                      marker-end="url(#bendarr)"/>`;
         }
 
-        // Draw after layout settles
-        window.addEventListener('load', drawArrows);
-        window.addEventListener('resize', drawArrows);
-
-        // Also try after a short delay (for fonts/images affecting layout)
-        document.addEventListener('DOMContentLoaded', () => setTimeout(drawArrows, 120));
+        window.addEventListener('load',   drawBend);
+        window.addEventListener('resize', drawBend);
+        document.addEventListener('DOMContentLoaded', () => setTimeout(drawBend, 150));
     })();
     </script>
 </body>
