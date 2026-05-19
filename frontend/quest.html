@@ -38,16 +38,12 @@
 
         /* Q4 spans cols 2-3 (centred on the arrow lane between Q1 and Q2) */
 .qc4 {
-    grid-column: 2 / 3;
-    justify-self: center;
+    grid-column: 2;
     width: 100%;
-    max-width: 320px;
 }        /* Q5 spans cols 4-5 (centred on the arrow lane between Q2 and Q3) */
 .qc5 {
-    grid-column: 4 / 5;
-    justify-self: center;
+    grid-column: 4;
     width: 100%;
-    max-width: 320px;
 }
         /* Arrow 4→5 in between */
 .qarr-45 {
@@ -82,6 +78,7 @@
             flex-direction: column;
             gap: 12px;
             transition: box-shadow 0.2s, transform 0.2s;
+            min-height: 260px;
         }
         .qcard:hover {
             box-shadow: 0 6px 28px rgba(0,0,0,0.09);
