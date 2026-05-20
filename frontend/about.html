@@ -1,110 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>關於探險 - AI 蘚苔探險家</title>
-    <link rel="stylesheet" href="css/style.css">
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>關於探險 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-
-    <div id="navbar-placeholder"></div>
-
-    <div class="container about-page">
-        <nav class="breadcrumb">
-            <a href="index.html">🏠 首頁</a> &gt; <span>關於探險 (About)</span>
-        </nav>
-        <div class="page-header">
-            <h1>關於探險 (About)</h1>
-            <p>連結自然觀察與人工智慧，讓科學研究變得更直覺、更有趣。</p>
-        </div>
-
-        <div class="card about-hero">
-            <div class="hero-content">
-                <h2 class="section-title">計畫初衷</h2>
-                <p>苔蘚植物在地球上生存了超過四億年，是生態環境中極為靈敏的指標。然而，對於許多想投入科展研究的高中生來說，苔蘚的微觀辨識門檻極高，且傳統的研究方法往往讓新手感到不知所措。</p>
-                <p>「AI 蘚苔探險家」是一個專為中學生設計的科研輔助平台。我們結合了機器學習技術與標準化的生態觀察流程，希望能降低研究門檻，引導探險員們發現腳下的微觀森林。</p>
-            </div>
-        </div>
-
-        <div class="about-features">
-            <div class="card feature-item">
-                <div class="feature-icon">🧭</div>
-                <h3>引導式研究路徑</h3>
-                <p>將繁瑣的科展流程拆解成「研究導航路徑 (Quest)」，像玩遊戲一樣一步步完成任務。</p>
-            </div>
-            <div class="card feature-item">
-                <div class="feature-icon">🧠</div>
-                <h3>視覺化 AI 邏輯</h3>
-                <p>不只是黑盒子。我們透過視覺化拆解，讓學生理解 AI 提取特徵與影像判讀的科學原理。</p>
-            </div>
-            <div class="card feature-item">
-                <div class="feature-icon">⚒️</div>
-                <h3>實戰輔助工具箱</h3>
-                <p>提供特徵矩陣比對、資料集比例計算等專用工具，讓研究過程更符合科學嚴謹性。</p>
-            </div>
-        </div>
-
-        <div class="card start-guide">
-            <h3 class="section-title">如何開始你的探險？</h3>
-            <div class="steps-container">
-                <div class="step-box">
-                    <span class="step-num">01</span>
-                    <h4>閱讀導航</h4>
-                    <p>前往 <a href="quest.html">研究導航路徑</a>，了解科展研究的五大階段。</p>
-                </div>
-                <div class="step-box">
-                    <span class="step-num">02</span>
-                    <h4>採集特徵</h4>
-                    <p>使用 <a href="microscope.html">微觀探險儀</a>，按照指引拍下並記錄第一批樣本。</p>
-                </div>
-                <div class="step-box">
-                    <span class="step-num">03</span>
-                    <h4>建立數據</h4>
-                    <p>利用 <a href="ratio-calculator.html">比例計算機</a> 與工具箱，將觀察轉化為 AI 可讀的資料。</p>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-primary" onclick="window.location.href='index.html'">回到儀表板開始行動</button>
-            </div>
-        </div>
-    </div>
-
-
-        <div class="card" style="margin-top:30px;">
-            <h3 class="section-title">🤖 AI 使用範圍說明</h3>
-            <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.7; margin-bottom:20px;">
-                本平台在開發過程中有使用 AI 工具輔助，以下說明具體應用範圍與人工把關機制：
-            </p>
-            <div style="display:flex; flex-direction:column; gap:16px;">
-
-                <div style="border-left:4px solid var(--primary); padding:12px 16px; background:#f7faf5; border-radius:0 8px 8px 0;">
-                    <strong style="color:var(--primary);">1. 文本轉譯與語感優化</strong>
-                    <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);">
-                        利用 AI 協助將傳統科展較生硬的學術步驟（如：文獻探討、實驗設計），轉譯為符合高中生閱讀習慣的「在地化探險任務（Quest 1–5）」。<br>
-                        <strong>人工把關：</strong>團隊確認轉譯後的文案依然保有「變因控制」、「可重複性」等核心科學概念，確保趣味性不凌駕於學術嚴謹度之上。
-                    </p>
-                </div>
-
-                <div style="border-left:4px solid var(--ai-blue); padding:12px 16px; background:#f0f4ff; border-radius:0 8px 8px 0;">
-                    <strong style="color:var(--ai-blue);">2. 系統邏輯與工具架構建置</strong>
-                    <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);">
-                        在規劃「Vibe Coding 輔助小工具集」（如：苔蘚特徵矩陣比對器、AI 訓練資料庫比例計算機）時，借助 AI 梳理功能邏輯與流程框架。<br>
-                        <strong>人工把關：</strong>工具背後的科學依據（如：資料集 8:1:1 的切分原則、植物特徵矩陣的欄位設定），皆由團隊參酌資訊科學與植物分類學之專業規範後定案。
-                    </p>
-                </div>
-
-                <div style="border-left:4px solid var(--accent); padding:12px 16px; background:#fffde7; border-radius:0 8px 8px 0;">
-                    <strong style="color:#e65100;">3. 關鍵字推薦與文獻檢索擴充</strong>
-                    <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);">
-                        將初步搜集到的文獻段落或核心研究主題輸入給 AI，利用 AI 進行文本分析並萃取出更精準的學術關鍵字（例如從「苔蘚」延伸出「物候監測」、「環境指標」等），再前往正規學術資料庫（如 Scopus、Google Scholar）進行滾雪球式查找。<br>
-                        <strong>人工把關：</strong>嚴守「AI 僅作探索輔助，不作最終來源」的原則。所有文獻，團隊皆會親自點擊原始連結，確認文獻真實存在、比對作者與出版年份，並手動核對引用格式，以杜絕 AI 產生文獻幻覺（Hallucination）或提供錯誤網址的風險。
-                    </p>
-                </div>
-
-            </div>
-        </div>
-
-    <script src="js/main.js"></script>
+<body> <div id="navbar-placeholder"></div> <div class="container about-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>關於探險 (About)</span></nav> <div class="page-header"> <h1>關於探險 (About)</h1> <p>連結自然觀察與人工智慧，讓科學研究變得更直覺、更有趣。</p> </div> <div class="card about-hero"> <div class="hero-content"> <h2 class="section-title">計畫初衷</h2> <p>苔蘚植物在地球上生存了超過四億年，是生態環境中極為靈敏的指標。然而，對於許多想投入科展研究的高中生來說，苔蘚的微觀辨識門檻極高，且傳統的研究方法往往讓新手感到不知所措。</p> <p>「AI 蘚苔探險家」是一個專為中學生設計的科研輔助平台。我們結合了機器學習技術與標準化的生態觀察流程，希望能降低研究門檻，引導探險員們發現腳下的微觀森林。</p> </div> </div> <div class="about-features"> <div class="card feature-item"> <div class="feature-icon"></div> <h3>引導式研究路徑</h3> <p>將繁瑣的科展流程拆解成「研究導航路徑 (Quest)」，像玩遊戲一樣一步步完成任務。</p> </div> <div class="card feature-item"> <div class="feature-icon"></div> <h3>視覺化 AI 邏輯</h3> <p>不只是黑盒子。我們透過視覺化拆解，讓學生理解 AI 提取特徵與影像判讀的科學原理。</p> </div> <div class="card feature-item"> <div class="feature-icon"></div> <h3>實戰輔助工具箱</h3> <p>提供特徵矩陣比對、資料集比例計算等專用工具，讓研究過程更符合科學嚴謹性。</p> </div> </div> <div class="card start-guide"> <h3 class="section-title">如何開始你的探險？</h3> <div class="steps-container"> <div class="step-box"> <span class="step-num">01</span> <h4>閱讀導航</h4> <p>前往 <a href="quest.html">研究導航路徑</a>，了解科展研究的五大階段。</p> </div> <div class="step-box"> <span class="step-num">02</span> <h4>採集特徵</h4> <p>使用 <a href="microscope.html">微觀探險儀</a>，按照指引拍下並記錄第一批樣本。</p> </div> <div class="step-box"> <span class="step-num">03</span> <h4>建立數據</h4> <p>利用 <a href="ratio-calculator.html">比例計算機</a> 與工具箱，將觀察轉化為 AI 可讀的資料。</p> </div> </div> <div style="text-align: center; margin-top: 30px;"> <button class="btn btn-primary" onclick="window.location.href='index.html'">回到儀表板開始行動</button> </div> </div> </div> <div class="card" style="margin-top:30px;"> <h3 class="section-title"> AI 使用範圍說明</h3> <p style="color:var(--text-muted); font-size:0.95rem; line-height:1.7; margin-bottom:20px;"> 本平台在開發過程中有使用 AI 工具輔助，以下說明具體應用範圍與人工把關機制：
+            </p> <div style="display:flex; flex-direction:column; gap:16px;"> <div style="border-left:4px solid var(--primary); padding:12px 16px; background:#f7faf5; border-radius:0 8px 8px 0;"> <strong style="color:var(--primary);">1. 文本轉譯與語感優化</strong> <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);"> 利用 AI 協助將傳統科展較生硬的學術步驟（如：文獻探討、實驗設計），轉譯為符合高中生閱讀習慣的「在地化探險任務（Quest 1–5）」。<br> <strong>人工把關：</strong>團隊確認轉譯後的文案依然保有「變因控制」、「可重複性」等核心科學概念，確保趣味性不凌駕於學術嚴謹度之上。
+                    </p> </div> <div style="border-left:4px solid var(--ai-blue); padding:12px 16px; background:#f0f4ff; border-radius:0 8px 8px 0;"> <strong style="color:var(--ai-blue);">2. 系統邏輯與工具架構建置</strong> <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);"> 在規劃「Vibe Coding 輔助小工具集」（如：苔蘚特徵矩陣比對器、AI 訓練資料庫比例計算機）時，借助 AI 梳理功能邏輯與流程框架。<br> <strong>人工把關：</strong>工具背後的科學依據（如：資料集 8:1:1 的切分原則、植物特徵矩陣的欄位設定），皆由團隊參酌資訊科學與植物分類學之專業規範後定案。
+                    </p> </div> <div style="border-left:4px solid var(--accent); padding:12px 16px; background:#fffde7; border-radius:0 8px 8px 0;"> <strong style="color:#e65100;">3. 關鍵字推薦與文獻檢索擴充</strong> <p style="margin:6px 0 0 0; font-size:0.9rem; color:var(--text-muted);"> 將初步搜集到的文獻段落或核心研究主題輸入給 AI，利用 AI 進行文本分析並萃取出更精準的學術關鍵字（例如從「苔蘚」延伸出「物候監測」、「環境指標」等），再前往正規學術資料庫（如 Scopus、Google Scholar）進行滾雪球式查找。<br> <strong>人工把關：</strong>嚴守「AI 僅作探索輔助，不作最終來源」的原則。所有文獻，團隊皆會親自點擊原始連結，確認文獻真實存在、比對作者與出版年份，並手動核對引用格式，以杜絕 AI 產生文獻幻覺（Hallucination）或提供錯誤網址的風險。
+                    </p> </div> </div> </div> <script src="js/main.js"></script>
 </body>
 </html>

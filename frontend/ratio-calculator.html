@@ -1,114 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 訓練資料庫比例計算機 - AI 蘚苔探險家</title>
-    <link rel="stylesheet" href="css/style.css">
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>AI 訓練資料庫比例計算機 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-
-    <div id="navbar-placeholder"></div>
-
-    <div class="container">
-        <nav class="breadcrumb">
-            <a href="index.html">🏠 首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt; <span>AI 訓練資料庫比例計算機</span>
-        </nav>
-        <div class="page-header">
-            <h1>AI 訓練資料庫比例計算機</h1>
-            <p>準備給 AI 的照片該怎麼分？一鍵幫你算出最科學的黃金比例！</p>
-        </div>
-
-        <div class="calculator-grid">
-            
-            <div class="card explanation-box">
-                <h3>為什麼 AI 認苔蘚，照片還要分組？</h3>
-                <p style="color:var(--text-muted); line-height:1.6; margin-top:8px;">
-                    想像你在教 AI 認識「真苔」和「泥炭苔」。如果你把拍到的 1,000 張照片全部丟給 AI 去「死背」，它在實驗室裡也許能答對 100%，但只要把它帶去野外，看到一株長得稍微不一樣的苔蘚，它就認不出來了！（這叫做<strong>過度擬合 Overfitting</strong>）。
+<body> <div id="navbar-placeholder"></div> <div class="container"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt; <span>AI 訓練資料庫比例計算機</span></nav> <div class="page-header"> <h1>AI 訓練資料庫比例計算機</h1> <p>準備給 AI 的照片該怎麼分？一鍵幫你算出最科學的黃金比例！</p> </div> <div class="calculator-grid"> <div class="card explanation-box"> <h3>為什麼 AI 認苔蘚，照片還要分組？</h3> <p style="color:var(--text-muted); line-height:1.6; margin-top:8px;"> 想像你在教 AI 認識「真苔」和「泥炭苔」。如果你把拍到的 1,000 張照片全部丟給 AI 去「死背」，它在實驗室裡也許能答對 100%，但只要把它帶去野外，看到一株長得稍微不一樣的苔蘚，它就認不出來了！（這叫做<strong>過度擬合 Overfitting</strong>）。
                     <br><br>為了解決這個問題，科學家會把照片切分成三個集合，就像學生準備考試一樣：
-                </p>
-
-                <div class="analogy-item">
-                    <div class="analogy-icon icon-train">學</div>
-                    <div class="analogy-text">
-                        <h4 class="c-train">訓練集 (Training Set) ➔ 「課本」</h4>
-                        <p>佔比最大（通常 70%~80%）。AI 用這些苔蘚照片來上課，學習葉子形狀、中肋長短等核心特徵。</p>
-                    </div>
-                </div>
-
-                <div class="analogy-item">
-                    <div class="analogy-icon icon-valid">驗</div>
-                    <div class="analogy-text">
-                        <h4 class="c-valid">驗證集 (Validation Set) ➔ 「模擬考」</h4>
-                        <p>佔約 10%~20%。AI 讀完課本後，用這批照片進行隨堂考。答錯了就回去調整參數，確保它不是在死背照片的背景。</p>
-                    </div>
-                </div>
-
-                <div class="analogy-item">
-                    <div class="analogy-icon icon-test">測</div>
-                    <div class="analogy-text">
-                        <h4 class="c-test">測試集 (Testing Set) ➔ 「期末大會考」</h4>
-                        <p>佔約 10%。這是 AI <strong>從來沒看過</strong>的終極考題！用來客觀評估 AI 到野外真正遇到苔蘚時的辨識準確率，寫進你的科展報告裡。</p>
-                    </div>
-                </div>
-
-                <div class="alert-box">
-                    <strong>科展小提示：</strong> 只要你在小論文裡寫出「本研究將資料集依科學標準分為 8:1:1...」，評審老師就會知道你們具備了正確的資訊科學素養喔！
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="calc-form">
-                    <div class="input-group">
-                        <label for="totalPhotos">請輸入你收集到的苔蘚照片總數：</label>
-                        <input type="number" id="totalPhotos" value="1000" min="10" placeholder="例如：1000">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="ratioSelect">選擇科學切分比例：</label>
-                        <select id="ratioSelect">
-                            <option value="8,1,1">8 : 1 : 1 (經典深度學習比例，適合照片數量多)</option>
-                            <option value="7,2,1">7 : 2 : 1 (嚴謹驗證比例，適合照片數量較少)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="results-box">
-                    <h4 style="margin-top:0; border-bottom:1px solid #ddd; padding-bottom:8px;">計算結果分配</h4>
-                    
-                    <div class="result-item">
-                        <span class="res-label c-train">訓練集照片分配數：</span>
-                        <span class="res-value c-train" id="res-train">800</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="res-label c-valid">驗證集照片分配數：</span>
-                        <span class="res-value c-valid" id="res-valid">100</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="res-label c-test">測試集照片分配數：</span>
-                        <span class="res-value c-test" id="res-test">100</span>
-                    </div>
-
-                    <div class="visual-bar">
-                        <div class="bar-train" id="bar-train" style="width: 80%;" title="訓練集"></div>
-                        <div class="bar-valid" id="bar-valid" style="width: 10%;" title="驗證集"></div>
-                        <div class="bar-test" id="bar-test" style="width: 10%;" title="測試集"></div>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#888; margin-top:8px;">
-                        <span>Train</span>
-                        <span>Valid</span>
-                        <span>Test</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <script src="js/main.js"></script>
-
-    <script>
-        const totalInput = document.getElementById('totalPhotos');
+                </p> <div class="analogy-item"> <div class="analogy-icon icon-train">學</div> <div class="analogy-text"> <h4 class="c-train">訓練集 (Training Set)  「課本」</h4> <p>佔比最大（通常 70%~80%）。AI 用這些苔蘚照片來上課，學習葉子形狀、中肋長短等核心特徵。</p> </div> </div> <div class="analogy-item"> <div class="analogy-icon icon-valid">驗</div> <div class="analogy-text"> <h4 class="c-valid">驗證集 (Validation Set)  「模擬考」</h4> <p>佔約 10%~20%。AI 讀完課本後，用這批照片進行隨堂考。答錯了就回去調整參數，確保它不是在死背照片的背景。</p> </div> </div> <div class="analogy-item"> <div class="analogy-icon icon-test">測</div> <div class="analogy-text"> <h4 class="c-test">測試集 (Testing Set)  「期末大會考」</h4> <p>佔約 10%。這是 AI <strong>從來沒看過</strong>的終極考題！用來客觀評估 AI 到野外真正遇到苔蘚時的辨識準確率，寫進你的科展報告裡。</p> </div> </div> <div class="alert-box"> <strong>科展小提示：</strong> 只要你在小論文裡寫出「本研究將資料集依科學標準分為 8:1:1...」，評審老師就會知道你們具備了正確的資訊科學素養喔！
+                </div> </div> <div class="card"> <div class="calc-form"> <div class="input-group"> <label for="totalPhotos">請輸入你收集到的苔蘚照片總數：</label> <input type="number" id="totalPhotos" value="1000" min="10" placeholder="例如：1000"> </div> <div class="input-group"> <label for="ratioSelect">選擇科學切分比例：</label> <select id="ratioSelect"> <option value="8,1,1">8 : 1 : 1 (經典深度學習比例，適合照片數量多)</option> <option value="7,2,1">7 : 2 : 1 (嚴謹驗證比例，適合照片數量較少)</option> </select> </div> </div> <div class="results-box"> <h4 style="margin-top:0; border-bottom:1px solid #ddd; padding-bottom:8px;">計算結果分配</h4> <div class="result-item"> <span class="res-label c-train">訓練集照片分配數：</span> <span class="res-value c-train" id="res-train">800</span> </div> <div class="result-item"> <span class="res-label c-valid">驗證集照片分配數：</span> <span class="res-value c-valid" id="res-valid">100</span> </div> <div class="result-item"> <span class="res-label c-test">測試集照片分配數：</span> <span class="res-value c-test" id="res-test">100</span> </div> <div class="visual-bar"> <div class="bar-train" id="bar-train" style="width: 80%;" title="訓練集"></div> <div class="bar-valid" id="bar-valid" style="width: 10%;" title="驗證集"></div> <div class="bar-test" id="bar-test" style="width: 10%;" title="測試集"></div> </div> <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#888; margin-top:8px;"> <span>Train</span> <span>Valid</span> <span>Test</span> </div> </div> </div> </div> </div> <script src="js/main.js"></script> <script> const totalInput = document.getElementById('totalPhotos');
         const ratioSelect = document.getElementById('ratioSelect');
         
         const resTrain = document.getElementById('res-train');

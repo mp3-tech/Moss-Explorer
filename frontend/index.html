@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 蘚苔探險家 - 研究儀表板</title>
-    <link rel="stylesheet" href="css/style.css?v=7">
-    <style>
-        /* ========================================================
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>AI 蘚苔探險家 - 研究儀表板</title> <link rel="stylesheet" href="css/style.css?v=7"> <style> /* ========================================================
            PAGE BACKGROUND  — spreads from the hero title outward
            ======================================================== */
         body {
@@ -572,129 +566,11 @@
         }
     </style>
 </head>
-<body>
-
-    <!-- Splash -->
-    <div id="splash-screen" class="splash-screen">
-        <div class="splash-content">
-            <div class="splash-icon-wrapper">
-                <div class="splash-icon">🌿</div>
-                <div class="splash-scan-line"></div>
-            </div>
-            <h1 class="splash-title">AI 蘚苔探險家</h1>
-            <div class="splash-subtitle-container">
-                <span class="splash-subtitle">System Initializing... Load Quest Data...</span>
-            </div>
-            <div class="splash-progress"><div class="splash-progress-bar"></div></div>
-        </div>
-    </div>
-
-    <!-- Full-page background bloom -->
-    <div id="page-bg"></div>
-
-    <!-- Navbar -->
-    <div id="navbar-placeholder"></div>
-
-    <!-- Page shell -->
-    <div class="page-shell">
-
-        <!-- Hero -->
-        <section class="idx-hero">
-            <div class="idx-hero-inner">
-
-                <!-- Left: text -->
-                <div class="idx-hero-text">
-                    <span class="idx-badge">Moss Explorer Beta 1.0</span>
-                    <h1 class="idx-title">
-                        從一片蘚苔開始，<br>
-                        展開你的 <span class="highlight">AI 科展探險</span>
-                    </h1>
-                    <p class="idx-desc">
-                        結合植物觀察、影像辨識與研究工具，協助高中生打造標準化的特徵矩陣，精準完成科展與小論文。
-                    </p>
-                    <div class="idx-actions">
-                        <button class="idx-btn-primary" onclick="location.href='quest.html'">開始研究 (Quest)</button>
-                        <button class="idx-btn-outline" onclick="location.href='tools.html'">進入研究工具箱</button>
-                    </div>
-                </div>
-
-                <!-- Right: AI scanner -->
-                <div class="idx-hero-visual">
-                    <div class="ai-scanner">
-                        <div class="scan-line"></div>
-                        <div class="scan-bbox"></div>
-                        <div class="scan-target">
-                            <span class="scan-leaf">🌿</span>
-                            <span class="scan-filename">hero-moss.jpg</span>
-                        </div>
-                        <div class="scan-tag scan-tag-tl">Target Detected</div>
-                        <div class="scan-tag scan-tag-br">Probability: 98.5%</div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Countdown timers -->
-        <div class="idx-timers-wrap">
-            <div class="idx-timers">
-                <div class="idx-timer-card">
-                    <h4>
-                        <span class="timer-label" style="color:#1565c0;">科學展覽會 剩餘時間</span>
-                        <a href="countdown.html" class="btn-timer-link">設定時間</a>
-                    </h4>
-                    <div class="idx-timer-divider"></div>
-                    <div class="idx-huge-timer" id="idx-sci"></div>
-                </div>
-                <div class="idx-timer-card">
-                    <h4>
-                        <span class="timer-label" style="color:#ef6c00;">中學生小論文 剩餘時間</span>
-                        <a href="countdown.html" class="btn-timer-link">設定時間</a>
-                    </h4>
-                    <div class="idx-timer-divider"></div>
-                    <div class="idx-huge-timer" id="idx-ess"></div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- end page-shell -->
-
-    <!-- Color Lab FAB -->
-    <button class="wcl-fab" id="wcl-fab">
-        <span class="wcl-saved-dot" id="wcl-dot"></span>
-        網頁配色實驗
-    </button>
-
-    <!-- Color Lab Panel -->
-    <div class="wcl-panel" id="wcl-panel">
-        <div class="wcl-head">
-            <div class="wcl-head-left">
-                <h3>網頁配色實驗</h3>
-                <span class="wcl-head-sub">輸入色碼推薦調色盤，點擊方案即時套用全站配色</span>
-                <span class="wcl-preview-tag" id="wcl-ptag">預覽中，尚未儲存</span>
-            </div>
-            <div class="wcl-head-right">
-                <button class="wcl-save" id="wcl-save">儲存配色</button>
-                <button class="wcl-x" id="wcl-x">✕</button>
-            </div>
-        </div>
-
-        <div class="wcl-inputs">
-            <label>輸入色碼</label>
-            <div class="wcl-swatch-box" id="wcl-sw0" style="background:#2e7d32;"></div>
-            <input type="color" id="wcl-picker" value="#2e7d32"
-                style="width:34px;height:34px;border:none;background:none;cursor:pointer;padding:0;">
-            <input type="text" class="wcl-hex" id="wcl-hex" value="#2E7D32" maxlength="7" placeholder="#RRGGBB">
-            <button class="wcl-gen" id="wcl-gen">推薦配色</button>
-        </div>
-
-        <div id="wcl-area"><div class="wcl-empty">輸入色碼後點擊「推薦配色」，產生 6 組調色盤方案</div></div>
-        <div class="wcl-msg" id="wcl-msg"></div>
-    </div>
-
-    <script src="js/main.js?v=7"></script>
-    <script>
-    // ── Countdown ──────────────────────────────────────────────
+<body> <!-- Splash --> <div id="splash-screen" class="splash-screen"> <div class="splash-content"> <div class="splash-icon-wrapper"> <div class="splash-icon"></div> <div class="splash-scan-line"></div> </div> <h1 class="splash-title">AI 蘚苔探險家</h1> <div class="splash-subtitle-container"> <span class="splash-subtitle">System Initializing... Load Quest Data...</span> </div> <div class="splash-progress"><div class="splash-progress-bar"></div></div> </div> </div> <!-- Full-page background bloom --> <div id="page-bg"></div> <!-- Navbar --> <div id="navbar-placeholder"></div> <!-- Page shell --> <div class="page-shell">
+        <nav class="breadcrumb"><span>首頁</span></nav> <!-- Hero --> <section class="idx-hero"> <div class="idx-hero-inner"> <!-- Left: text --> <div class="idx-hero-text"> <span class="idx-badge">Moss Explorer Beta 1.0</span> <h1 class="idx-title"> 從一片蘚苔開始，<br> 展開你的 <span class="highlight">AI 科展探險</span> </h1> <p class="idx-desc"> 結合植物觀察、影像辨識與研究工具，協助高中生打造標準化的特徵矩陣，精準完成科展與小論文。
+                    </p> <div class="idx-actions"> <button class="idx-btn-primary" onclick="location.href='quest.html'">開始研究 (Quest)</button> <button class="idx-btn-outline" onclick="location.href='tools.html'">進入研究工具箱</button> </div> </div> <!-- Right: AI scanner --> <div class="idx-hero-visual"> <div class="ai-scanner"> <div class="scan-line"></div> <div class="scan-bbox"></div> <div class="scan-target"><img src="images/hero-moss.jpg" alt="苔蘚樣本" style="width:100%;height:100%;object-fit:cover;border-radius:3px;opacity:0.85;"></div> <div class="scan-tag scan-tag-tl">Target Detected</div> <div class="scan-tag scan-tag-br">Probability: 98.5%</div> </div> </div> </div> </section> <!-- Countdown timers --> <div class="idx-timers-wrap"> <div class="idx-timers"> <div class="idx-timer-card"> <h4> <span class="timer-label" style="color:#1565c0;">科學展覽會 剩餘時間</span> <a href="countdown.html" class="btn-timer-link">設定時間</a> </h4> <div class="idx-timer-divider"></div> <div class="idx-huge-timer" id="idx-sci"></div> </div> <div class="idx-timer-card"> <h4> <span class="timer-label" style="color:#ef6c00;">中學生小論文 剩餘時間</span> <a href="countdown.html" class="btn-timer-link">設定時間</a> </h4> <div class="idx-timer-divider"></div> <div class="idx-huge-timer" id="idx-ess"></div> </div> </div> </div> </div><!-- end page-shell --> <!-- Color Lab FAB --> <button class="wcl-fab" id="wcl-fab"> <span class="wcl-saved-dot" id="wcl-dot"></span> 網頁配色實驗
+    </button> <!-- Color Lab Panel --> <div class="wcl-panel" id="wcl-panel"> <div class="wcl-head"> <div class="wcl-head-left"> <h3>網頁配色實驗</h3> <span class="wcl-head-sub">輸入色碼推薦調色盤，點擊方案即時套用全站配色</span> <span class="wcl-preview-tag" id="wcl-ptag">預覽中，尚未儲存</span> </div> <div class="wcl-head-right"> <button class="wcl-save" id="wcl-save">儲存配色</button> <button class="wcl-x" id="wcl-x"></button> </div> </div> <div class="wcl-inputs"> <label>輸入色碼</label> <div class="wcl-swatch-box" id="wcl-sw0" style="background:#2e7d32;"></div> <input type="color" id="wcl-picker" value="#2e7d32"
+                style="width:34px;height:34px;border:none;background:none;cursor:pointer;padding:0;"> <input type="text" class="wcl-hex" id="wcl-hex" value="#2E7D32" maxlength="7" placeholder="#RRGGBB"> <button class="wcl-gen" id="wcl-gen">推薦配色</button> </div> <div id="wcl-area"><div class="wcl-empty">輸入色碼後點擊「推薦配色」，產生 6 組調色盤方案</div></div> <div class="wcl-msg" id="wcl-msg"></div> </div> <script src="js/main.js?v=7"></script> <script> // ── Countdown ──────────────────────────────────────────────
     (function () {
         function getMs(k, fb) {
             const s = localStorage.getItem(k);
@@ -879,7 +755,7 @@
 
         function copyHex(c) {
             navigator.clipboard.writeText(c.toUpperCase()).catch(()=>{});
-            msgEl.textContent='已複製 '+c.toUpperCase()+'  ✓';
+            msgEl.textContent='已複製 '+c.toUpperCase()+'  ';
             setTimeout(()=>msgEl.textContent='',2000);
         }
 

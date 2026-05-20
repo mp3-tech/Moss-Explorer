@@ -1,226 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>苔蘚特徵矩陣比對器 - AI 蘚苔探險家</title>
-    <link rel="stylesheet" href="css/style.css">
+<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>苔蘚特徵矩陣比對器 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-
-    <div id="navbar-placeholder"></div>
-
-    <div class="container matrix-page">
-        <nav class="breadcrumb">
-            <a href="index.html">🏠 首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt; <span>苔蘚特徵矩陣比對器</span>
-        </nav>
-        <div class="page-header">
-            <h1>📝 苔蘚特徵矩陣比對器 (Feature Matrix)</h1>
-            <p>把大自然的模樣「翻譯」成電腦看得懂的數據！建立專屬你的訓練特徵表。</p>
-        </div>
-
-        <!-- ===== 上半：手動登錄 ===== -->
-        <div class="matrix-layout">
-            <div class="card input-panel">
-                <h3 class="section-title">🔍 採集特徵登錄</h3>
-                <p class="text-muted" style="font-size:0.85rem; margin-bottom:20px;">
-                    根據肉眼或放大鏡觀察到的特徵填寫，<strong>不需要知道學名</strong>。
-                </p>
-                <form id="matrix-form">
-                    <div class="input-group">
-                        <label for="m-id">樣本編號 (Sample ID)</label>
-                        <input type="text" id="m-id" placeholder="例如：MOSS-001" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-growth">生長型態 (Growth Form)</label>
-                        <select id="m-growth" required>
-                            <option value="">請選擇...</option>
-                            <option value="墊狀 (Cushion)">墊狀 (Cushion)</option>
-                            <option value="毯狀 (Mat)">毯狀 (Mat)</option>
-                            <option value="叢生 (Tuft)">叢生 (Tuft)</option>
-                            <option value="樹狀 (Dendroid)">樹狀 (Dendroid)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-color">主要顏色 (Color)</label>
-                        <select id="m-color" required>
-                            <option value="">請選擇...</option>
-                            <option value="深綠 (Dark Green)">深綠 (Dark Green)</option>
-                            <option value="翠綠 (Bright Green)">翠綠 (Bright Green)</option>
-                            <option value="黃綠 (Yellow-Green)">黃綠 (Yellow-Green)</option>
-                            <option value="紅褐 (Red-Brown)">紅褐 (Red-Brown)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-substrate">生長基質 (Substrate)</label>
-                        <select id="m-substrate" required>
-                            <option value="">請選擇...</option>
-                            <option value="岩石 (Rock)">岩石 (Rock)</option>
-                            <option value="樹皮 (Bark)">樹皮 (Bark)</option>
-                            <option value="土壤 (Soil)">土壤 (Soil)</option>
-                            <option value="人造物 (Concrete/Brick)">人造物 (水泥/磚牆)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-capsule">孢蒴有無 (Capsule)</label>
-                        <select id="m-capsule" required>
-                            <option value="">請選擇...</option>
-                            <option value="有 (Present)">有 (Present)</option>
-                            <option value="無 (Absent)">無 (Absent)</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="m-location">觀測地點 (Location)</label>
-                        <input type="text" id="m-location" placeholder="例如：台北市大安區">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width:100%;">➕ 新增至特徵矩陣</button>
-                </form>
-            </div>
-
-            <div class="card data-panel">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:8px;">
-                    <h3 class="section-title" style="margin:0;">📊 結構化數據預覽</h3>
-                    <div style="display:flex; gap:8px;">
-                        <button class="btn" id="btn-export-csv" style="background-color:var(--secondary); color:white; padding:6px 12px; font-size:0.85rem;">📥 匯出 CSV</button>
-                        <button class="btn" id="btn-export-json" style="background-color:#1565c0; color:white; padding:6px 12px; font-size:0.85rem;">📥 匯出 JSON</button>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="matrix-table" id="matrix-table">
-                        <thead>
-                            <tr>
-                                <th>樣本編號</th>
-                                <th>生長型態</th>
-                                <th>顏色</th>
-                                <th>基質</th>
-                                <th>孢蒴</th>
-                                <th>觀測地點</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="matrix-tbody">
-                            <tr class="empty-row">
-                                <td colspan="7" style="text-align:center; color:#999;">尚未加入任何特徵資料，請由左方表單新增。</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="alert-box" style="margin-top:20px;">
-                    <strong>💡 資訊科學小教室：</strong> 電腦無法直接理解文字。當你把這些資料匯出成 CSV 後，AI 工程師會將「有」轉換為 1，「無」轉換為 0，這就是所謂的「資料編碼 (Data Encoding)」！
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/main.js"></script>
-
-    <!-- ===== 下半：eFloras 查詢 ===== -->
-    <div class="container" style="margin-top:40px;">
-        <div class="card">
-            <h3 class="section-title">🔎 從資料庫查詢苔蘚特徵</h3>
-            <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;">
-                資料來源：eFloras (Flora of North America)，共 30 筆學術形態紀錄。
-            </p>
-
-            <!-- 篩選列 -->
-            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:16px;">
-                <div>
-                    <label style="font-size:0.8rem; color:#666;">苔蘚類群</label>
-                    <select id="filter-group" style="width:100%; margin-top:4px;">
-                        <option value="">全部</option>
-                        <option>蘚類 Bryophyta</option>
-                        <option>苔類 Marchantiophyta</option>
-                        <option>角苔類 Anthocerotophyta</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size:0.8rem; color:#666;">生長型態</label>
-                    <select id="filter-growth" style="width:100%; margin-top:4px;">
-                        <option value="">全部</option>
-                        <option>墊狀 (Cushion)</option>
-                        <option>毯狀 (Mat)</option>
-                        <option>叢生 (Tuft)</option>
-                        <option>樹狀 (Dendroid)</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size:0.8rem; color:#666;">生長基質</label>
-                    <select id="filter-substrate" style="width:100%; margin-top:4px;">
-                        <option value="">全部</option>
-                        <option>岩石 (Rock)</option>
-                        <option>樹皮 (Bark)</option>
-                        <option>土壤 (Soil)</option>
-                        <option>人造物 (Concrete/Brick)</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size:0.8rem; color:#666;">孢蒴有無</label>
-                    <select id="filter-capsule" style="width:100%; margin-top:4px;">
-                        <option value="">全部</option>
-                        <option>有 (Present)</option>
-                        <option>無 (Absent)</option>
-                    </select>
-                </div>
-                <div>
-                    <label style="font-size:0.8rem; color:#666;">關鍵字（學名或中文）</label>
-                    <input type="text" id="filter-keyword" placeholder="例如：Sphagnum 或 水苔" style="width:100%; margin-top:4px;">
-                </div>
-                <div style="display:flex; align-items:flex-end;">
-                    <button class="btn btn-primary" id="btn-db-query" style="width:100%;">查詢</button>
-                </div>
-            </div>
-
-            <!-- 狀態列 -->
-            <div id="db-status" style="font-size:0.85rem; color:#888; margin-bottom:8px;">載入中...</div>
-
-            <!-- 比對選取列 -->
-            <div id="compare-bar" style="display:none; background:#e8f5e9; border:1.5px solid #a5d6a7; border-radius:10px; padding:12px 16px; margin-bottom:12px; align-items:center; gap:12px; flex-wrap:wrap;">
-                <span style="font-size:0.88rem; color:#2e7d32; font-weight:600;">🔬 已選取比對：</span>
-                <span id="compare-a-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">尚未選取</span>
-                <span style="color:#aaa;">vs</span>
-                <span id="compare-b-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">尚未選取</span>
-                <button class="btn btn-primary" id="btn-do-compare" style="padding:5px 16px; font-size:0.85rem;" disabled>開始比對</button>
-                <button class="btn" id="btn-clear-compare" style="padding:5px 12px; font-size:0.85rem;">清除</button>
-            </div>
-
-            <!-- 結果表格 -->
-            <div style="overflow-x:auto;">
-                <table class="matrix-table" id="db-table" style="display:none;">
-                    <thead>
-                        <tr>
-                            <th>加入比對</th>
-                            <th>樣本編號</th>
-                            <th>中文俗名</th>
-                            <th>學名</th>
-                            <th>類群</th>
-                            <th>生長型態</th>
-                            <th>顏色</th>
-                            <th>基質</th>
-                            <th>孢蒴</th>
-                            <th>地點</th>
-                        </tr>
-                    </thead>
-                    <tbody id="db-tbody"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- 比對結果 Modal -->
-    <div id="compare-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center; padding:16px;">
-        <div style="background:#fff; border-radius:16px; max-width:720px; width:100%; max-height:88vh; overflow-y:auto; padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.2);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h3 style="margin:0; font-family:var(--font-serif); color:#1b5e20;">🔬 特徵比對結果</h3>
-                <button id="btn-close-modal" style="background:none; border:none; font-size:1.4rem; cursor:pointer; color:#888; line-height:1;">✕</button>
-            </div>
-            <div id="compare-result-body"></div>
-        </div>
-    </div>
-
-    <script>
-    let allData  = [];
+<body> <div id="navbar-placeholder"></div> <div class="container matrix-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt; <span>苔蘚特徵矩陣比對器</span></nav> <div class="page-header"> <h1> 苔蘚特徵矩陣比對器 (Feature Matrix)</h1> <p>把大自然的模樣「翻譯」成電腦看得懂的數據！建立專屬你的訓練特徵表。</p> </div> <!-- ===== 上半：手動登錄 ===== --> <div class="matrix-layout"> <div class="card input-panel"> <h3 class="section-title"> 採集特徵登錄</h3> <p class="text-muted" style="font-size:0.85rem; margin-bottom:20px;"> 根據肉眼或放大鏡觀察到的特徵填寫，<strong>不需要知道學名</strong>。
+                </p> <form id="matrix-form"> <div class="input-group"> <label for="m-id">樣本編號 (Sample ID)</label> <input type="text" id="m-id" placeholder="例如：MOSS-001" required> </div> <div class="input-group"> <label for="m-growth">生長型態 (Growth Form)</label> <select id="m-growth" required> <option value="">請選擇...</option> <option value="墊狀 (Cushion)">墊狀 (Cushion)</option> <option value="毯狀 (Mat)">毯狀 (Mat)</option> <option value="叢生 (Tuft)">叢生 (Tuft)</option> <option value="樹狀 (Dendroid)">樹狀 (Dendroid)</option> </select> </div> <div class="input-group"> <label for="m-color">主要顏色 (Color)</label> <select id="m-color" required> <option value="">請選擇...</option> <option value="深綠 (Dark Green)">深綠 (Dark Green)</option> <option value="翠綠 (Bright Green)">翠綠 (Bright Green)</option> <option value="黃綠 (Yellow-Green)">黃綠 (Yellow-Green)</option> <option value="紅褐 (Red-Brown)">紅褐 (Red-Brown)</option> </select> </div> <div class="input-group"> <label for="m-substrate">生長基質 (Substrate)</label> <select id="m-substrate" required> <option value="">請選擇...</option> <option value="岩石 (Rock)">岩石 (Rock)</option> <option value="樹皮 (Bark)">樹皮 (Bark)</option> <option value="土壤 (Soil)">土壤 (Soil)</option> <option value="人造物 (Concrete/Brick)">人造物 (水泥/磚牆)</option> </select> </div> <div class="input-group"> <label for="m-capsule">孢蒴有無 (Capsule)</label> <select id="m-capsule" required> <option value="">請選擇...</option> <option value="有 (Present)">有 (Present)</option> <option value="無 (Absent)">無 (Absent)</option> </select> </div> <div class="input-group"> <label for="m-location">觀測地點 (Location)</label> <input type="text" id="m-location" placeholder="例如：台北市大安區"> </div> <button type="submit" class="btn btn-primary" style="width:100%;"> 新增至特徵矩陣</button> </form> </div> <div class="card data-panel"> <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap; gap:8px;"> <h3 class="section-title" style="margin:0;"> 結構化數據預覽</h3> <div style="display:flex; gap:8px;"> <button class="btn" id="btn-export-csv" style="background-color:var(--secondary); color:white; padding:6px 12px; font-size:0.85rem;"> 匯出 CSV</button> <button class="btn" id="btn-export-json" style="background-color:#1565c0; color:white; padding:6px 12px; font-size:0.85rem;"> 匯出 JSON</button> </div> </div> <div class="table-responsive"> <table class="matrix-table" id="matrix-table"> <thead> <tr> <th>樣本編號</th> <th>生長型態</th> <th>顏色</th> <th>基質</th> <th>孢蒴</th> <th>觀測地點</th> <th>操作</th> </tr> </thead> <tbody id="matrix-tbody"> <tr class="empty-row"> <td colspan="7" style="text-align:center; color:#999;">尚未加入任何特徵資料，請由左方表單新增。</td> </tr> </tbody> </table> </div> <div class="alert-box" style="margin-top:20px;"> <strong> 資訊科學小教室：</strong> 電腦無法直接理解文字。當你把這些資料匯出成 CSV 後，AI 工程師會將「有」轉換為 1，「無」轉換為 0，這就是所謂的「資料編碼 (Data Encoding)」！
+                </div> </div> </div> </div> <script src="js/main.js"></script> <!-- ===== 下半：eFloras 查詢 ===== --> <div class="container" style="margin-top:40px;"> <div class="card"> <h3 class="section-title"> 從資料庫查詢苔蘚特徵</h3> <p class="text-muted" style="font-size:0.85rem; margin-bottom:16px;"> 資料來源：eFloras (Flora of North America)，共 30 筆學術形態紀錄。
+            </p> <!-- 篩選列 --> <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin-bottom:16px;"> <div> <label style="font-size:0.8rem; color:#666;">苔蘚類群</label> <select id="filter-group" style="width:100%; margin-top:4px;"> <option value="">全部</option> <option>蘚類 Bryophyta</option> <option>苔類 Marchantiophyta</option> <option>角苔類 Anthocerotophyta</option> </select> </div> <div> <label style="font-size:0.8rem; color:#666;">生長型態</label> <select id="filter-growth" style="width:100%; margin-top:4px;"> <option value="">全部</option> <option>墊狀 (Cushion)</option> <option>毯狀 (Mat)</option> <option>叢生 (Tuft)</option> <option>樹狀 (Dendroid)</option> </select> </div> <div> <label style="font-size:0.8rem; color:#666;">生長基質</label> <select id="filter-substrate" style="width:100%; margin-top:4px;"> <option value="">全部</option> <option>岩石 (Rock)</option> <option>樹皮 (Bark)</option> <option>土壤 (Soil)</option> <option>人造物 (Concrete/Brick)</option> </select> </div> <div> <label style="font-size:0.8rem; color:#666;">孢蒴有無</label> <select id="filter-capsule" style="width:100%; margin-top:4px;"> <option value="">全部</option> <option>有 (Present)</option> <option>無 (Absent)</option> </select> </div> <div> <label style="font-size:0.8rem; color:#666;">關鍵字（學名或中文）</label> <input type="text" id="filter-keyword" placeholder="例如：Sphagnum 或 水苔" style="width:100%; margin-top:4px;"> </div> <div style="display:flex; align-items:flex-end;"> <button class="btn btn-primary" id="btn-db-query" style="width:100%;">查詢</button> </div> </div> <!-- 狀態列 --> <div id="db-status" style="font-size:0.85rem; color:#888; margin-bottom:8px;">載入中...</div> <!-- 比對選取列 --> <div id="compare-bar" style="display:none; background:#e8f5e9; border:1.5px solid #a5d6a7; border-radius:10px; padding:12px 16px; margin-bottom:12px; align-items:center; gap:12px; flex-wrap:wrap;"> <span style="font-size:0.88rem; color:#2e7d32; font-weight:600;"> 已選取比對：</span> <span id="compare-a-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">尚未選取</span> <span style="color:#aaa;">vs</span> <span id="compare-b-label" style="font-size:0.85rem; background:#fff; border:1px solid #c8e6c9; border-radius:6px; padding:3px 10px;">尚未選取</span> <button class="btn btn-primary" id="btn-do-compare" style="padding:5px 16px; font-size:0.85rem;" disabled>開始比對</button> <button class="btn" id="btn-clear-compare" style="padding:5px 12px; font-size:0.85rem;">清除</button> </div> <!-- 結果表格 --> <div style="overflow-x:auto;"> <table class="matrix-table" id="db-table" style="display:none;"> <thead> <tr> <th>加入比對</th> <th>樣本編號</th> <th>中文俗名</th> <th>學名</th> <th>類群</th> <th>生長型態</th> <th>顏色</th> <th>基質</th> <th>孢蒴</th> <th>地點</th> </tr> </thead> <tbody id="db-tbody"></tbody> </table> </div> </div> </div> <!-- 比對結果 Modal --> <div id="compare-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center; padding:16px;"> <div style="background:#fff; border-radius:16px; max-width:720px; width:100%; max-height:88vh; overflow-y:auto; padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.2);"> <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;"> <h3 style="margin:0; font-family:var(--font-serif); color:#1b5e20;"> 特徵比對結果</h3> <button id="btn-close-modal" style="background:none; border:none; font-size:1.4rem; cursor:pointer; color:#888; line-height:1;"></button> </div> <div id="compare-result-body"></div> </div> </div> <script> let allData  = [];
     let compareA = null;
     let compareB = null;
 
@@ -244,11 +29,11 @@
         .then(data => {
             allData = data;
             document.getElementById('db-status').textContent =
-                `✅ 已載入 ${data.length} 筆資料，請選擇條件後按查詢。`;
+                ` 已載入 ${data.length} 筆資料，請選擇條件後按查詢。`;
         })
         .catch(() => {
             document.getElementById('db-status').textContent =
-                '❌ 找不到資料檔，請確認 frontend/data/moss_matrix.json 是否已放置。';
+                ' 找不到資料檔，請確認 frontend/data/moss_matrix.json 是否已放置。';
         });
 
     // ── 查詢 ────────────────────────────────────────────────────────────
@@ -285,7 +70,7 @@
             return;
         }
 
-        status.textContent = `✅ 找到 ${result.length} 筆（共 ${allData.length} 筆中）`;
+        status.textContent = ` 找到 ${result.length} 筆（共 ${allData.length} 筆中）`;
         table.style.display = 'table';
 
         result.forEach(row => {
@@ -304,26 +89,13 @@
             }
 
             tr.innerHTML = `
-                <td style="text-align:center; white-space:nowrap;">
-                    <button class="btn-compare-pick" data-id="${sid}"
+                <td style="text-align:center; white-space:nowrap;"> <button class="btn-compare-pick" data-id="${sid}"
                         style="font-size:0.78rem; padding:3px 10px; border-radius:8px;
                                border:1.5px solid #a5d6a7;
                                background:${isA ? '#2e7d32' : isB ? '#1565c0' : 'transparent'};
                                color:${(isA || isB) ? '#fff' : '#2e7d32'};
-                               cursor:pointer; white-space:nowrap;">
-                        ${isA ? '✓ 樣本A' : isB ? '✓ 樣本B' : '＋ 加入比對'}
-                    </button>
-                </td>
-                <td style="font-family:monospace; font-size:0.82rem;">${sid}</td>
-                <td>${row['中文俗名'] || '—'}</td>
-                <td><em>${row['學名'] || ''}</em></td>
-                <td>${row['苔蘚類群'] || ''}</td>
-                <td>${dv(row['生長型態'])}</td>
-                <td>${dv(row['主要顏色'])}</td>
-                <td>${dv(row['生長基質'])}</td>
-                <td>${dv(row['孢蒴有無'])}</td>
-                <td>${row['觀測地點'] || ''}</td>
-            `;
+                               cursor:pointer; white-space:nowrap;"> ${isA ? ' 樣本A' : isB ? ' 樣本B' : '＋ 加入比對'}
+                    </button> </td> <td style="font-family:monospace; font-size:0.82rem;">${sid}</td> <td>${row['中文俗名'] || '—'}</td> <td><em>${row['學名'] || ''}</em></td> <td>${row['苔蘚類群'] || ''}</td> <td>${dv(row['生長型態'])}</td> <td>${dv(row['主要顏色'])}</td> <td>${dv(row['生長基質'])}</td> <td>${dv(row['孢蒴有無'])}</td> <td>${row['觀測地點'] || ''}</td> `;
             tbody.appendChild(tr);
         });
 
@@ -368,30 +140,9 @@
         if (!compareA || !compareB) return;
 
         let html = `
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; font-size:0.88rem;">
-            <div style="background:#e8f5e9; border-radius:8px; padding:10px 14px;">
-                <strong style="color:#2e7d32;">樣本 A</strong><br>
-                ${compareA['中文俗名'] ? `<strong>${compareA['中文俗名']}</strong><br>` : ''}
-                <em style="font-size:0.85rem;">${compareA['學名'] || '—'}</em><br>
-                <span style="color:#666; font-size:0.78rem;">${compareA['樣本編號']}</span>
-            </div>
-            <div style="background:#e3f2fd; border-radius:8px; padding:10px 14px;">
-                <strong style="color:#1565c0;">樣本 B</strong><br>
-                ${compareB['中文俗名'] ? `<strong>${compareB['中文俗名']}</strong><br>` : ''}
-                <em style="font-size:0.85rem;">${compareB['學名'] || '—'}</em><br>
-                <span style="color:#666; font-size:0.78rem;">${compareB['樣本編號']}</span>
-            </div>
-        </div>
-        <table style="width:100%; border-collapse:collapse; font-size:0.88rem;">
-            <thead>
-                <tr style="background:#f5f5f5;">
-                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:16%;">特徵欄位</th>
-                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#2e7d32;">樣本 A</th>
-                    <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#1565c0;">樣本 B</th>
-                    <th style="padding:8px 12px; text-align:center; border-bottom:2px solid #eee; width:28%;">比對結果</th>
-                </tr>
-            </thead>
-            <tbody>`;
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; font-size:0.88rem;"> <div style="background:#e8f5e9; border-radius:8px; padding:10px 14px;"> <strong style="color:#2e7d32;">樣本 A</strong><br> ${compareA['中文俗名'] ? `<strong>${compareA['中文俗名']}</strong><br>` : ''}
+                <em style="font-size:0.85rem;">${compareA['學名'] || '—'}</em><br> <span style="color:#666; font-size:0.78rem;">${compareA['樣本編號']}</span> </div> <div style="background:#e3f2fd; border-radius:8px; padding:10px 14px;"> <strong style="color:#1565c0;">樣本 B</strong><br> ${compareB['中文俗名'] ? `<strong>${compareB['中文俗名']}</strong><br>` : ''}
+                <em style="font-size:0.85rem;">${compareB['學名'] || '—'}</em><br> <span style="color:#666; font-size:0.78rem;">${compareB['樣本編號']}</span> </div> </div> <table style="width:100%; border-collapse:collapse; font-size:0.88rem;"> <thead> <tr style="background:#f5f5f5;"> <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:16%;">特徵欄位</th> <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#2e7d32;">樣本 A</th> <th style="padding:8px 12px; text-align:left; border-bottom:2px solid #eee; width:28%; color:#1565c0;">樣本 B</th> <th style="padding:8px 12px; text-align:center; border-bottom:2px solid #eee; width:28%;">比對結果</th> </tr> </thead> <tbody>`;
 
         let canCount = 0, matchCount = 0;
 
@@ -404,25 +155,20 @@
             let resultCell, rowBg;
             if (uA || uB) {
                 const reason = [uA ? 'A 未記錄' : '', uB ? 'B 未記錄' : ''].filter(Boolean).join('、');
-                resultCell = `<span style="color:#f57c00; font-size:0.82rem;">⚠️ 無法比對<br><span style="font-size:0.75rem; color:#aaa;">${reason}</span></span>`;
+                resultCell = `<span style="color:#f57c00; font-size:0.82rem;"> 無法比對<br><span style="font-size:0.75rem; color:#aaa;">${reason}</span></span>`;
                 rowBg = '#fffde7';
             } else if (vA === vB) {
-                resultCell = `<span style="color:#2e7d32; font-weight:600;">✅ 相同</span>`;
+                resultCell = `<span style="color:#2e7d32; font-weight:600;"> 相同</span>`;
                 rowBg = '#f1f8f1';
                 canCount++; matchCount++;
             } else {
-                resultCell = `<span style="color:#c62828; font-weight:600;">❌ 不同</span>`;
+                resultCell = `<span style="color:#c62828; font-weight:600;"> 不同</span>`;
                 rowBg = '#fff5f5';
                 canCount++;
             }
 
             html += `
-            <tr style="background:${rowBg}; border-bottom:1px solid #f0f0f0;">
-                <td style="padding:9px 12px; font-weight:600; color:#555;">${f.label}</td>
-                <td style="padding:9px 12px; color:${uA ? '#bbb' : '#333'};">${uA ? '未記錄' : vA}</td>
-                <td style="padding:9px 12px; color:${uB ? '#bbb' : '#333'};">${uB ? '未記錄' : vB}</td>
-                <td style="padding:9px 12px; text-align:center;">${resultCell}</td>
-            </tr>`;
+            <tr style="background:${rowBg}; border-bottom:1px solid #f0f0f0;"> <td style="padding:9px 12px; font-weight:600; color:#555;">${f.label}</td> <td style="padding:9px 12px; color:${uA ? '#bbb' : '#333'};">${uA ? '未記錄' : vA}</td> <td style="padding:9px 12px; color:${uB ? '#bbb' : '#333'};">${uB ? '未記錄' : vB}</td> <td style="padding:9px 12px; text-align:center;">${resultCell}</td> </tr>`;
         });
 
         html += `</tbody></table>`;
@@ -431,9 +177,7 @@
         const pct = canCount > 0 ? Math.round(matchCount / canCount * 100) : null;
 
         html += `
-        <div style="margin-top:16px; padding:12px 16px; background:#f5f5f5; border-radius:10px; font-size:0.88rem; display:flex; gap:20px; flex-wrap:wrap; align-items:center;">
-            <span>📊 可比對欄位：<strong>${canCount} / ${COMPARE_FIELDS.length}</strong></span>
-            ${unknownCount > 0 ? `<span style="color:#f57c00;">⚠️ 無法比對：<strong>${unknownCount} 欄</strong>（資料未記錄）</span>` : ''}
+        <div style="margin-top:16px; padding:12px 16px; background:#f5f5f5; border-radius:10px; font-size:0.88rem; display:flex; gap:20px; flex-wrap:wrap; align-items:center;"> <span> 可比對欄位：<strong>${canCount} / ${COMPARE_FIELDS.length}</strong></span> ${unknownCount > 0 ? `<span style="color:#f57c00;"> 無法比對：<strong>${unknownCount} 欄</strong>（資料未記錄）</span>` : ''}
             ${pct !== null
                 ? `<span>相符率：<strong style="color:${pct >= 60 ? '#2e7d32' : '#c62828'}">${pct}%</strong>（${matchCount}/${canCount} 欄相同）</span>`
                 : `<span style="color:#f57c00;">所有欄位均無法比對</span>`}
