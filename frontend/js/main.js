@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // --- 1. 動態載入導覽列 ---
+    // --- 1. 動態載入導覽列與手機選單邏輯 ---
     const navbarPlaceholder = document.getElementById("navbar-placeholder");
     if (navbarPlaceholder) {
         fetch("navbar.html")
@@ -10,6 +10,28 @@ document.addEventListener("DOMContentLoaded", function() {
             })
             .then(data => {
                 navbarPlaceholder.innerHTML = data;
+
+                // 🌟 新增：載入完成後，綁定手機版漢堡選單的點擊事件
+                const menuBtn = document.getElementById('mobile-menu-btn');
+                const navLinks = document.getElementById('nav-links');
+                
+                if (menuBtn && navLinks) {
+                    menuBtn.addEventListener('click', () => {
+                        // 切換選單的開關狀態
+                        navLinks.classList.toggle('active');
+                    });
+                }
+
+                // 🌟 新增：處理手機版「下拉選單」的點擊展開
+                const dropdowns = document.querySelectorAll('.dropdown, .dropdown-submenu');
+                dropdowns.forEach(drop => {
+                    drop.addEventListener('click', (e) => {
+                        if (window.innerWidth <= 1024) {
+                            e.stopPropagation(); // 防止點擊事件擴散
+                            drop.classList.toggle('active');
+                        }
+                    });
+                });
             })
             .catch(error => console.error("載入導覽列時發生錯誤:", error));
     }
