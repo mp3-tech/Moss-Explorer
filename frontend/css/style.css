@@ -1063,3 +1063,102 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     color: #558b2f;
     background: rgba(0,0,0,0.06);
 }
+/* =========================================
+   23. 浮動配色實驗室控制面板 (Floating Color Panel)
+========================================= */
+/* 1. 右下角的懸浮打開按鈕 */
+.toggle-color-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+.toggle-color-btn:hover {
+    background-color: var(--primary);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* 2. 隱藏在畫面最下方的面板本體 */
+.bottom-color-bar {
+    position: fixed;
+    bottom: -150%; /* 預設藏在畫面下方，完全看不見 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    /* 加入滑順的彈出動畫 */
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. 當 JS 加入 show 類別時，面板滑上來 */
+.bottom-color-bar.show {
+    bottom: 0;
+}
+
+/* --- 面板內部的排版，確保 X 按鈕不會被擠不見 --- */
+.color-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap; /* 如果螢幕太小自動換行 */
+}
+.color-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.color-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    padding: 4px 10px;
+    border: 1px solid #ddd;
+}
+.color-input-wrapper input[type="color"] {
+    border: none;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 0;
+}
+.hex-value {
+    margin-left: 8px;
+    font-family: monospace;
+    color: #555;
+}
+
+/* X 關閉按鈕設計 */
+.close-color-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: color 0.2s;
+}
+.close-color-btn:hover {
+    color: #ff3b30;
+}
