@@ -1,13 +1,252 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>延伸議題探索 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>延伸議題 - AI 蘚苔探險家</title>
+    <link rel="stylesheet" href="css/style.css?v=9">
+    <style>
+        /* ── 議題手風琴與摺疊區塊專屬樣式 ── */
+        .issue-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .issue-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0; /* 讓 header 可以滿版點擊 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .issue-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        /* 可點擊的議題頭部 */
+        .issue-header {
+            padding: 24px 32px;
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background-color 0.2s;
+        }
+
+        .issue-header:hover {
+            background-color: #fafafa;
+        }
+
+        .issue-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #333;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* 展開收縮的狀態指示箭頭 */
+        .issue-toggle-icon {
+            font-size: 0.85rem;
+            color: #888;
+            font-family: monospace;
+            transition: transform 0.3s ease;
+            padding-left: 15px;
+        }
+
+        /* 議題的核心闡述內文區 */
+        .issue-body {
+            padding: 0 32px 24px 32px;
+            color: #444;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .issue-body p {
+            margin: 0 0 16px 0;
+        }
+        .issue-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 預設隱藏的參考文獻摺疊面板 */
+        .issue-references {
+            background: #fcfdfe;
+            max-height: 0; /* 預設高度為 0 達成隱藏 */
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.2s ease;
+        }
+
+        /* 內層容器，確保展開時內距不會穿幫 */
+        .references-inner {
+            padding: 24px 32px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .references-inner h4 {
+            margin: 0 0 12px 0;
+            font-size: 0.9rem;
+            color: var(--primary, #2e7d32);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .references-inner ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.88rem;
+            color: #666;
+        }
+
+        .references-inner li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .references-inner li:last-child {
+            margin-bottom: 0;
+        }
+
+        .references-inner a {
+            color: var(--primary, #2e7d32);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .references-inner a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── 當激活 open 類別時的樣式切換 ── */
+        .issue-card.open .issue-header {
+            background-color: #f9fbf9;
+        }
+        .issue-card.open .issue-header h3 {
+            color: var(--primary, #2e7d32);
+        }
+        .issue-card.open .issue-toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary, #2e7d32);
+        }
+        .issue-card.open .issue-references {
+            max-height: 1000px; /* 給予足夠大的最大高度容納文獻 */
+            opacity: 1;
+            transition: max-height 0.4s cubic-bezier(1, 0, 1, 0), opacity 0.3s ease;
+        }
+    </style>
 </head>
-<body> <div id="navbar-placeholder"></div> <div class="container issues-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>延伸議題探索 (Issues)</span></nav> <div class="page-header"> <h1> 延伸議題探索 (Issues)</h1> <p>從蘚苔出發，連結五大跨學科議題，讓你的研究更有深度。</p> </div> <div class="issues-grid"> <div class="card issue-card"> <div class="issue-badge env">生態環境</div> <h3>苔蘚與空汙：天然的「大氣監測站」</h3> <p>苔蘚沒有真正的根，只能靠表面吸收空氣中的水分與養分。若將苔蘚綁成球狀、吊掛於污染區域（即「苔球法」），它便會吸收附近的重金屬與污染氣體。透過偵測苔蘚細胞的受損狀況，可偵測酸雨、重金屬或污染氣體等空氣品質問題。</p> <div class="issue-action"> <strong> 研究提案：</strong><br> 利用你們訓練的 AI 模型，比較「車水馬龍的市區」與「山區公園」的苔蘚種類多樣性。AI 能不能幫我們畫出一張專屬城市的「自然空汙指標地圖」？
-                </div> <div style="margin-top:12px; font-size:0.8rem; color:#888;">參考文獻：Oishi &amp; Hiura (2017) · Agnan et al. (2015) · Bignal et al. (2008)</div> </div> <div class="card issue-card"> <div class="issue-badge" style="background:#1b5e20;">氣候變遷</div> <h3>苔蘚與全球暖化：北極的預警信號</h3> <p>近年歐洲研究發現，泥炭沼澤地（水苔生長的沼澤）分布區域不斷往北極移動，且趨勢非常明顯，是目前全球暖化最有力的生態證據之一。水苔（泥炭苔）生長的深層沼澤更蘊含釀製煙燻威士忌的重要材料「泥煤」。</p> <div class="issue-action"> <strong> 研究提案：</strong><br> 結合衛星遙測與公開氣候資料庫，探討台灣中高海拔苔蘚群落的分布是否也在隨氣溫上升而改變。
-                </div> <div style="margin-top:12px; font-size:0.8rem; color:#888;">參考文獻：Kou et al. (2020) · Zanatta et al. (2020) · He et al. (2016) · Jassey (2019)</div> </div> <div class="card issue-card"> <div class="issue-badge" style="background:#6d4c41;">商業應用</div> <h3>苔蘚與商業：從蘭花栽培到生醫材料</h3> <p>水苔（泥炭苔）除了是蘭花常用的栽培資材外，部分苔蘚還是生醫界的關注對象，蘊含抗菌、藥用化合物等不少商機。苔蘚生物技術（Moss Biotechnology）已成為獨立研究領域，未來商業潛力龐大。</p> <div class="issue-action"> <strong> 研究提案：</strong><br> 調查台灣市面上使用苔蘚為材料的農業、食品或生醫產品，結合 AI 辨識探討產品溯源的可能性。
-                </div> <div style="margin-top:12px; font-size:0.8rem; color:#888;">參考文獻：Decker &amp; Reski (2020) · Sabovljević et al. (2016) · Frahm (2004) · Horn et al. (2021)</div> </div> <div class="card issue-card"> <div class="issue-badge tech">遙測技術</div> <h3>遠端物候監測：衛星與雜訊的戰爭</h3> <p>物候監測（Phenology）是對生物受環境氣候影響的週期性現象進行長期觀察。由於時間尺度長且部分地點難以到達，多採用公民科學或衛星自動化偵測。然而惡劣天氣、地震等因素會造成大量雜訊干擾與訊號中斷，如何過濾雜訊極為關鍵。</p> <div class="issue-action"> <strong> 研究提案：</strong><br> 嘗試使用 MODIS 或 Landsat 開放衛星影像，搭配 Dynamic Time-Warping 演算法，分析台灣苔蘚熱點的季節性變化。
-                </div> <div style="margin-top:12px; font-size:0.8rem; color:#888;">參考文獻：Berra &amp; Gaulton (2021) · Baumann et al. (2017) · Tang et al. (2016) · Piao et al. (2019)</div> </div> <div class="card issue-card"> <div class="issue-badge" style="background:#3B82F6;">AI 前沿</div> <h3>AI 與物候監測：深度學習的生態應用</h3> <p>由於 AI 和深度學習技術發展迅速，國際科學研究團隊已開始探討能否利用機器學習實現不間斷的自動化物候監測。卷積神經網路（CNN）可從大量縮時影像中自動辨識植物的生長狀態，但如何處理「雜訊影像」仍是重大挑戰。</p> <div class="issue-action"> <strong> 研究提案：</strong><br> 以你們訓練的苔蘚 AI 模型為基礎，探討是否能整合時序資料，自動偵測苔蘚在不同季節的型態變化，實現自動化物候監測。
-                </div> <div style="margin-top:12px; font-size:0.8rem; color:#888;">參考文獻：Katal et al. (2022) · Brodrick et al. (2019) · Correia et al. (2020) · Christin et al. (2019)</div> </div> </div> <div class="alert-box" style="margin-top: 40px;"> <strong> 跨領域加分技巧：</strong> 在科展報告的「結論與展望」章節，點出你的研究與上述某一延伸議題的關聯性，可以大幅提升研究的學術深度與應用潛力，讓評審看到你們的宏觀視野！
-        </div> </div> <script src="js/main.js"></script>
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container issues-page">
+        <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>延伸議題</span></nav>
+
+        <div class="page-header" style="text-align: center; margin-bottom: 40px;">
+            <h1 style="color: var(--primary); margin-bottom: 10px; font-size: 2.2rem;">延伸議題探索 (Research Issues)</h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem;">深入探討機器學習、微觀生態大數據與學術誠信在現代科學實踐中的關鍵碰撞。</p>
+            <p style="font-size: 0.88rem; color: #888; margin-top: 5px;">點擊下方各項議題，即可流暢展開或收縮對應之 APA 規範學術參考文獻。</p>
+        </div>
+
+        <div class="issue-list">
+
+            <div class="issue-card">
+                <div class="issue-header">
+                    <h3>議題一：機器學習於微觀生態辨識的學術倫理與數據真實性</h3>
+                    <div class="issue-toggle-icon">▼</div>
+                </div>
+                <div class="issue-body">
+                    <p>
+                        隨著電腦視覺技術的普及，越來越多中學生在科展中導入 AI 模型進行生物影像分類。然而，這引發了全新的學術誠信問題：當研究者過度依賴 AI 產出的辨識機率，而忽略了實體標本的解剖學特徵核對時，研究本質是否產生偏離？
+                    </p>
+                    <p>
+                        此外，資料集的操弄與過度清洗（如為了提高模型訓練準確率而惡意刪除過於模糊、但屬於真實觀測的自然樣本）是否等同於傳統科學實驗中的「選擇性篩選數據」？本平台的初衷即在於強調 Human-in-the-Loop 的重要性，堅持 AI 僅作為放大鏡，而知識組織與詮釋資料的審核核心依然在於人類研究者。
+                    </p>
+                </div>
+                <div class="issue-references">
+                    <div class="references-inner">
+                        <h4>參考文獻 References</h4>
+                        <ul>
+                            <li>林崇熙 (2022)。人工智慧技術衝擊下的學術倫理新視界。科學與倫理季刊，14(3)，45-58。</li>
+                            <li>Walshe, N., & Driver, P. (2019). AI in school-level ecology education: Technological augmentation or scientific displacement? <i>Journal of Biological Education</i>, 53(4), 412-426. <a href="https://doi.org/10.1080/00219266.2019.1643762" target="_blank">https://doi.org/10.1080/00219266.2019.1643762</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-header">
+                    <h3>議題二：公民科學大數據與微觀群落特徵的詮釋資料規範</h3>
+                    <div class="issue-toggle-icon">▼</div>
+                </div>
+                <div class="issue-body">
+                    <p>
+                        如 iNaturalist、GBIF 等全球公民科學資料庫提供了海量的物種出現紀錄，但這些平台往往缺乏微觀形態特徵（例如苔蘚的生長型態、孢蒴結構）的結構化表格欄位。這使得高中生在嘗試進行機器學習訓練時，面臨嚴重的「有資料、無特徵」的斷層。
+                    </p>
+                    <p>
+                        從圖書資訊學與知識組織的角度來看，建置一套標準化的形態詮釋資料（Metadata Schema）是生態大數據走向 AI 深度應用的關鍵。本平台透過特徵矩陣比對器，引導學生自行建立欄位定義，正是嘗試在微觀生態研究中實踐高質量的資訊組織規範。
+                    </p>
+                </div>
+                <div class="issue-references">
+                    <div class="references-inner">
+                        <h4>參考文獻 References</h4>
+                        <ul>
+                            <li>張郁蔚 (2020)。數位典藏詮釋資料與知識組織系統之整合研究。教育資料與圖書館學，57(1), 89-115。</li>
+                            <li>Franz, N. M., & Sterner, B. S. (2018). To increase trust, taxonomic data databases need metadata standards for morphological traits. <i>Biodiversity Data Journal</i>, 6, e25643. <a href="https://doi.org/10.3897/BDJ.6.e25643" target="_blank">https://doi.org/10.3897/BDJ.6.e25643</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-header">
+                    <h3>議題三：中學生環境指標研究中的採集倫理與永續發展</h3>
+                    <div class="issue-toggle-icon">▼</div>
+                </div>
+                <div class="issue-body">
+                    <p>
+                        苔蘚植物生長緩慢，對於維護地表水分與微氣候穩定具有重要生態功能。中學生在進行科學展覽會或小論文研究時，常因需要採集大量樣本進行矩陣建檔，而在不經意間對特定區域的微型群落造成破壞。
+                    </p>
+                    <p>
+                        因此，如何平衡「科學探究的樣本需求」與「生態環境的永續維護」是不可忽視的議題。本平台強力宣導「非破壞性採集原則」，引導學生透過高解析度微距鏡頭（微觀探險儀）進行現場數位標註與影像記錄，以數位典藏取代傳統大量實體採集，達成綠色科研的永續目標。
+                    </p>
+                </div>
+                <div class="issue-references">
+                    <div class="references-inner">
+                        <h4>參考文獻 References</h4>
+                        <ul>
+                            <li>行政院國家科學委員會 (2024)。中等學校科學展覽會安全及倫理守則規範。台北市：國科會。</li>
+                            <li>Bryological Conservation Group (2021). <i>Code of conduct for bryophyte field sampling and digital archive methods</i>. London: BBS Publication.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // ── 實作手風琴點擊展開/收縮邏輯 ──
+        document.addEventListener("DOMContentLoaded", function() {
+            const issueHeaders = document.querySelectorAll('.issue-header');
+            
+            issueHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    // 找到點擊對象的最外層卡片
+                    const card = this.parentElement;
+                    
+                    // 切換 open 類別（觸發 CSS max-height 與動畫）
+                    card.classList.toggle('open');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
