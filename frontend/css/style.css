@@ -1162,3 +1162,92 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 .close-color-btn:hover {
     color: #ff3b30;
 }
+/* =========================================
+   20. 響應式排版優化 (手機版與平板完美適應)
+========================================= */
+/* 預設在電腦版隱藏漢堡按鈕 */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 5px;
+}
+
+@media (max-width: 1024px) {
+    /* --- 1. 導覽列變身漢堡選單 --- */
+    header {
+        flex-direction: row; /* 保持 LOGO 和按鈕在同一行 */
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* 讓選單可以掉到下一行 */
+        padding: 10px 5%;
+    }
+    
+    .menu-toggle {
+        display: block; /* 在手機平板顯示漢堡按鈕 */
+    }
+
+    .nav-links {
+        display: none; /* 預設隱藏全部連結 */
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 15px;
+        border-top: 1px solid var(--border-color);
+        margin-top: 15px;
+    }
+
+    /* 當 JS 加上 active 時顯示選單 */
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* 手機版連結放大，方便手指點擊 */
+    .nav-links a, .dropdown {
+        width: 100%;
+        padding: 14px 10px;
+        border-bottom: 1px dashed #eee;
+        box-sizing: border-box;
+    }
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    /* 手機版的下拉選單改為直接展開，取消 hover 浮動效果 */
+    .dropdown-content, .submenu-content {
+        position: static;
+        display: none; /* 預設隱藏子選單 */
+        box-shadow: none;
+        border: none;
+        border-left: 2px solid var(--primary);
+        padding: 0 0 0 15px;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .dropdown.active .dropdown-content { display: block; } /* 點擊後展開 */
+    .dropdown-submenu.active .submenu-content { display: block; }
+    
+    .submenu-content::before { display: none; } /* 移除電腦版的小裝飾 */
+
+    /* --- 2. 內容區塊單欄化 --- */
+    .dashboard-container,
+    .calculator-grid,
+    .micro-grid,
+    .calendar-layout,
+    .palette-layout,
+    .matrix-layout,
+    .countdown-layout,
+    .hero-split,
+    .platform-features,
+    .contact-grid {
+        grid-template-columns: 1fr !important;
+        flex-direction: column !important;
+        gap: 20px;
+    }
+    
+    .dashboard-container { padding: 16px 5%; }
+    .hero-visual-side, .hero-text-side { width: 100% !important; justify-content: center; }
+}
