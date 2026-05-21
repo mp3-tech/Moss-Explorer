@@ -50,21 +50,110 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
     
-    // --- 3. 懸浮調色盤開關邏輯 ---
+    // --- 3. 懸浮調色盤全站控制與智慧開關 ---
     const colorBarPanel = document.getElementById('color-bar-panel');
     const openColorBtn = document.getElementById('open-color-btn');
     const closeColorBtn = document.getElementById('close-color-btn');
 
-    if (openColorBtn && closeColorBtn && colorBarPanel) {
-        openColorBtn.addEventListener('click', () => {
+    const cpPrimary = document.getElementById('cp-primary');
+    const cpBg = document.getElementById('cp-bg');
+    const hexPrimary = document.getElementById('hex-primary');
+    const hexBg = document.getElementById('hex-bg');
+    const btnReset = document.getElementById('btn-reset');
+
+    // 【功能 A：讀取並在所有頁面套用已儲存的顏色】
+    function applySavedColors() {
+        const savedPrimary = localStorage.getItem('moss-theme-primary');
+        const savedBg = localStorage.getItem('moss-theme-bg');
+
+        // 如果有記憶，就修改網頁最頂層的 CSS 變數
+        if (savedPrimary) {
+            document.documentElement.style.setProperty('--primary', savedPrimary);
+            // 同步更新首頁面板上的選色器數值 (如果該頁面有面板的話)
+            if (cpPrimary) cpPrimary.value = savedPrimary;
+            if (hexPrimary) hexPrimary.textContent = savedPrimary;
+        }
+        if (savedBg) {
+            document.documentElement.style.setProperty('--bg-body', savedBg);
+            if (cpBg) cpBg.value = savedBg;
+            if (hexBg) hexBg.textContent = savedBg;
+        }
+    }
+    
+    // 一進入任何頁面，立刻執行套用
+    applySavedColors();
+
+    // 【功能 B：面板智慧開關 (包含點擊空白處關閉)】
+    if (colorBarPanel && openColorBtn) {
+        // 點擊按鈕開啟面板
+        openColorBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止點擊事件往上傳遞
             colorBarPanel.classList.add('show');
             openColorBtn.style.display = 'none'; 
         });
 
-        closeColorBtn.addEventListener('click', () => {
-            colorBarPanel.classList.remove('show');
-            openColorBtn.style.display = 'flex'; 
+        // 點擊 X 按鈕關閉
+        if (closeColorBtn) {
+            closeColorBtn.addEventListener('click', () => {
+                colorBarPanel.classList.remove('show');
+                openColorBtn.style.display = 'flex'; 
+            });
+        }
+
+        // 點擊網頁其他空白處，自動收合面板
+        document.addEventListener('click', (e) => {
+            // 如果面板正在顯示，且點擊的目標「不是」面板本身裡面的東西
+            if (colorBarPanel.classList.contains('show') && !colorBarPanel.contains(e.target)) {
+                colorBarPanel.classList.remove('show');
+                openColorBtn.style.display = 'flex';
+            }
         });
+
+        // 點擊面板內部時，阻止事件傳遞 (避免觸發上面那個點擊空白處關閉的功能)
+        colorBarPanel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+    }
+
+    // 【功能 C：即時變色並自動記憶】
+    if (cpPrimary && cpBg) {
+        // 監聽主色調更改
+        cpPrimary.addEventListener('input', (e) => {
+            const color = e.target.value;
+            document.documentElement.style.setProperty('--primary', color);
+            if (hexPrimary) hexPrimary.textContent = color;
+            localStorage.setItem('moss-theme-primary', color); // 存入瀏覽器記憶
+        });
+
+        // 監聽背景色更改
+        cpBg.addEventListener('input', (e) => {
+            const color = e.target.value;
+            document.documentElement.style.setProperty('--bg-body', color);
+            if (hexBg) hexBg.textContent = color;
+            localStorage.setItem('moss-theme-bg', color);
+        });
+
+        // 重設預設值
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                const defaultPrimary = '#2e7d32';
+                const defaultBg = '#F3F5F2';
+
+                // 恢復 CSS 變數
+                document.documentElement.style.setProperty('--primary', defaultPrimary);
+                document.documentElement.style.setProperty('--bg-body', defaultBg);
+                
+                // 恢復面板數值
+                cpPrimary.value = defaultPrimary;
+                cpBg.value = defaultBg;
+                if (hexPrimary) hexPrimary.textContent = defaultPrimary;
+                if (hexBg) hexBg.textContent = defaultBg;
+
+                // 清除記憶
+                localStorage.removeItem('moss-theme-primary');
+                localStorage.removeItem('moss-theme-bg');
+            });
+        }
     }
 
     // --- 5. AI 訓練資料庫比例計算機邏輯 ---
