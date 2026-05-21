@@ -66,10 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const savedPrimary = localStorage.getItem('moss-theme-primary');
         const savedBg = localStorage.getItem('moss-theme-bg');
 
-        // 如果有記憶，就修改網頁最頂層的 CSS 變數
         if (savedPrimary) {
             document.documentElement.style.setProperty('--primary', savedPrimary);
-            // 同步更新首頁面板上的選色器數值 (如果該頁面有面板的話)
             if (cpPrimary) cpPrimary.value = savedPrimary;
             if (hexPrimary) hexPrimary.textContent = savedPrimary;
         }
@@ -80,38 +78,35 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
     
-    // 一進入任何頁面，立刻執行套用
     applySavedColors();
 
-    // 【功能 B：面板智慧開關 (包含點擊空白處關閉)】
+    // 【功能 B：面板智慧開關 (無敵防彈版)】
     if (colorBarPanel && openColorBtn) {
-        // 點擊按鈕開啟面板
-        openColorBtn.addEventListener('click', (e) => {
-            e.stopPropagation(); // 阻止點擊事件往上傳遞
+        
+        // 1. 點擊按鈕開啟面板
+        openColorBtn.addEventListener('click', () => {
             colorBarPanel.classList.add('show');
             openColorBtn.style.display = 'none'; 
         });
 
-        // 點擊 X 按鈕關閉
+        // 2. 點擊 X 按鈕關閉
         if (closeColorBtn) {
             closeColorBtn.addEventListener('click', () => {
                 colorBarPanel.classList.remove('show');
-                openColorBtn.style.display = 'flex'; 
+                openColorBtn.style.display = ''; // 設為空字串，完美恢復 CSS 預設排版
             });
         }
 
-        // 點擊網頁其他空白處，自動收合面板
+        // 3. 點擊網頁空白處關閉
         document.addEventListener('click', (e) => {
-            // 如果面板正在顯示，且點擊的目標「不是」面板本身裡面的東西
-            if (colorBarPanel.classList.contains('show') && !colorBarPanel.contains(e.target)) {
-                colorBarPanel.classList.remove('show');
-                openColorBtn.style.display = 'flex';
+            // 如果面板是開著的
+            if (colorBarPanel.classList.contains('show')) {
+                // 如果點擊的目標「不是」面板裡面，也「不是」開啟按鈕本身
+                if (!colorBarPanel.contains(e.target) && !openColorBtn.contains(e.target)) {
+                    colorBarPanel.classList.remove('show');
+                    openColorBtn.style.display = ''; 
+                }
             }
-        });
-
-        // 點擊面板內部時，阻止事件傳遞 (避免觸發上面那個點擊空白處關閉的功能)
-        colorBarPanel.addEventListener('click', (e) => {
-            e.stopPropagation();
         });
     }
 
@@ -122,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const color = e.target.value;
             document.documentElement.style.setProperty('--primary', color);
             if (hexPrimary) hexPrimary.textContent = color;
-            localStorage.setItem('moss-theme-primary', color); // 存入瀏覽器記憶
+            localStorage.setItem('moss-theme-primary', color); 
         });
 
         // 監聽背景色更改
@@ -139,23 +134,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 const defaultPrimary = '#2e7d32';
                 const defaultBg = '#F3F5F2';
 
-                // 恢復 CSS 變數
                 document.documentElement.style.setProperty('--primary', defaultPrimary);
                 document.documentElement.style.setProperty('--bg-body', defaultBg);
                 
-                // 恢復面板數值
                 cpPrimary.value = defaultPrimary;
                 cpBg.value = defaultBg;
                 if (hexPrimary) hexPrimary.textContent = defaultPrimary;
                 if (hexBg) hexBg.textContent = defaultBg;
 
-                // 清除記憶
                 localStorage.removeItem('moss-theme-primary');
                 localStorage.removeItem('moss-theme-bg');
             });
         }
     }
-
     // --- 5. AI 訓練資料庫比例計算機邏輯 ---
     const totalInput = document.getElementById('totalPhotos');
     if (totalInput) {
