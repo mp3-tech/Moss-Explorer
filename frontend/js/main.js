@@ -21,26 +21,20 @@ document.addEventListener("DOMContentLoaded", function() {
         
         function formatTime(distance) {
             if (isNaN(distance) || distance < 0) return "已截止";
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-            const hrStr = hours.toString().padStart(2, '0');
-            const minStr = minutes.toString().padStart(2, '0');
-            const secStr = seconds.toString().padStart(2, '0');
+            const days = Math.floor(distance / (86400000));
+            const hours = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
+            const minutes = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
+            const seconds = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
 
-            return `${days}<span>天</span>${hrStr}<span>時</span>${minStr}<span>分</span>${secStr}<span>秒</span>`;
+            return `${days}<span>天</span>${hours}<span>時</span>${minutes}<span>分</span>${seconds}<span>秒</span>`;
         }
 
-        // 獨立更新：科學展覽會倒數
         const timerScience = document.getElementById("timer-science");
         if (timerScience) {
             const savedSciStr = localStorage.getItem("targetDateScience") || `${currentYear}-09-01T23:59:59`;
             timerScience.innerHTML = formatTime(new Date(savedSciStr).getTime() - now);
         }
 
-        // 獨立更新：小論文倒數 (若該頁面沒有此區塊也不會當機)
         const timerEssay = document.getElementById("timer-essay");
         if (timerEssay) {
             const savedEssStr = localStorage.getItem("targetDateEssay") || `${currentYear}-10-15T12:00:00`;
@@ -50,103 +44,33 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
     
-    // --- 3. 懸浮調色盤全站控制與智慧開關 ---
-    const colorBarPanel = document.getElementById('color-bar-panel');
-    const openColorBtn = document.getElementById('open-color-btn');
-    const closeColorBtn = document.getElementById('close-color-btn');
-
-    const cpPrimary = document.getElementById('cp-primary');
-    const cpBg = document.getElementById('cp-bg');
-    const hexPrimary = document.getElementById('hex-primary');
-    const hexBg = document.getElementById('hex-bg');
-    const btnReset = document.getElementById('btn-reset');
-
-    // 【功能 A：讀取並在所有頁面套用已儲存的顏色】
-    function applySavedColors() {
-        const savedPrimary = localStorage.getItem('moss-theme-primary');
-        const savedBg = localStorage.getItem('moss-theme-bg');
-
-        if (savedPrimary) {
-            document.documentElement.style.setProperty('--primary', savedPrimary);
-            if (cpPrimary) cpPrimary.value = savedPrimary;
-            if (hexPrimary) hexPrimary.textContent = savedPrimary;
-        }
-        if (savedBg) {
-            document.documentElement.style.setProperty('--bg-body', savedBg);
-            if (cpBg) cpBg.value = savedBg;
-            if (hexBg) hexBg.textContent = savedBg;
-        }
-    }
-    
-    applySavedColors();
-
-    // 【功能 B：面板智慧開關 (無敵防彈版)】
-    if (colorBarPanel && openColorBtn) {
-        
-        // 1. 點擊按鈕開啟面板
-        openColorBtn.addEventListener('click', () => {
-            colorBarPanel.classList.add('show');
-            openColorBtn.style.display = 'none'; 
-        });
-
-        // 2. 點擊 X 按鈕關閉
-        if (closeColorBtn) {
-            closeColorBtn.addEventListener('click', () => {
-                colorBarPanel.classList.remove('show');
-                openColorBtn.style.display = ''; // 設為空字串，完美恢復 CSS 預設排版
-            });
-        }
-
-        // 3. 點擊網頁空白處關閉
-        document.addEventListener('click', (e) => {
-            // 如果面板是開著的
-            if (colorBarPanel.classList.contains('show')) {
-                // 如果點擊的目標「不是」面板裡面，也「不是」開啟按鈕本身
-                if (!colorBarPanel.contains(e.target) && !openColorBtn.contains(e.target)) {
-                    colorBarPanel.classList.remove('show');
-                    openColorBtn.style.display = ''; 
+    // --- 3. 全站色彩同步智慧控制中心 (全新升級版) ---
+    function applyGlobalSavedColors() {
+        const stored = localStorage.getItem('siteColorTheme');
+        if (stored) {
+            try {
+                const theme = JSON.parse(stored);
+                // 讀取 JSON 並精準修改當前頁面的 CSS 全域變數
+                if (theme.primary) {
+                    document.documentElement.style.setProperty('--primary', theme.primary);
                 }
+                if (theme.secondary) {
+                    document.documentElement.style.setProperty('--secondary', theme.secondary);
+                }
+                if (theme.accent) {
+                    document.documentElement.style.setProperty('--accent', theme.accent);
+                }
+                if (theme.bg) {
+                    document.documentElement.style.setProperty('--bg-body', theme.bg);
+                }
+            } catch (e) {
+                console.error("同步全站配色時發生錯誤:", e);
             }
-        });
-    }
-
-    // 【功能 C：即時變色並自動記憶】
-    if (cpPrimary && cpBg) {
-        // 監聽主色調更改
-        cpPrimary.addEventListener('input', (e) => {
-            const color = e.target.value;
-            document.documentElement.style.setProperty('--primary', color);
-            if (hexPrimary) hexPrimary.textContent = color;
-            localStorage.setItem('moss-theme-primary', color); 
-        });
-
-        // 監聽背景色更改
-        cpBg.addEventListener('input', (e) => {
-            const color = e.target.value;
-            document.documentElement.style.setProperty('--bg-body', color);
-            if (hexBg) hexBg.textContent = color;
-            localStorage.setItem('moss-theme-bg', color);
-        });
-
-        // 重設預設值
-        if (btnReset) {
-            btnReset.addEventListener('click', () => {
-                const defaultPrimary = '#2e7d32';
-                const defaultBg = '#F3F5F2';
-
-                document.documentElement.style.setProperty('--primary', defaultPrimary);
-                document.documentElement.style.setProperty('--bg-body', defaultBg);
-                
-                cpPrimary.value = defaultPrimary;
-                cpBg.value = defaultBg;
-                if (hexPrimary) hexPrimary.textContent = defaultPrimary;
-                if (hexBg) hexBg.textContent = defaultBg;
-
-                localStorage.removeItem('moss-theme-primary');
-                localStorage.removeItem('moss-theme-bg');
-            });
         }
     }
+    // 任何分頁一載入，立刻向首頁調色盤對齊顏色
+    applyGlobalSavedColors();
+
     // --- 5. AI 訓練資料庫比例計算機邏輯 ---
     const totalInput = document.getElementById('totalPhotos');
     if (totalInput) {
@@ -375,26 +299,23 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // --- 9. 開場動畫 (Splash Screen) 終極防呆邏輯 ---
+    // --- 9. 開場動畫 (Splash Screen) 智慧控制邏輯 ---
     const splashScreen = document.getElementById('splash-screen');
     if (splashScreen) {
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
         
         if (!hasSeenSplash) {
-            // 第一次進來，強制 2.5 秒後執行隱藏動作
             setTimeout(() => {
                 splashScreen.style.opacity = '0';
                 splashScreen.style.visibility = 'hidden';
-                splashScreen.style.pointerEvents = 'none'; // 滑鼠穿透，防卡死
+                splashScreen.style.pointerEvents = 'none'; 
                 sessionStorage.setItem('moss_splash_seen', 'true');
                 
-                // 動畫結束後徹底移除
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                 }, 500); 
             }, 2500); 
         } else {
-            // 已經看過，瞬間消失
             splashScreen.style.display = 'none';
         }
     }
