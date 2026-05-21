@@ -18,7 +18,7 @@
             background: #ffffff;
             border: 1px solid #e0e0e0;
             border-radius: 8px;
-            padding: 0; /* 讓 header 可以滿版點擊 */
+            padding: 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             overflow: hidden;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -80,13 +80,12 @@
         /* 預設隱藏的參考文獻摺疊面板 */
         .issue-references {
             background: #fcfdfe;
-            max-height: 0; /* 預設高度為 0 達成隱藏 */
+            max-height: 0; 
             opacity: 0;
             overflow: hidden;
             transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.2s ease;
         }
 
-        /* 內層容器，確保展開時內距不會穿幫 */
         .references-inner {
             padding: 24px 32px;
             border-top: 1px solid #f0f0f0;
@@ -136,7 +135,7 @@
             color: var(--primary, #2e7d32);
         }
         .issue-card.open .issue-references {
-            max-height: 1000px; /* 給予足夠大的最大高度容納文獻 */
+            max-height: 1000px;
             opacity: 1;
             transition: max-height 0.4s cubic-bezier(1, 0, 1, 0), opacity 0.3s ease;
         }
@@ -158,23 +157,62 @@
 
             <div class="issue-card">
                 <div class="issue-header">
-                    <h3>議題一：機器學習於微觀生態辨識的學術倫理與數據真實性</h3>
+                    <h3>議題一：苔蘚與空汙</h3>
                     <div class="issue-toggle-icon">▼</div>
                 </div>
                 <div class="issue-body">
-                    <p>
-                        隨著電腦視覺技術的普及，越來越多中學生在科展中導入 AI 模型進行生物影像分類。然而，這引發了全新的學術誠信問題：當研究者過度依賴 AI 產出的辨識機率，而忽略了實體標本的解剖學特徵核對時，研究本質是否產生偏離？
-                    </p>
-                    <p>
-                        此外，資料集的操弄與過度清洗（如為了提高模型訓練準確率而惡意刪除過於模糊、但屬於真實觀測的自然樣本）是否等同於傳統科學實驗中的「選擇性篩選數據」？本平台的初衷即在於強調 Human-in-the-Loop 的重要性，堅持 AI 僅作為放大鏡，而知識組織與詮釋資料的審核核心依然在於人類研究者。
-                    </p>
+                    <p>苔蘚可以作為分析空氣是否有汙染的方法之一，可
+以嘗試將苔蘚綁成球狀，並把苔蘚球吊在空氣污染的區域裡面，而
+苔蘚會吸收附近的污染物質，透過偵測裡面污染物質跟觀察苔蘚細
+11
+胞受損的狀況，可以偵測附近環境的品質，包括是否有酸雨、重金
+屬、或是污染的氣體等（楊嘉棟，無日期），而此方法被稱為「苔球
+法」。</p>
                 </div>
                 <div class="issue-references">
                     <div class="references-inner">
                         <h4>參考文獻 References</h4>
                         <ul>
-                            <li>林崇熙 (2022)。人工智慧技術衝擊下的學術倫理新視界。科學與倫理季刊，14(3)，45-58。</li>
-                            <li>Walshe, N., & Driver, P. (2019). AI in school-level ecology education: Technological augmentation or scientific displacement? <i>Journal of Biological Education</i>, 53(4), 412-426. <a href="https://doi.org/10.1080/00219266.2019.1643762" target="_blank">https://doi.org/10.1080/00219266.2019.1643762</a></li>
+                            <li> Bryophytes as bioindicators of the atmospheric environment in urbanforest landscapes
+ Oishi Y, Hiura T. Bryophytes as bioindicators of the atmospheric environment in
+urban-forest landscapes [Internet]. ScienceDirect. 2017 [cited 2026 April 30].
+Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S0169204617301
+72X
+</li>
+                            <li> Investigation of spatial and temporal metal atmospheric deposition in
+France through lichen and moss bioaccumulation over one century
+ Agnan Y, Séjalon-Delmas N, Claustres A, Probst A. Investigation of spatial and.
+temporal metal atmospheric deposition in France through lichen and moss
+bioaccumulation over one century [Internet]. ScienceDirect. 2015 [cited 2026
+April 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S0048969715301
+42X</li>
+                            <li>Effects of air pollution from road transport on growth and physiology of six
+transplanted bryophyte species
+Bignal KL, Ashmore MR, Headley AD. Effects of air pollution from road
+transport on growth and physiology of six transplanted bryophyte species
+[Internet]. ScienceDirect. 2008 [cited 2026 April 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S026974910800
+0985
+</li>
+                            <li>Spatial structure of trace elements in extensive biomonitoring surveys with
+terrestrial mosses
+12
+Boquete MT, Fernández JÁ, Aboal JR, Real C, Carballeira A. Spatial structure
+of trace elements in extensive biomonitoring surveys with terrestrial mosses
+[Internet]. ScienceDirect. 2009 [cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S004896970900
+8614</li>
+                            <li>Active moss biomonitoring for extensive screening of urban air pollution:
+Magnetic and chemical analyses
+Vuković G, Urošević MA, Goryainova Z, Pergal M, Škrivanj S, Samson R, et al.
+Active moss biomonitoring for extensive screening of urban air pollution:
+Magnetic and chemical analyses [Internet]. ScienceDirect. 2015 [cited 2026 Apr
+30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S004896971500
+3605
+</li>
                         </ul>
                     </div>
                 </div>
@@ -182,23 +220,52 @@
 
             <div class="issue-card">
                 <div class="issue-header">
-                    <h3>議題二：公民科學大數據與微觀群落特徵的詮釋資料規範</h3>
+                    <h3>議題二：苔蘚與商業</h3>
                     <div class="issue-toggle-icon">▼</div>
                 </div>
                 <div class="issue-body">
-                    <p>
-                        如 iNaturalist、GBIF 等全球公民科學資料庫提供了海量的物種出現紀錄，但這些平台往往缺乏微觀形態特徵（例如苔蘚的生長型態、孢蒴結構）的結構化表格欄位。這使得高中生在嘗試進行機器學習訓練時，面臨嚴重的「有資料、無特徵」的斷層。
-                    </p>
-                    <p>
-                        從圖書資訊學與知識組織的角度來看，建置一套標準化的形態詮釋資料（Metadata Schema）是生態大數據走向 AI 深度應用的關鍵。本平台透過特徵矩陣比對器，引導學生自行建立欄位定義，正是嘗試在微觀生態研究中實踐高質量的資訊組織規範。
-                    </p>
+                    <p>水苔是苔蘚的一種，又稱泥炭苔，除了本身是重要
+的園藝資材（蘭花經常使用水苔作為資材）外，水苔生長的沼澤深
+層更是有著釀製煙燻威士忌的重要材料「泥煤」（楊嘉棟，無日
+期），更甚至有部分苔蘚是生醫界的關注對象，蘊含不少商機。</p>
                 </div>
                 <div class="issue-references">
                     <div class="references-inner">
                         <h4>參考文獻 References</h4>
                         <ul>
-                            <li>張郁蔚 (2020)。數位典藏詮釋資料與知識組織系統之整合研究。教育資料與圖書館學，57(1), 89-115。</li>
-                            <li>Franz, N. M., & Sterner, B. S. (2018). To increase trust, taxonomic data databases need metadata standards for morphological traits. <i>Biodiversity Data Journal</i>, 6, e25643. <a href="https://doi.org/10.3897/BDJ.6.e25643" target="_blank">https://doi.org/10.3897/BDJ.6.e25643</a></li>
+                            <li>Mosses in biotechnology
+Decker EL, Reski R. Mosses in biotechnology [Internet]. ScienceDirect. 2020
+[cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/pii/S095816691930096
+5
+</li>
+                            <li> Bryophytes – an emerging source for herbal remedies 」and chemical
+production
+Sabovljević MS, Sabovljević AD, Ikram NKK, Peramuna A, Bae H, Simonsen
+HT. Bryophytes – an emerging source for herbal remedies and chemical
+13
+production [Internet]. Cambridge Core. 2016 [cited 2026 Apr 30]. Available
+from: https://www.cambridge.org/core/journals/plant-geneticresources/article/abs/bryophytes-an-emerging-source-for-herbalremedies-and-chemicalproduction/3E429765F05A536DCAEA2484354D81B3
+</li>
+                            <li> Recent Developments of Commercial Products from Bryophytes
+Frahm JP. Recent Developments of Commercial Products from Bryophytes
+[Internet]. JSTOR. 2004 [cited 2026 Apr 30]. Available from:
+https://www.jstor.org/stable/3244860
+</li>
+                            <li>Natural Products from Bryophytes: From Basic Biology to Biotechnological
+Applications
+Horn A, Pascal A, Lonć arević I, Marques RV, Lu Y, Miguel S, et al. Natural
+Products from Bryophytes: From Basic Biology to Biotechnological Applications
+[Internet]. Taylor &Francis Online. 2021 [cited 2026 Apr 30]. Available from:
+https://www.tandfonline.com/doi/full/10.1080/07352689.2021.1911034</li>
+                            <li> Sphagnum moss as a novel growth medium in sustainable indoor agriculture
+systems
+McKeon-Bennett MMP, Hodkinson TR. Natural Products from Bryophytes:
+From Basic Biology to Biotechnological Applications [Internet]. ScienceDirect.
+2021 [cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/pii/S246858442100041
+6
+</li>
                         </ul>
                     </div>
                 </div>
@@ -206,23 +273,157 @@
 
             <div class="issue-card">
                 <div class="issue-header">
-                    <h3>議題三：中學生環境指標研究中的採集倫理與永續發展</h3>
+                    <h3>議題三：苔蘚與暖化</h3>
                     <div class="issue-toggle-icon">▼</div>
                 </div>
                 <div class="issue-body">
-                    <p>
-                        苔蘚植物生長緩慢，對於維護地表水分與微氣候穩定具有重要生態功能。中學生在進行科學展覽會或小論文研究時，常因需要採集大量樣本進行矩陣建檔，而在不經意間對特定區域的微型群落造成破壞。
-                    </p>
-                    <p>
-                        因此，如何平衡「科學探究的樣本需求」與「生態環境的永續維護」是不可忽視的議題。本平台強力宣導「非破壞性採集原則」，引導學生透過高解析度微距鏡頭（微觀探險儀）進行現場數位標註與影像記錄，以數位典藏取代傳統大量實體採集，達成綠色科研的永續目標。
-                    </p>
+                    <p>近年歐洲的研究發現泥炭沼澤地（水苔生長的沼
+澤）的分布區域不斷地往北極地區移動，且往北移動的趨勢非常明
+顯，可以證明地球的溫度的確是在上升的，也是目前全球暖化非常
+有力的證據之一（楊嘉棟，無日期）。</p>
                 </div>
                 <div class="issue-references">
                     <div class="references-inner">
                         <h4>參考文獻 References</h4>
                         <ul>
-                            <li>行政院國家科學委員會 (2024)。中等學校科學展覽會安全及倫理守則規範。台北市：國科會。</li>
-                            <li>Bryological Conservation Group (2021). <i>Code of conduct for bryophyte field sampling and digital archive methods</i>. London: BBS Publication.</li>
+                            <li>The moss genus Didymodon as an indicator of climate change on the Tibetan
+Plateau
+14
+Kou J, Wang T, Yu F, Sun Y, Feng C, Shao X. The moss genus Didymodon as
+an indicator of climate change on the Tibetan Plateau [Internet]. ScienceDirect.
+2020 [cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S1470160X2030
+1412
+</li>
+                            <li>Effects of climate warming on Sphagnum photosynthesis in peatlands depend on
+peat moisture and species-specific anatomical traits
+Jassey VEJ. Effects of climate warming on Sphagnum photosynthesis in
+peatlands depend on peat moisture and species-specific anatomical traits
+[Internet]. WILEY Online Library. 2019 [cited 2026 Apr 30]. Available from:
+https://onlinelibrary.wiley.com/doi/abs/10.1111/gcb.14788</li>
+                            <li>bryophytes are predicted to lag behind future climate change despite their high
+dispersal capacities
+Zanatta F, Engler R. , Collart F, Broennimann O, Mateo RG, Papp B, et al.
+Bryophytes are predicted to lag behind future climate change despite their high
+dispersal capacities [Internet]. nature communications. 2020 [cited 2026 Apr 30].
+Available from: https://www.nature.com/articles/s41467-020-19410-8</li>
+                            <li>Will bryophytes survive in a warming world?
+He X, He KS, Hyvönen J. Will bryophytes survive in a warming world?
+[Internet]. ScienceDirect. 2016 [cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S14338319163
+00117</li>
+                            <li> Is Antarctica Greening?
+Colesie C, Gray AM, Walshaw Charlotte V., Bokhorst Stef , Kerby, JT, Jawak
+S, et al. Is Antarctica Greening? [Internet]. WILEY Online Library. 2025 [cited
+2026 Apr 30]. Available from:
+https://onlinelibrary.wiley.com/doi/10.1111/gcb.70294 </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-header">
+                    <h3>議題四：遠端物候監測與訊號工程</h3>
+                    <div class="issue-toggle-icon">▼</div>
+                </div>
+                <div class="issue-body">
+                    <p>物候監測是指對生物，以動植物為
+主，受環境氣候影響而產生的週期性現象進行長期觀察與記錄，由
+於時間尺度多半較長且部分地點難以到達，故多採用公民科學與自
+15
+動化偵測（遠端，利用相機或低地衛星等不同設備）的方式，公民
+科學的方式難以確保其照片毫無雜訊，而自動化偵測又會因為惡劣
+天氣、地震等因素導致其出現大量雜訊干擾和訊號中斷導致資料缺
+失，因此如何過濾雜訊便極為重要。</p>
+                </div>
+                <div class="issue-references">
+                    <div class="references-inner">
+                        <h4>參考文獻 References</h4>
+                        <ul>
+                            <li> Remote sensing of temperate and boreal forest phenology: A review of progress,
+challenges and opportunities in the intercomparison of in-situ and satellite
+phenological metrics
+Berra FF, Gaulton Rachel. Remote sensing of temperate and boreal forest
+phenology: A review of progress, challenges and opportunities in the
+intercomparison of in-situ and satellite phenological metrics [Internet].
+ScienceDirect. 2021 [cited 2026 Apr 30]. Available from:
+https://www.sciencedirect.com/science/article/abs/pii/S0378112720314
+328</li>
+                            <li>Phenology from Landsat when data is scarce: Using MODIS and Dynamic TimeWarping to combine multi-year Landsat imagery to derive annual phenology
+curves
+Baumann M, Ozdogan M, Richardson AD, Radeloff V. Phenology from
+Landsat When Data Is Scarce: Using MODIS and Dynamic Time-Warping to
+Combine Multi-Year Landsat Imagery to Derive Annual Phenology Curves
+[Internet]. ResearchGate. 2017 [cited 2026 Apr 30]. Available from:
+https://www.researchgate.net/publication/308351827_Phenology_fro
+m_Landsat_When_Data_Is_Scarce_Using_MODIS_and_Dynamic_Time
+-Warping_to_Combine_MultiYear_Landsat_Imagery_to_Derive_Annual_Phenology_Curves
+</li>
+                            <li>Emerging opportunities and challenges in phenology: A review
+Tang J, Körner C, Muraoka H, Piao S, Shen Miaogen, Thackeray SJ, et al.
+Emerging opportunities and challenges in phenology: a review [Internet].
+Director of Publishing at ESA. 2016 [cited 2026 Apr 30]. Available from:
+https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecs2.1436</li>
+                            <li>Remote sensing phenology status and the way forward
+C. RB, D. SM, X. X. REMOTE SENSING PHENOLOGY STATUS AND THE
+WAY FORWARD [Internet]. SCRIP Open Access. 2009 [cited 2026 Apr 30].
+Available from:
+https://www.scirp.org/reference/referencespapers?referenceid=212004
+9
+</li>
+                            <li>Plant phenology and global climate change: Current progresses and challenges
+Piao S, Liu Qiang, Chen A, Janssens Ivan A., Fu Y, Dai J, et al. Plant phenology
+and global climate change: Current progresses and challenges [Internet]. WILEY.
+2019 [cited 2026 Apr 30]. Available from:
+https://onlinelibrary..com/doi/abs/10.1111/gcb.14619</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-header">
+                    <h3>議題五：人工智慧與物候監測</h3>
+                    <div class="issue-toggle-icon">▼</div>
+                </div>
+                <div class="issue-body">
+                    <p>由於人工智慧和深度學習的技術發展迅
+速，國際的科學研究團隊也開始探討能否利用人工智慧、機器學習
+等方式來實現不間段的自動化物候監測。</p>
+                </div>
+                <div class="issue-references">
+                    <div class="references-inner">
+                        <h4>參考文獻 References</h4>
+                        <ul>
+                            <li>Deep Learning in Plant Phenological Research: A Systematic Literature Review
+Katal Negin, Rzanny Michael, Mäder P, Wäldchen J. Deep Learning in Plant
+Phenological Research: A Systematic Literature Review [Internet]. frontiers.
+2022 [cited 2026 Apr 30]. Available from:
+https://www.frontiersin.org/journals/plantscience/articles/10.3389/fpls.2022.805738/full</li>
+                            <li>Uncovering Ecological Patterns with Convolutional Neural Networks
+Brodrick PG, Davies AB, Asner GP. Uncovering Ecological Patterns with
+Convolutional Neural Networks [Internet]. CellPress. 2019 [cited 2026 Apr 30].
+Available from: https://www.cell.com/trends/ecologyevolution/abstract/S0169-5347(19)30086-2</li>
+                            <li>Going deeper in the automated identification of Herbarium specimens
+Rojas Jose Carranza, Goeau H, Bonnet P, Montero EM, Joly Alexis . Going
+deeper in the automated identification of Herbarium specimens [Internet].
+Springer Nature Link. 2017 [cited 2026 Apr 30]. Available from:
+https://link.springer.com/article/10.1186/s12862-017-1014-z</li>
+                            <li>Applications for deep learning in ecology
+17
+Christin S, Hervet Éric, Lecomte N. Applications for deep learning in ecology
+[Internet]. besjournals. 2019 [cited 2026 Apr 30]. Available from:
+https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-
+210X.13256</li>
+                            <li>Leveraging Artificial Intelligence for Large-Scale Plant Phenology Studies from
+Noisy Time-Lapse Images
+Correia D, Bouachir W, Gervais D, Pureswaran D. , Kneeshaw D, Grandpré L.
+De . Leveraging Artificial Intelligence for Large-Scale Plant Phenology Studies
+From Noisy Time-Lapse Images [Internet]. ResearchGate. 2020 [cited 2026 Apr
+30]. Available from:
+https://www.researchgate.net/publication/338496873_Leveraging_Artif
+icial_Intelligence_for_LargeScale_Plant_Phenology_Studies_From_Noisy_Time-Lapse_Images</li>
                         </ul>
                     </div>
                 </div>
@@ -239,10 +440,7 @@
             
             issueHeaders.forEach(header => {
                 header.addEventListener('click', function() {
-                    // 找到點擊對象的最外層卡片
                     const card = this.parentElement;
-                    
-                    // 切換 open 類別（觸發 CSS max-height 與動畫）
                     card.classList.toggle('open');
                 });
             });
