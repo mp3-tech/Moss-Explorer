@@ -723,10 +723,27 @@
             catch(e) {}
         }
 
-        fab.addEventListener('click', () => panel.classList.add('open'));
+        // 1. 點擊按鈕開啟面板
+        fab.addEventListener('click', (e) => {
+            panel.classList.add('open');
+        });
+
+        // 2. 點擊 X 按鈕關閉
         xBtn.addEventListener('click', () => {
             if (pending && !saved_flag) revert();
             panel.classList.remove('open');
+        });
+
+        // 3. 【全新加入】點擊網頁其他空白處，自動收合面板
+        document.addEventListener('click', (e) => {
+            // 如果面板是開著的
+            if (panel.classList.contains('open')) {
+                // 判斷點擊的位置「不是面板本身」也「不是打開按鈕」
+                if (!panel.contains(e.target) && !fab.contains(e.target)) {
+                    if (pending && !saved_flag) revert(); // 如果只是預覽沒按儲存，收起來時自動復原
+                    panel.classList.remove('open');
+                }
+            }
         });
 
         picker.addEventListener('input', () => {
