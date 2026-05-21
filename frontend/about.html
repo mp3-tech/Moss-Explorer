@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>關於我們 - AI 蘚苔探險家</title>
-    <link rel="stylesheet" href="css/style.css?v=7">
+    <link rel="stylesheet" href="css/style.css?v=8">
     <style>
         /* ========================================================
            PAGE BACKGROUND — 延續首頁的科研微光背板
@@ -48,13 +48,13 @@
             max-width: 1060px;
             width: 100%;
             margin: 0 auto;
-            padding: 40px 40px 80px;
+            padding: 20px 40px 80px; /* 縮小上方 padding 讓麵包屑更緊湊 */
             box-sizing: border-box;
         }
 
         .about-hero-section {
             text-align: center;
-            padding: 40px 0 60px;
+            padding: 20px 0 60px;
         }
 
         .about-title {
@@ -93,22 +93,23 @@
             padding: 30px 24px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .vision-icon {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            display: block;
+        .vision-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.08);
+            border-bottom: 3px solid var(--primary, #2e7d32);
         }
         .vision-card h3 {
-            margin: 0 0 12px 0;
+            margin: 0 0 16px 0;
             font-size: 1.15rem;
             color: var(--primary, #2e7d32);
             font-weight: 700;
         }
         .vision-card p {
             margin: 0;
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 0.95rem;
+            color: #555;
             line-height: 1.6;
         }
 
@@ -138,62 +139,61 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.9);
-            border-left: 5px solid var(--primary, #2e7d32);
             border-radius: 12px;
             padding: 32px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.06);
         }
+        .contact-card-consult { border-left: 5px solid #ef6c00; }
+        .contact-card-sys { border-left: 5px solid var(--primary, #2e7d32); }
 
         .contact-card h4 {
-            margin: 0 0 8px 0;
+            margin: 0 0 12px 0;
             font-size: 1.3rem;
             font-weight: 800;
             color: #1a1a1a;
         }
         .team-role-tag {
             display: inline-block;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            color: var(--primary, #2e7d32);
-            background: color-mix(in srgb, var(--primary, #2e7d32) 10%, white);
-            padding: 3px 10px;
+            padding: 4px 10px;
             border-radius: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
+        .tag-consult { background: #fff3e0; color: #ef6c00; }
+        .tag-sys { background: color-mix(in srgb, var(--primary, #2e7d32) 10%, white); color: var(--primary, #2e7d32); }
 
         .contact-method-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
         .method-item {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 0.92rem;
-            color: #444;
+            flex-direction: column;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 12px;
         }
-        .method-icon {
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            width: 20px;
-            text-align: center;
+        .method-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
         }
-        .method-details strong {
+        .method-item strong {
             display: block;
-            color: #1a1a1a;
             font-size: 0.8rem;
             color: #888;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             text-transform: uppercase;
         }
-        .method-details span {
+        .method-item span {
             font-size: 0.95rem;
+            color: #333;
             word-break: break-all;
+            font-weight: 500;
         }
 
         @media (max-width: 820px) {
-            .about-container { padding: 24px 24px 60px; }
+            .about-container { padding: 16px 24px 60px; }
             .vision-grid { grid-template-columns: 1fr; gap: 16px; }
             .contact-grid { grid-template-columns: 1fr; gap: 20px; }
         }
@@ -205,15 +205,18 @@
     <div id="navbar-placeholder"></div>
 
     <div class="page-shell">
+        
+        <div class="idx-breadcrumb-wrapper">
+            <nav class="breadcrumb idx-breadcrumb-inner">
+                <a href="index.html">首頁</a>
+                <span>&gt; 關於我們</span>
+            </nav>
+        </div>
+
         <main class="about-container">
             
-            <nav class="breadcrumb" style="margin-bottom: 20px;">
-                <a href="index.html">首頁</a>
-                <span>➔ 關於我們</span>
-            </nav>
-
             <section class="about-hero-section">
-                <h1 class="about-title">用資訊組織，引導 <span class="highlight">AI 生态學研究</span></h1>
+                <h1 class="about-title">用資訊組織，引導 <span class="highlight">AI 生態學研究</span></h1>
                 <p class="about-subtitle">
                     我們是來自圖書資訊學專業的研究團隊。我們深信，在 AI 大數據時代，嚴謹的資料分類學（Taxonomy）與精準的詮釋資料（Metadata）架構，才是賦予 AI 辨識微觀生態真正價值的核心基石。
                 </p>
@@ -221,96 +224,69 @@
 
             <section class="vision-grid">
                 <div class="vision-card">
-                    <span class="vision-icon"></span>
                     <h3>知識組織精神</h3>
-                    <p>將繁複的蘚苔文獻描述，轉化為標準化、結構化的 5 大核心形態特徵矩陣。</p>
+                    <p>將繁複的蘚苔文獻描述，轉化為標準化、結構化的核心形態特徵矩陣。</p>
                 </div>
                 <div class="vision-card">
-                    <span class="vision-icon"></span>
                     <h3>黃金資料集標註</h3>
-                    <p>引導科學探險者進行 Human-in-the-Loop 半自動標註，親手建立無價的 AI 訓練資料。</p>
+                    <p>引導科學探險者進行 Human-in-the-Loop 半自動標註，建立高品質的 AI 訓練資料。</p>
                 </div>
                 <div class="vision-card">
-                    <span class="vision-icon"></span>
                     <h3>學術參考諮詢</h3>
-                    <p>串聯圖書館專業資源，為高中生科展與小論文提供強大的資訊檢索與規範指引。</p>
+                    <p>串聯專業資源，為高中生科展與小論文提供強大的資訊檢索與規範指引。</p>
                 </div>
             </section>
 
             <section>
                 <h2 class="contact-section-title">參考諮詢與技術團隊聯絡</h2>
-                <p class="contact-section-desc">若您在進行科展任務、特徵矩陣建檔或文獻搜尋時遇到瓶頸，歡迎隨時聯絡我們的專業服務小組。</p>
+                <p class="contact-section-desc">若您在進行專題任務、特徵矩陣建檔或文獻搜尋時遇到困難，請隨時聯絡本系統的專業服務小組。</p>
                 
                 <div class="contact-grid">
                     
-                    <div class="contact-card" style="border-left-color: #ef6c00;">
+                    <div class="contact-card contact-card-consult">
                         <h4>參考諮詢服務組</h4>
-                        <span class="team-role-tag" style="background: #fff3e0; color: #ef6c00;">文獻檢索 / 引用校對 / 科展諮詢</span>
+                        <span class="team-role-tag tag-consult">文獻檢索 / 引用校對 / 科展諮詢</span>
                         
                         <div class="contact-method-list">
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>電子郵件信箱</strong>
-                                    <span>[預留：請填寫參考諮詢組 Email，例如: ref-service@example.com]</span>
-                                </div>
+                                <strong>電子郵件信箱 Email</strong>
+                                <span>[預留：請填寫諮詢組信箱，例如 ref-service@example.com]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>辦公室聯絡電話</strong>
-                                    <span>[預留：請填寫分機，例如: (02) 2621-5656 ext. 2345]</span>
-                                </div>
+                                <strong>辦公室聯絡電話 Telephone</strong>
+                                <span>[預留：請填寫分機，例如 (02) 2621-5656 ext. 2345]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>服務臨櫃位置</strong>
-                                    <span>[預留：請填寫實體研究室或圖書館櫃檯位置]</span>
-                                </div>
+                                <strong>服務臨櫃位置 Location</strong>
+                                <span>[預留：請填寫實體研究室或櫃檯位置]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>諮詢服務時間</strong>
-                                    <span>[預留：請填寫服務時段，例如: 週一至週五 09:00 - 17:00]</span>
-                                </div>
+                                <strong>諮詢服務時間 Service Hours</strong>
+                                <span>[預留：請填寫服務時段，例如 週一至週五 09:00 - 17:00]</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="contact-card" style="border-left-color: var(--primary);">
+                    <div class="contact-card contact-card-sys">
                         <h4>系統資訊開發組</h4>
-                        <span class="team-role-tag">網頁操作 / 資料庫儲存 / 爬蟲與 Bug 回報</span>
+                        <span class="team-role-tag tag-sys">網頁操作 / 資料庫儲存 / 爬蟲與系統回報</span>
                         
                         <div class="contact-method-list">
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>技術支援信箱</strong>
-                                    <span>[預留：請填寫系統組 Email，例如: tech-support@example.com]</span>
-                                </div>
+                                <strong>技術支援信箱 Support Email</strong>
+                                <span>[預留：請填寫系統組信箱，例如 tech-support@example.com]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>GitHub Issue 追蹤</strong>
-                                    <span>[預留：請填寫專案代碼庫網址，例如: github.com/username/repo/issues]</span>
-                                </div>
+                                <strong>GitHub Issue 追蹤 Repository</strong>
+                                <span>[預留：請填寫專案代碼庫網址]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>技術團隊基地</strong>
-                                    <span>[預留：請填寫開發小組實驗室位置]</span>
-                                </div>
+                                <strong>技術團隊基地 Lab Location</strong>
+                                <span>[預留：請填寫開發小組實驗室位置]</span>
                             </div>
                             <div class="method-item">
-                                <span class="method-icon"></span>
-                                <div class="method-details">
-                                    <strong>系統狀態公告</strong>
-                                    <span>[預留：系統更新或維護日誌連結位置]</span>
-                                </div>
+                                <strong>系統狀態公告 System Status</strong>
+                                <span>[預留：系統更新或維護日誌連結位置]</span>
                             </div>
                         </div>
                     </div>
@@ -320,9 +296,8 @@
         </main>
     </div>
 
-    <script src="js/main.js?v=7"></script>
+    <script src="js/main.js?v=8"></script>
     <script>
-        // 自動載入全站已儲存的配色
         (function () {
             const stored = localStorage.getItem('siteColorTheme');
             if (stored) {
