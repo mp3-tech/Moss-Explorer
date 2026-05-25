@@ -1,7 +1,63 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>館員諮詢服務月時間表 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 蘚苔探險家-館員諮詢服務</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body> <div id="navbar-placeholder"></div> <div class="container calendar-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt; <span>館員諮詢服務預約</span></nav> <div class="page-header"> <h1> 館員諮詢服務月 (Library Consultation)</h1> <p>文獻找不到？引用格式有問題？預約專業館員，為你的研究精準導航。</p> </div> <div class="calendar-layout"> <div class="card calendar-container"> <div class="calendar-header"> <button class="cal-nav-btn">&lt;</button> <h3 id="current-month">2026年 5月</h3> <button class="cal-nav-btn">&gt;</button> </div> <table class="full-calendar"> <thead> <tr><th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th></tr> </thead> <tbody id="calendar-body"> </tbody> </table> <div class="calendar-legend"> <span><span class="dot dot-available"></span>可預約</span> <span><span class="dot dot-booked"></span>已預約</span> <span><span class="dot dot-today"></span>今天</span> </div> </div> <div class="card booking-panel"> <h3 class="section-title"> 預約資料與信件產生</h3> <div class="input-group"> <label>已選擇日期</label> <input type="text" id="selected-date" readonly placeholder="請點擊左側日曆選擇日期"> </div> <div class="input-group"> <label for="student-school">學校名稱</label> <input type="text" id="student-school" placeholder="例如：淡江高中"> </div> <div class="input-group"> <label for="project-title">研究計畫名稱</label> <input type="text" id="project-title" placeholder="例如：利用 AI 進行校園蘚苔辨識之初探"> </div> <button class="btn btn-primary" id="btn-gen-letter" style="width: 100%;"> 產生專業預約信</button> <div id="letter-result" class="letter-box" style="display: none;"> <div class="letter-header"> <span>預約信範本 (請複製使用)</span> <button class="btn-copy" id="btn-copy-letter">複製內容</button> </div> <textarea id="letter-content" rows="10" readonly></textarea> </div> </div> </div> </div> <script src="js/main.js"></script>
+
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="container calendar-page">
+        <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <a href="tools.html">研究工具箱</a> &gt;
+            <span>館員諮詢服務預約</span></nav>
+        <div class="page-header">
+            <h1> 館員諮詢服務預約</h1>
+            <p>文獻找不到？引用格式有問題？預約專業館員，為你的研究精準導航。</p>
+        </div>
+        <div class="calendar-layout">
+            <div class="card calendar-container">
+                <div class="calendar-header"> <button class="cal-nav-btn">&lt;</button>
+                    <h3 id="current-month">2026年 5月</h3> <button class="cal-nav-btn">&gt;</button>
+                </div>
+                <table class="full-calendar">
+                    <thead>
+                        <tr>
+                            <th>日</th>
+                            <th>一</th>
+                            <th>二</th>
+                            <th>三</th>
+                            <th>四</th>
+                            <th>五</th>
+                            <th>六</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendar-body"> </tbody>
+                </table>
+                <div class="calendar-legend"> <span><span class="dot dot-available"></span>可預約</span> <span><span
+                            class="dot dot-booked"></span>已預約</span> <span><span class="dot dot-today"></span>今天</span>
+                </div>
+            </div>
+            <div class="card booking-panel">
+                <h3 class="section-title"> 預約資料與信件產生</h3>
+                <div class="input-group"> <label>已選擇日期</label> <input type="text" id="selected-date" readonly
+                        placeholder="請點擊左側日曆選擇日期"> </div>
+                <div class="input-group"> <label for="student-school">學校名稱</label> <input type="text"
+                        id="student-school" placeholder="例如：淡江高中"> </div>
+                <div class="input-group"> <label for="project-title">研究計畫名稱</label> <input type="text"
+                        id="project-title" placeholder="例如：利用 AI 進行校園蘚苔辨識之初探"> </div> <button class="btn btn-primary"
+                    id="btn-gen-letter" style="width: 100%;"> 產生專業預約信</button>
+                <div id="letter-result" class="letter-box" style="display: none;">
+                    <div class="letter-header"> <span>預約信範本 (請複製使用)</span> <button class="btn-copy"
+                            id="btn-copy-letter">複製內容</button> </div> <textarea id="letter-content" rows="10"
+                        readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
 </body>
+
 </html>
