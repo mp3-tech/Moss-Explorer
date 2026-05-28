@@ -70,18 +70,15 @@
            LAYOUT & NAVBAR (永遠懸浮設定)
            ======================================================== */
         
-        /* 將導覽列固定在畫面上方 */
-        #navbar-placeholder { 
-            position: fixed; 
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999; 
-            /* 加入一點半透明毛玻璃效果，避免往下滑時文字重疊太亂 */
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+        /* 導覽列由 header 本身 fixed 處理，此處不需重複設定 */
+        #navbar-placeholder {
+            position: static;
+            background: none;
+            backdrop-filter: none;
+            box-shadow: none;
+            height: 0;
+            padding: 0;
+            margin: 0;
         }
 
         .page-shell {
@@ -90,8 +87,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            /* 往下推 80px，避免最上方的內容被懸浮的導覽列蓋住 */
-            padding-top: 80px; 
+            /* body 已統一設定 padding-top，此處歸零避免重疊 */
+            padding-top: 0; 
         }
 
         /* ── Hero ── */
@@ -481,7 +478,7 @@
     <div id="splash-screen" class="splash-screen" style="transition: opacity 0.5s ease;"> 
         <div class="splash-content"> 
             <div class="splash-icon-wrapper"> 
-                <div class="splash-icon"></div> 
+                <img src="images/logo.png" alt="LOGO" class="splash-icon" onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('afterbegin','<span style=\'font-size:3rem;line-height:1;\'>🌿</span>')">
                 <div class="splash-scan-line"></div> 
             </div> 
             <h1 class="splash-title">AI 蘚苔探險家</h1> 
