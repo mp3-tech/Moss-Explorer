@@ -317,4 +317,34 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // --- 10. 網站地圖底部面板 (Sitemap Panel) 智慧控制邏輯 ---
+    const sitemapFab = document.getElementById('sitemap-fab');
+    const sitemapPanel = document.getElementById('sitemap-panel');
+    const sitemapCloseBtn = document.getElementById('sitemap-x');
+
+    if (sitemapFab && sitemapPanel) {
+        // 1. 點擊按鈕開啟面板
+        sitemapFab.addEventListener('click', (e) => {
+            e.stopPropagation(); // 防止點擊事件擴散導致立刻關閉
+            sitemapPanel.classList.toggle('open');
+        });
+
+        // 2. 點擊右上角 X 關閉面板
+        if (sitemapCloseBtn) {
+            sitemapCloseBtn.addEventListener('click', () => {
+                sitemapPanel.classList.remove('open');
+            });
+        }
+
+        // 3. 點擊網頁其他空白處，自動收合面板
+        document.addEventListener('click', (e) => {
+            if (sitemapPanel.classList.contains('open')) {
+                // 判斷點擊的位置如果「不是面板本身」，就關閉它
+                if (!sitemapPanel.contains(e.target)) {
+                    sitemapPanel.classList.remove('open');
+                }
+            }
+        });
+    }
+
 });
