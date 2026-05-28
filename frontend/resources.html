@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head> 
@@ -25,11 +26,15 @@
         .journal-item { background:var(--bg-card); border:1px solid var(--border-color); border-left:4px solid var(--primary); border-radius:0 10px 10px 0; padding:12px 16px; }
         .journal-item.ai { border-left-color:#1565c0; }
         .journal-item.taxonomy { border-left-color:#6d4c41; }
+        .journal-item.imgai { border-left-color:#6a1b9a; }
         .journal-name { font-weight:700; font-size:0.95rem; color:var(--text-main); }
         .journal-pub { font-size:0.8rem; color:var(--text-muted); margin-top:3px; }
         .journal-note { font-size:0.78rem; color:var(--primary); margin-top:4px; font-style:italic; }
         .lang-tag { display:inline-block; font-size:0.7rem; padding:1px 7px; border-radius:8px; margin-right:6px; background:#f1f8e9; color:var(--primary); border:1px solid #c8e6c9; }
         .lang-tag.en { background:#e3f2fd; color:#1565c0; border-color:#bbdefb; }
+        .rec-label { font-size:0.72rem; font-weight:700; color:var(--primary); margin-top:8px; }
+        .rec-text { font-size:0.78rem; color:var(--text-muted); line-height:1.6; margin-top:3px; }
+        .sub-field-title { font-size:0.9rem; font-weight:700; color:var(--text-muted); margin:18px 0 10px; padding-left:8px; border-left:3px solid var(--primary); }
     </style>
 </head>
 <body> 
@@ -48,39 +53,235 @@
             <button class="tab-btn" data-tab="databases" role="tab">資料庫平台</button> 
         </div> 
 
-        <div class="tab-panel active" id="tab-orgs"> 
-            <div class="resource-field"> 
-                <div class="field-title">植物與苔蘚學研究</div> 
-                <div class="org-grid"> 
-                    <div class="org-card"><span class="org-badge badge-tw">台灣</span> <div class="org-title"><a href="https://www.tspb.org.tw/" target="_blank">臺灣植物學會</a></div><div class="org-sub">國內植物科學發展中心，科展靈感來源。</div></div>
-                    <div class="org-card"><span class="org-badge badge-tw">台灣</span> <div class="org-title"><a href="https://ipmb.sinica.edu.tw/" target="_blank">中研院植微所</a></div><div class="org-sub">台灣頂尖植物科研機構。</div></div>
-                    <div class="org-card"><span class="org-badge badge-int">國際</span> <div class="org-title"><a href="https://www.kew.org/" target="_blank">英國皇家植物園 (Kew)</a></div><div class="org-sub">全球植物研究與保育權威。</div></div>
-                    <div class="org-card"><span class="org-badge badge-int">國際</span> <div class="org-title"><a href="https://www.bryology.org/" target="_blank">國際蘚苔植物學者協會</a></div><div class="org-sub">全球苔蘚學術交流核心。</div></div>
-                </div> 
-            </div>
-        </div> 
+        <!-- 組織網站 -->
+        <div class="tab-panel active" id="tab-orgs">
 
-        <div class="tab-panel" id="tab-journals"> 
-            <div class="journal-list">
-                <div class="journal-item"><span class="lang-tag">中文</span> <div class="journal-name"><a href="https://taiwania.ntu.edu.tw/" target="_blank">TAIWANIA</a></div><div class="journal-pub">台灣指標性植物學期刊</div></div>
-                <div class="journal-item ai"><span class="lang-tag en">英文</span> <div class="journal-name"><a href="https://www.journals.elsevier.com/artificial-intelligence" target="_blank">Artificial Intelligence</a></div><div class="journal-pub">AI 領域核心基礎理論期刊</div></div>
-                <div class="journal-item taxonomy"><span class="lang-tag en">英文</span> <div class="journal-name"><a href="https://onlinelibrary.wiley.com/journal/10958339" target="_blank">Taxon</a></div><div class="journal-pub">國際植物分類學權威期刊</div></div>
+            <div class="resource-field">
+                <div class="field-title">植物學</div>
+                <div class="sub-field-title">臺灣</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://tspb.org.tw/" target="_blank">臺灣植物學會 (TSPB)</a></div><div class="org-sub">Taiwan Society of Plant Biologists</div><div class="rec-label">推薦原因</div><div class="rec-text">提供國內植物科學最新發展的科普文章，是尋找科展靈感、了解植物生理基礎知識的最佳入口。</div></div>
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://ipmb.sinica.edu.tw/ch" target="_blank">中央研究院 植物暨微細生物學研究所 (IPMB)</a></div><div class="org-sub">Institute of Plant and Microbial Biology, Academia Sinica</div><div class="rec-label">推薦原因</div><div class="rec-text">台灣頂尖植物研究機構，其科普專區能讓學生看到最前沿的植物科學實驗與技術應用，也可申請暑期參訪。</div></div>
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://www.forest.gov.tw/" target="_blank">農業部林業及自然保育署</a></div><div class="org-sub">Forestry and Nature Conservation Agency</div><div class="rec-label">推薦原因</div><div class="rec-text">提供豐富的台灣森林與植物保育開放資料，適合用於探討生態保育與生活應用的實務型小論文。</div></div>
+                </div>
+                <div class="sub-field-title">國際</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.plantprotection.org/" target="_blank">國際植物保護科學協會 (IAPPS)</a></div><div class="org-sub">International Association for the Plant Protection Sciences</div><div class="rec-label">推薦原因</div><div class="rec-text">若想探討植物病蟲害或氣候變遷對植物的影響，這裡有國際視野的環保與防護資料。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.botany.org/" target="_blank">美國植物學會 (BSA)</a></div><div class="org-sub">Botanical Society of America</div><div class="rec-label">推薦原因</div><div class="rec-text">提供大量高品質的植物顯微圖片與教學資源，能豐富小論文的視覺呈現與科學正確性。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.missouribotanicalgarden.org/" target="_blank">美國密蘇里植物園 (MOBOT)</a></div><div class="org-sub">Missouri Botanical Garden</div><div class="rec-label">推薦原因</div><div class="rec-text">擁有龐大植物庫 Tropicos，可快速查詢學名、文獻與地理分布，提升研究專業度。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.kew.org/" target="_blank">英國皇家植物園 (Kew)</a></div><div class="org-sub">Royal Botanic Gardens, Kew</div><div class="rec-label">推薦原因</div><div class="rec-text">全球植物研究與保育權威，提供大量免費植物資料庫、圖鑑與科普文章，是確認植物學名最可靠的國際來源。</div></div>
+                </div>
             </div>
+
+            <div class="resource-field">
+                <div class="field-title">苔蘚學</div>
+                <div class="sub-field-title">臺灣</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://www.tbri.gov.tw/view.php?theme=web_structure&id=193" target="_blank">農業部生物多樣性研究所 — 藻菌苔蘚研究室</a></div><div class="org-sub">Taiwan Biodiversity Research Institute</div><div class="rec-label">推薦原因</div><div class="rec-text">提供最權威的台灣本土蘚苔圖鑑與分布資料，是做環境觀察與對照 AI 辨識結果的首選。</div></div>
+                </div>
+                <div class="sub-field-title">國際</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://bryology.org/" target="_blank">國際蘚苔植物學者協會 (IAB)</a></div><div class="org-sub">International Association of Bryologists</div><div class="rec-label">推薦原因</div><div class="rec-text">全球苔蘚學者的集散地，了解國際上目前都在關注哪些微觀植物的新發現，也能找到最新的分類修訂資訊。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.abls.org/" target="_blank">美國苔蘚及地衣學會 (ABLS)</a></div><div class="org-sub">American Bryological and Lichenological Society</div><div class="rec-label">推薦原因</div><div class="rec-text">專門研究微觀生態，其出版資源可幫助深入了解蘚苔在極端環境中的生存機制。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.britishbryologicalsociety.org.uk/" target="_blank">英國蘚苔植物學會 (BBS)</a></div><div class="org-sub">The British Bryological Society</div><div class="rec-label">推薦原因</div><div class="rec-text">提供許多初學者友善的野外觀察指南與苔蘚圖鑑，適合引導進行實地採集與紀錄。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://hattorilab.org/" target="_blank">服部植物研究所</a></div><div class="org-sub">Hattori Botanical Laboratory</div><div class="rec-label">推薦原因</div><div class="rec-text">亞洲獨有的純苔蘚研究機構，若研究涉及東亞特有種，這裡是查證物種特徵的最高指標。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">植物分類學</div>
+                <div class="sub-field-title">臺灣</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://twsps.wordpress.com/" target="_blank">台灣植物分類學會 (TSPT)</a></div><div class="org-sub">Taiwan Society of Plant Systematics</div><div class="rec-label">推薦原因</div><div class="rec-text">幫助了解植物分類的最新變動，確保小論文中使用的植物名稱與分類邏輯完全正確。</div></div>
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://www.taibif.tw/" target="_blank">台灣生物多樣性資訊機構 (TaiBIF)</a></div><div class="org-sub">Taiwan Biodiversity Information Facility</div><div class="rec-label">推薦原因</div><div class="rec-text">提供台灣物種標準名錄與開放數據庫，是建立「AI 辨識對照組」時必備的科學數據庫。</div></div>
+                </div>
+                <div class="sub-field-title">國際</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.linnean.org/" target="_blank">林奈學會</a></div><div class="org-sub">The Linnean Society</div><div class="rec-label">推薦原因</div><div class="rec-text">掌管國際植物命名法規，對某種植物的學名或分類有爭議時，這是最絕對的查證標準。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.iaptglobal.org/" target="_blank">國際植物分類學協會 (IAPT)</a></div><div class="org-sub">International Association for Plant Taxonomy</div><div class="rec-label">推薦原因</div><div class="rec-text">掌管國際植物命名法規，是確認植物命名規則與分類修訂的最高依據。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="http://catalogueoflife.org" target="_blank">生命大百科 (CoL)</a></div><div class="org-sub">Catalogue of Life</div><div class="rec-label">推薦原因</div><div class="rec-text">匯集全球物種的終極名錄，若想與國際接軌，這是確認物種身分的全球通用字典。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://systass.org/" target="_blank">系統分類學協會</a></div><div class="org-sub">The Systematics Association</div><div class="rec-label">推薦原因</div><div class="rec-text">探討演化與分類技術，可幫助理解「為什麼同一種植物會有不同外型」的深層科學原因。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">人工智慧</div>
+                <div class="sub-field-title">臺灣</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="http://aiatw.org" target="_blank">台灣人工智慧協會 (TAIA)</a></div><div class="org-sub">Taiwan Artificial Intelligence Association</div><div class="rec-label">推薦原因</div><div class="rec-text">致力於 AI 普及教育，提供許多淺顯易懂的 AI 應用案例，將艱澀技術轉化為白話文。</div></div>
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://www.taai.org.tw/" target="_blank">中華民國人工智慧學會 (TAAI)</a></div><div class="org-sub">Taiwanese Association for Artificial Intelligence</div><div class="rec-label">推薦原因</div><div class="rec-text">匯集國內最新的 AI 學術發表，想了解目前台灣 AI 技術發展的極限，這裡是最專業的指標。</div></div>
+                </div>
+                <div class="sub-field-title">國際</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="http://aaai.org" target="_blank">人工智慧促進協會 (AAAI)</a></div><div class="org-sub">Association for the Advancement of Artificial Intelligence</div><div class="rec-label">推薦原因</div><div class="rec-text">全球最重要的 AI 學術組織之一，官網有豐富的開放論文集，是掌握 AI 最新趨勢的第一手資料。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="http://sigai.acm.org" target="_blank">ACM SIGAI</a></div><div class="org-sub">ACM Special Interest Group on Artificial Intelligence</div><div class="rec-label">推薦原因</div><div class="rec-text">探討最高階演算法標準，適合對寫程式有興趣、想探究 AI 運算底層邏輯的高中生。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">AI 圖像分析</div>
+                <div class="sub-field-title">臺灣</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://ippr.org.tw/" target="_blank">中華民國影像處理與圖形識別學會 (IPPR)</a></div><div class="org-sub">The Chinese Image Processing and Pattern Recognition Society</div><div class="rec-label">推薦原因</div><div class="rec-text">國內影像辨識技術的核心，能幫助理解 AI 是如何精準「看懂」並抓取植物特徵的。</div></div>
+                    <div class="org-card"><span class="org-badge badge-tw">台灣</span><div class="org-title"><a href="https://www.itri.org.tw/" target="_blank">工業技術研究院 資訊與通訊研究所 (ITRI-ICL)</a></div><div class="org-sub">Industrial Technology Research Institute</div><div class="rec-label">推薦原因</div><div class="rec-text">提供台灣 AI 影像辨識在智慧農業與環境監測的實際應用案例，是科展實作最棒的參考。</div></div>
+                </div>
+                <div class="sub-field-title">國際</div>
+                <div class="org-grid">
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://iapr.org/" target="_blank">國際模式識別協會 (IAPR)</a></div><div class="org-sub">International Association for Pattern Recognition</div><div class="rec-label">推薦原因</div><div class="rec-text">全球影像處理的聯合組織，能了解目前機器視覺在國際上的最新技術標準與應用範圍。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.thecvf.com/" target="_blank">電腦視覺基金會 (CVF)</a></div><div class="org-sub">The Computer Vision Foundation</div><div class="rec-label">推薦原因</div><div class="rec-text">主辦頂尖的 CVPR 會議，這裡有全球最前沿的 AI 視覺辨識技術趨勢，適合拓展科技視野。</div></div>
+                    <div class="org-card"><span class="org-badge badge-int">國際</span><div class="org-title"><a href="https://www.computer.org/" target="_blank">IEEE 電腦學會</a></div><div class="org-sub">IEEE Computer Society</div><div class="rec-label">推薦原因</div><div class="rec-text">全球最大的資訊組織，其教育資源能建立紮實的電腦科學基礎，理解 AI 背後的運算科學。</div></div>
+                </div>
+            </div>
+
         </div>
 
+        <!-- 相關期刊 -->
+        <div class="tab-panel" id="tab-journals">
+
+            <div class="resource-field">
+                <div class="field-title">植物學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://taiwania.ntu.edu.tw/" target="_blank">TAIWANIA</a></div><div class="journal-pub">台大出版，台灣最具國際學術指標性的 SCIE 植物學期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">台灣發行歷史最悠久的植物學術期刊，部分文章有中文摘要，閱讀門檻相對友善，是查找台灣特有植物學術依據的第一站。</div></div>
+                    <div class="journal-item"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?PublicationID=16072928" target="_blank">自然保育季刊</a></div><div class="journal-pub">林保署出版，生態保育與科普應用文獻來源</div><div class="rec-label">推薦原因</div><div class="rec-text">由林業及自然保育署出版，文章語言易讀，高中生不需特別背景知識即可閱讀，適合作為生態保育文獻來源。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://bsapubs.onlinelibrary.wiley.com/journal/15372197" target="_blank">American Journal of Botany</a></div><div class="journal-pub">美國植物學會出版，歷史悠久的綜合植物學期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">歷史悠久且權威的綜合植物學期刊，摘要可作為了解植物研究方向的入門指引。</div></div>
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.sciencedirect.com/journal/annals-of-botany" target="_blank">Annals of Botany</a></div><div class="journal-pub">涵蓋植物生態、演化與生理的頂尖國際期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">涵蓋植物生態、演化與生理，部分文章開放閱讀，是拓展植物科學視野的優質來源。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">植物學 — 苔蘚學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?publicationID=20766971" target="_blank">台灣生物多樣性研究</a></div><div class="journal-pub">生多所出版，台灣本土苔蘚分類與生態調查的主要刊物</div><div class="rec-label">推薦原因</div><div class="rec-text">台灣目前無純粹的苔蘚中文學報，重要的本土分類與生態調查文獻皆收錄於此，是查找台灣苔蘚本土研究的首要中文來源。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://bioone.org/" target="_blank">The Bryologist</a></div><div class="journal-pub">美國苔蘚及地衣學會出版，微觀植物生態核心期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">專注苔蘚與地衣研究，若科展主題涉及苔蘚鑑定或生態，這裡是最直接的國際學術參考。</div></div>
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://bioone.org/" target="_blank">Journal of Bryology</a></div><div class="journal-pub">英國蘚苔植物學會出版，苔蘚學權威期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">收錄全球苔蘚最新分類與生態研究，是國際苔蘚文獻的核心來源。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">植物學 — 植物分類學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item taxonomy"><span class="lang-tag">中文</span><div class="journal-name"><a href="http://airitilibrary.com/Common/Click_Information?encode_Url=%2FPublication%2FInformation%3FPublicationID%3D02570520" target="_blank">國立臺灣博物館學刊</a></div><div class="journal-pub">收錄本土植物分類、命名標本考證與自然史文獻</div><div class="rec-label">推薦原因</div><div class="rec-text">收錄大量本土植物分類、命名標本考證與自然史文獻，是研究台灣特有種分類史的珍貴中文來源。</div></div>
+                    <div class="journal-item taxonomy"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?PublicationID=16068351" target="_blank">林業研究季刊</a></div><div class="journal-pub">常刊載特定本土物種之分類異動與分布調查</div><div class="rec-label">推薦原因</div><div class="rec-text">常刊載特定本土物種的分類異動與分布調查，可用於確認台灣森林生態與物種分布的最新資訊。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item taxonomy"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://onlinelibrary.wiley.com/journal/19968175" target="_blank">Taxon</a></div><div class="journal-pub">國際植物分類學協會出版，全球植物命名法規的最高學術發表平台</div><div class="rec-label">推薦原因</div><div class="rec-text">由國際植物分類學會（IAPT）支持出版，是確認植物命名規則與分類修訂的最高依據。需要確認物種正式學名是否有更新時，這裡是最值得信賴的參考。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">人工智慧</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item ai"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?PublicationID=16085752" target="_blank">資訊管理學報</a></div><div class="journal-pub">TSSCI 收錄，涵蓋 AI 技術之跨領域管理、教育與應用探討</div><div class="rec-label">推薦原因</div><div class="rec-text">TSSCI 收錄期刊，中文撰寫、閱讀門檻較低，適合入門了解 AI 在各領域的實際應用。</div></div>
+                    <div class="journal-item ai"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Article/Detail?DocID=16841220-199811-2-6-44-45-a" target="_blank">電腦與通訊</a></div><div class="journal-pub">工研院出版，報導國內最新 AI 基礎設施與技術發展趨勢</div><div class="rec-label">推薦原因</div><div class="rec-text">工研院出版，報導國內最新 AI 基礎設施與技術發展趨勢，是了解台灣 AI 產業實務的好管道。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item ai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.sciencedirect.com/journal/artificial-intelligence" target="_blank">Artificial Intelligence</a></div><div class="journal-pub">AI 領域歷史最悠久、最具影響力的基礎理論期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">歷史超過 50 年的 AI 旗艦期刊。高中生不一定能讀懂全文，但摘要（Abstract）和引言（Introduction）通常能幫助了解一個 AI 方法的核心概念。</div></div>
+                    <div class="journal-item ai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.computer.org/csdl/journal/tp" target="_blank">IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI)</a></div><div class="journal-pub">機器學習與模式分析領域的全球最高殿堂</div><div class="rec-label">推薦原因</div><div class="rec-text">機器學習與模式分析的頂尖期刊，想了解 AI 辨識的技術原理，這裡的論文是最重要的參考來源。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">AI 圖像分析</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item imgai"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?PublicationID=P20121109003" target="_blank">影像處理暨通訊期刊</a></div><div class="journal-pub">中華民國影像處理與圖形識別學會出版，國內影像辨識演算法的核心刊物</div><div class="rec-label">推薦原因</div><div class="rec-text">國內影像辨識演算法的核心刊物，適合科展技術章節引用台灣本土研究文獻。</div></div>
+                    <div class="journal-item imgai"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.airitilibrary.com/Publication/Information?PublicationID=P20171221002" target="_blank">機械工業雜誌</a></div><div class="journal-pub">工研院出版，常刊載 AI 視覺技術於自動化與感測之實務應用文獻</div><div class="rec-label">推薦原因</div><div class="rec-text">工研院出版，常刊載 AI 視覺技術的實務應用，是理解 AI 圖像辨識如何落地的好素材。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item imgai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.sciencedirect.com/journal/computers-and-electronics-in-agriculture" target="_blank">Computers and Electronics in Agriculture</a></div><div class="journal-pub">SCIE 收錄，聚焦 AI 影像辨識與自動化在植物與農業的應用</div><div class="rec-label">推薦原因</div><div class="rec-text">專門收錄 AI 影像辨識在農業與植物辨識的研究，與科展主題高度相關，可找到直接可參考的植物 AI 辨識案例。</div></div>
+                    <div class="journal-item imgai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.sciencedirect.com/journal/information-processing-in-agriculture" target="_blank">Information Processing in Agriculture</a></div><div class="journal-pub">SCIE 收錄，聚焦農林數據與圖像處理技術</div><div class="rec-label">推薦原因</div><div class="rec-text">聚焦農林數據與圖像處理技術，收錄大量植物辨識與自動化監測研究，是理解 AI 如何應用於生態研究的重要來源。</div></div>
+                    <div class="journal-item imgai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://link.springer.com/journal/11263" target="_blank">International Journal of Computer Vision (IJCV)</a></div><div class="journal-pub">SCI 收錄，全球電腦視覺與圖像分析領域的頂尖學術期刊</div><div class="rec-label">推薦原因</div><div class="rec-text">全球電腦視覺的頂尖期刊，科展若要引用 AI 辨識技術的理論基礎，這裡是最具說服力的文獻來源。</div></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 指標性研討會 -->
         <div class="tab-panel" id="tab-conferences">
-            <div class="journal-list">
-                <div class="journal-item"><span class="lang-tag">中文</span> <div class="journal-name"><a href="https://www.tbn.org.tw/" target="_blank">台灣生物多樣性研討會</a></div><div class="journal-note">觀摩本土生態研究報告的最佳場域。</div></div>
-                <div class="journal-item ai"><span class="lang-tag en">英文</span> <div class="journal-name"><a href="https://aaai.org/conferences/" target="_blank">AAAI Conference on AI</a></div><div class="journal-note">全球 AI 技術前沿趨勢與應用發表會。</div></div>
+
+            <div class="resource-field">
+                <div class="field-title">植物學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag">中文</span><div class="journal-name"><a href="http://tspb.org.tw" target="_blank">臺灣植物學會年會 (Annual Meeting of TSPB)</a></div><div class="journal-note">了解臺灣本土植物科學發展輪廓</div><div class="rec-label">推薦原因</div><div class="rec-text">可從中獲取「臺灣特有種生理機制」或「氣候變遷對中海拔霧林帶影響」等研究報告，是尋找具備在地特色科展題目的最佳資料庫。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="https://www.bunkerconference.com/" target="_blank">International Botanical Congress (IBC)</a></div><div class="journal-note">全球植物科學最高級別的綜合趨勢</div><div class="rec-label">推薦原因</div><div class="rec-text">透過探討「跨國界植物保育政策」與「基因體學育種突破」等前沿議題，幫助高中生將小論文視野從本土擴展至全球環境層次。</div></div>
+                </div>
             </div>
+
+            <div class="resource-field">
+                <div class="field-title">植物學 — 苔蘚學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://www.forest.gov.tw/0008678" target="_blank">台灣生物多樣性研討會 (Taiwan Biodiversity Conference)</a></div><div class="journal-note">台灣本土微觀生態多樣性的文獻基準</div><div class="rec-label">推薦原因</div><div class="rec-text">提供如「特定山區蘚苔群落分佈」或「都市化對微觀指標物種影響」等第一手調查報告，可作為學生野外觀察與對照的文獻基準。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item"><span class="lang-tag en">英文</span><div class="journal-name"><a href="http://bryology.org" target="_blank">IAB Congress (International Association of Bryologists)</a></div><div class="journal-note">微觀植物學界的國際最高學術殿堂</div><div class="rec-label">推薦原因</div><div class="rec-text">提供「極端氣候下苔蘚生存機制」與「全球數位圖鑑建置標準」等前沿文獻，引導學生探索全球最新發現。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">植物學 — 植物分類學</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item taxonomy"><span class="lang-tag">中文</span><div class="journal-name"><a href="https://twsps.wordpress.com/" target="_blank">臺灣植物分類學會年會暨研討會 (Annual Meeting of TSPT)</a></div><div class="journal-note">確保學名與分類架構符合國內最新學術共識</div><div class="rec-label">推薦原因</div><div class="rec-text">透過發布「本土新物種正式發表」、「外來入侵種鑑定標準」及「分類科屬異動公告」，確保小論文引用的學名符合最新共識，避免基礎錯誤。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item taxonomy"><span class="lang-tag en">英文</span><div class="journal-name"><a href="http://systass.org" target="_blank">International Congress of Systematic and Evolutionary Biology (ICSEB)</a></div><div class="journal-note">分類演化的深層科學機制</div><div class="rec-label">推薦原因</div><div class="rec-text">藉由探討「分子生物學在分類上的應用」與「跨物種 DNA 親緣關係」，幫助學生培養「為何植物外觀相似卻不同科」的進階探究能力。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">人工智慧</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item ai"><span class="lang-tag">中文</span><div class="journal-name"><a href="http://taai.org.tw" target="_blank">TAAI 人工智慧與應用研討會 (Conference on AI and Applications)</a></div><div class="journal-note">AI 跨領域實作的靈感來源</div><div class="rec-label">推薦原因</div><div class="rec-text">提供「智慧農業/環境工程導入 AI 的成功案例」，讓學生觀摩學術界如何將理論轉化為實際應用，激發 AI 跨領域實作的靈感。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item ai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="http://aaai.org/conference/aaai/" target="_blank">AAAI Conference on Artificial Intelligence</a></div><div class="journal-note">全球 AI 技術前沿趨勢與應用發表會</div><div class="rec-label">推薦原因</div><div class="rec-text">全球最重要的 AI 學術會議之一，官網公開的論文集（Proceedings）可免費瀏覽，是掌握 AI 最新應用趨勢的第一手資料。</div></div>
+                </div>
+            </div>
+
+            <div class="resource-field">
+                <div class="field-title">AI 圖像分析</div>
+                <div class="sub-field-title">中文</div>
+                <div class="journal-list">
+                    <div class="journal-item imgai"><span class="lang-tag">中文</span><div class="journal-name"><a href="http://ippr.org.tw" target="_blank">CVGIP 全國電腦視覺、圖形及影像處理研討會</a></div><div class="journal-note">本土 AI 植物辨識技術與架構參考</div><div class="rec-label">推薦原因</div><div class="rec-text">發表如「適合臺灣農林業的植物自動辨識演算法」，可作為高中生科展實作「AI 蘚苔辨識系統」時最直接的本土技術參考。</div></div>
+                </div>
+                <div class="sub-field-title">英文</div>
+                <div class="journal-list">
+                    <div class="journal-item imgai"><span class="lang-tag en">英文</span><div class="journal-name"><a href="http://thecvf.com" target="_blank">CVPR (IEEE Conference on Computer Vision and Pattern Recognition)</a></div><div class="journal-note">全球最前沿的 AI 視覺辨識技術趨勢</div><div class="rec-label">推薦原因</div><div class="rec-text">發表最新神經網絡架構與遠端監測微小物種辨識等頂尖技術，將前沿機器視覺概念引入小論文，能大幅提升技術理論深度。</div></div>
+                </div>
+            </div>
+
         </div>
 
+        <!-- 資料庫平台 -->
         <div class="tab-panel" id="tab-databases">
             <div class="org-grid">
-                <div class="org-card"><div class="org-title"><a href="https://www.gbif.org/" target="_blank">GBIF 全球生物資料庫</a></div><div class="org-sub">全球物種分布紀錄庫。</div></div>
-                <div class="org-card"><div class="org-title"><a href="https://www.kaggle.com/" target="_blank">Kaggle 資料科學社群</a></div><div class="org-sub">找尋開源圖像辨識資料集的好地方。</div></div>
+                <div class="org-card"><div class="org-title"><a href="https://www.gbif.org/" target="_blank">GBIF 全球生物資料庫</a></div><div class="org-sub">Global Biodiversity Information Facility — 全球物種分布紀錄庫</div><div class="rec-label">推薦原因</div><div class="rec-text">收錄全球超過 20 億筆物種觀察紀錄，資料完全免費開放下載。可查詢特定苔蘚在台灣的分布紀錄，也能下載 CSV 資料製作圖表，是科展資料分析的寶庫。</div></div>
+                <div class="org-card"><div class="org-title"><a href="https://www.kaggle.com/" target="_blank">Kaggle 資料科學社群</a></div><div class="org-sub">Google 旗下資料科學競賽與資料集平台 — 找尋開源圖像辨識資料集的好地方</div><div class="rec-label">推薦原因</div><div class="rec-text">有大量整理好的圖像辨識資料集可直接使用，也有入門教學筆記本（Notebook），即使沒寫過 Python 也能跟著學習 AI 模型訓練。</div></div>
             </div>
         </div>
+
     </div> 
 
     <script src="js/main.js?v=13"></script> 
