@@ -1,592 +1,351 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 蘚苔探險家 </title>
-    <link rel="stylesheet" href="css/style.css?v=7">
-    <style>
-        /* ========================================================
-           PAGE BACKGROUND  — spreads from the hero title outward
-           ======================================================== */
-        body {
-            background: #fff;
-            margin: 0;
-        }
-
-        /* The full-page canvas behind everything */
-        #page-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            /* radial bloom from the centre of the viewport */
-            background:
-                radial-gradient(ellipse 80% 60% at 50% 42%,
-                    color-mix(in srgb, var(--primary, #2e7d32) 55%, transparent) 0%,
-                    color-mix(in srgb, var(--primary, #2e7d32) 28%, transparent) 38%,
-                    color-mix(in srgb, var(--primary, #2e7d32) 10%, transparent) 65%,
-                    transparent 100%),
-                linear-gradient(165deg,
-                    color-mix(in srgb, var(--primary, #2e7d32) 18%, #f0f7f0) 0%,
-                    #f7faf5 55%,
-                    #fff 100%);
-            transition: background 0.6s ease;
-            pointer-events: none;
-        }
-
-        /* Very large ghost text that IS the background texture */
-        #page-bg::before {
-            content: "從一片蘚苔開始";
-            position: absolute;
-            top: 12%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(3.5rem, 10vw, 9rem);
-            font-weight: 900;
-            letter-spacing: -0.02em;
-            white-space: nowrap;
-            color: var(--primary, #2e7d32);
-            opacity: 0.055;
-            pointer-events: none;
-            line-height: 1;
-        }
-        #page-bg::after {
-            content: "展開你的 AI 科展探險";
-            position: absolute;
-            top: calc(12% + clamp(3.5rem, 11vw, 10rem));
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: clamp(2.2rem, 6.5vw, 5.8rem);
-            font-weight: 900;
-            letter-spacing: -0.01em;
-            white-space: nowrap;
-            color: var(--primary, #2e7d32);
-            opacity: 0.04;
-            pointer-events: none;
-            line-height: 1;
-        }
-
-        /* ========================================================
-           LAYOUT
-           ======================================================== */
-        #navbar-placeholder,
-        #navbar-placeholder > * { position: relative; z-index: 100; }
-
-        .page-shell {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* ── Hero ── */
-        .idx-badge {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--primary, #2e7d32);
-            background: color-mix(in srgb, var(--primary, #2e7d32) 12%, white);
-            border: 1px solid color-mix(in srgb, var(--primary, #2e7d32) 25%, transparent);
-            border-radius: 20px;
-            padding: 5px 16px;
-            margin-bottom: 28px;
-        }
-
-        .idx-title {
-            font-size: clamp(2rem, 5.5vw, 4.2rem);
-            font-weight: 900;
-            line-height: 1.18;
-            color: #1a1a1a;
-            letter-spacing: -0.025em;
-            margin: 0 0 20px;
-            max-width: 760px;
-        }
-        .idx-title .highlight {
-            color: var(--primary, #2e7d32);
-            position: relative;
-        }
-        .idx-title .highlight::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0; bottom: 2px;
-            height: 3px;
-            background: var(--primary, #2e7d32);
-            opacity: 0.3;
-            border-radius: 2px;
-        }
-
-        .idx-desc {
-            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
-            color: #555;
-            max-width: 560px;
-            line-height: 1.7;
-            margin: 0 0 36px;
-        }
-
-        .idx-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-        }
-
-        /* ── Hero split layout ── */
-        .idx-hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: clamp(48px, 10vh, 100px) 40px clamp(32px, 6vh, 72px);
-        }
-        .idx-hero-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 48px;
-            max-width: 1060px;
-            width: 100%;
-        }
-        .idx-hero-text {
-            flex: 1;
-            min-width: 0;
-            text-align: left;
-        }
-        .idx-hero-visual {
-            flex-shrink: 0;
-            width: clamp(260px, 34vw, 400px);
-        }
-        @media (max-width: 820px) {
-            .idx-hero { padding: 48px 24px 32px; }
-            .idx-hero-inner { flex-direction: column; align-items: center; }
-            .idx-hero-text { text-align: center; }
-            .idx-actions { justify-content: center; }
-            .idx-hero-visual { width: min(320px, 85vw); }
-        }
-
-        /* ── AI Scanner Box ── */
-        .ai-scanner {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: radial-gradient(ellipse at 50% 40%,
-                color-mix(in srgb, var(--primary,#2e7d32) 85%, #000) 0%,
-                color-mix(in srgb, var(--primary,#2e7d32) 55%, #000) 60%,
-                color-mix(in srgb, var(--primary,#2e7d32) 30%, #000) 100%);
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow:
-                0 0 0 1.5px color-mix(in srgb, var(--primary,#2e7d32) 40%, #0ff),
-                0 12px 48px rgba(0,0,0,0.35),
-                inset 0 1px 0 rgba(255,255,255,0.08);
-        }
-
-        /* grid lines */
-        .ai-scanner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.055) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.055) 1px, transparent 1px);
-            background-size: 28px 28px;
-        }
-
-        /* scanning line */
-        .scan-line {
-            position: absolute;
-            left: 0; right: 0;
-            height: 2px;
-            background: linear-gradient(90deg,
-                transparent 0%, rgba(0,255,120,0.0) 10%,
-                rgba(0,255,120,0.7) 50%,
-                rgba(0,255,120,0.0) 90%, transparent 100%);
-            box-shadow: 0 0 10px 2px rgba(0,255,120,0.35);
-            animation: scanMove 2.8s ease-in-out infinite;
-            z-index: 3;
-        }
-        @keyframes scanMove {
-            0%   { top: 8%; opacity: 0; }
-            10%  { opacity: 1; }
-            90%  { opacity: 1; }
-            100% { top: 88%; opacity: 0; }
-        }
-
-        /* bounding box */
-        .scan-bbox {
-            position: absolute;
-            top: 20%; left: 22%; right: 22%; bottom: 18%;
-            border: 1.5px solid rgba(0,255,120,0.75);
-            border-radius: 4px;
-            box-shadow: 0 0 12px rgba(0,255,120,0.2), inset 0 0 12px rgba(0,255,120,0.06);
-            z-index: 2;
-            animation: bboxPulse 2.8s ease-in-out infinite;
-        }
-        @keyframes bboxPulse {
-            0%,100% { opacity: 0.65; }
-            50%      { opacity: 1; }
-        }
-        /* corner accents */
-        .scan-bbox::before, .scan-bbox::after {
-            content: '';
-            position: absolute;
-            width: 14px; height: 14px;
-            border-color: rgba(0,255,120,0.95);
-            border-style: solid;
-        }
-        .scan-bbox::before {
-            top: -2px; left: -2px;
-            border-width: 2px 0 0 2px;
-        }
-        .scan-bbox::after {
-            bottom: -2px; right: -2px;
-            border-width: 0 2px 2px 0;
-        }
-
-        /* placeholder leaf */
-        .scan-target {
-            position: absolute;
-            top: 20%; left: 22%; right: 22%; bottom: 18%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1;
-            gap: 8px;
-        }
-        .scan-leaf {
-            font-size: clamp(2rem, 5vw, 3rem);
-            opacity: 0.55;
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
-        }
-        .scan-filename {
-            font-family: monospace;
-            font-size: 0.68rem;
-            color: rgba(255,255,255,0.4);
-            letter-spacing: 0.04em;
-        }
-
-        /* HUD tags */
-        .scan-tag {
-            position: absolute;
-            font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 0.06em;
-            z-index: 4;
-            animation: tagBlink 2.8s ease-in-out infinite;
-        }
-        @keyframes tagBlink {
-            0%,100% { opacity: 0.8; }
-            50%      { opacity: 1; }
-        }
-        .scan-tag-tl {
-            top: 10%; left: 8%;
-            background: rgba(0,0,0,0.55);
-            border: 1px solid rgba(0,255,120,0.6);
-            color: rgba(0,255,180,0.95);
-        }
-        .scan-tag-br {
-            bottom: 10%; right: 6%;
-            background: rgba(0,0,0,0.55);
-            border: 1px solid rgba(100,180,255,0.6);
-            color: rgba(120,200,255,0.95);
-        }
-        .idx-btn-primary {
-            background: var(--primary, #2e7d32);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            padding: 13px 28px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity 0.18s, transform 0.18s, box-shadow 0.18s;
-            box-shadow: 0 4px 18px color-mix(in srgb, var(--primary, #2e7d32) 35%, transparent);
-        }
-        .idx-btn-primary:hover {
-            opacity: 0.88;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px color-mix(in srgb, var(--primary, #2e7d32) 45%, transparent);
-        }
-        .idx-btn-outline {
-            background: transparent;
-            color: var(--primary, #2e7d32);
-            border: 2px solid color-mix(in srgb, var(--primary, #2e7d32) 45%, transparent);
-            border-radius: 10px;
-            padding: 11px 26px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: border-color 0.18s, background 0.18s, transform 0.18s;
-        }
-        .idx-btn-outline:hover {
-            border-color: var(--primary, #2e7d32);
-            background: color-mix(in srgb, var(--primary, #2e7d32) 6%, transparent);
-            transform: translateY(-2px);
-        }
-
-        /* ── Countdown section ── */
-        .idx-timers-wrap {
-            padding: 0 40px 48px;
-        }
-        .idx-timers {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            max-width: 1060px;
-            margin: 0 auto;
-        }
-        @media (max-width: 600px) {
-            .idx-timers { grid-template-columns: 1fr; }
-            .idx-timers-wrap { padding: 0 24px 40px; }
-        }
-        .idx-timer-card {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.9);
-            border-radius: 12px;
-            padding: 14px 20px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
-            transition: background 0.5s, border-color 0.5s;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .idx-timer-card h4 {
-            margin: 0;
-            font-size: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            flex-shrink: 0;
-        }
-        .timer-label { font-weight: 600; white-space: nowrap; }
-        .btn-timer-link {
-            font-size: 0.65rem;
-            color: var(--primary, #2e7d32);
-            background: color-mix(in srgb, var(--primary, #2e7d32) 10%, white);
-            border: 1px solid color-mix(in srgb, var(--primary, #2e7d32) 22%, transparent);
-            border-radius: 20px;
-            padding: 2px 10px;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: background 0.18s, color 0.18s;
-            font-weight: 600;
-            align-self: flex-start;
-        }
-        .btn-timer-link:hover {
-            background: var(--primary, #2e7d32);
-            color: #fff;
-        }
-        .idx-timer-divider {
-            width: 1px;
-            height: 36px;
-            background: #e0e0e0;
-            flex-shrink: 0;
-        }
-        .idx-huge-timer {
-            font-size: 1.45rem;
-            font-weight: 800;
-            letter-spacing: 0.01em;
-            color: #1a1a1a;
-            line-height: 1;
-            flex: 1;
-        }
-        .idx-huge-timer span {
-            font-size: 0.62rem;
-            font-weight: 500;
-            color: #aaa;
-            margin-right: 3px;
-        }
-        .timer-expired { color: #c62828; font-size: 0.85rem; font-weight: 600; }
-
-        /* ========================================================
-           WCL PANEL & FAB STYLES (Repurposed for Sitemap)
-           ======================================================== */
-        .wcl-fab {
-            position: fixed;
-            bottom: 28px; right: 28px;
-            z-index: 400;
-            background: var(--primary, #2e7d32);
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            padding: 12px 22px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.22);
-            display: flex; align-items: center; gap: 8px;
-            transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
-            letter-spacing: 0.01em;
-            text-decoration: none;
-        }
-        .wcl-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,0.28); }
-
-        .wcl-panel {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            z-index: 500;
-            background: #fff;
-            border-top: 2.5px solid var(--primary, #2e7d32);
-            box-shadow: 0 -8px 40px rgba(0,0,0,0.13);
-            padding: 20px 28px 24px;
-            transform: translateY(100%);
-            transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-            max-height: 72vh;
-            overflow-y: auto;
-        }
-        .wcl-panel.open { transform: translateY(0); }
-
-        .wcl-head {
-            display: flex; align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px; flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .wcl-head-left h3 {
-            margin: 0 0 4px; font-size: 1rem; font-weight: 700;
-        }
-        .wcl-head-sub {
-            font-size: 0.75rem; color: #999; display: block;
-        }
-        .wcl-head-right { display: flex; align-items: center; gap: 8px; }
-        .wcl-x {
-            background: none; border: none; font-size: 1.1rem;
-            cursor: pointer; color: #aaa; padding: 4px 8px; line-height: 1;
-        }
-
-        /* ── 首頁專屬麵包屑對齊框架 ── */
-        .idx-breadcrumb-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 24px 40px 0; /* 與下方的 Hero 區塊維持相同的左右 padding */
-            box-sizing: border-box;
-            position: relative;
-            z-index: 10;
-        }
-        .idx-breadcrumb-inner {
-            width: 100%;
-            max-width: 1060px; /* 精準對齊 Hero 區塊文字的 max-width */
-            margin-bottom: 0; 
-        }
-        @media (max-width: 820px) { 
-            .idx-breadcrumb-wrapper { padding: 16px 24px 0; } 
-        }
-    </style>
-</head>
-<body> 
-    <div id="splash-screen" class="splash-screen"> 
-        <div class="splash-content"> 
-            <div class="splash-icon-wrapper"> 
-                <div class="splash-icon"></div> 
-                <div class="splash-scan-line"></div> 
-            </div> 
-            <h1 class="splash-title">AI 蘚苔探險家</h1> 
-            <div class="splash-subtitle-container"> 
-                <span class="splash-subtitle">System Initializing... Load Quest Data...</span> 
-            </div> 
-            <div class="splash-progress"><div class="splash-progress-bar"></div></div> 
-        </div> 
-    </div> 
-    <div id="page-bg"></div> 
-    <div id="navbar-placeholder"></div> 
+document.addEventListener("DOMContentLoaded", function() {
     
-    <div class="page-shell">
-
-        <section class="idx-hero"> 
-            <div class="idx-hero-inner"> 
-                <div class="idx-hero-text"> 
-                    <span class="idx-badge">Moss Explorer Beta 1.0</span> 
-                    <h1 class="idx-title"> 從一片蘚苔開始，<br> 展開你的 <span class="highlight">AI 科展探險</span> </h1> 
-                    <p class="idx-desc"> 結合植物觀察、影像辨識與研究工具，協助高中生打造標準化的特徵矩陣，精準完成科展與小論文。</p> 
-                    <div class="idx-actions"> 
-                        <button class="idx-btn-primary" onclick="location.href='quest.html'">開始研究</button> 
-                        <button class="idx-btn-outline" onclick="location.href='tools.html'">進入研究工具箱</button> 
-                    </div> 
-                </div> 
-                <div class="idx-hero-visual"> 
-                    <div class="ai-scanner"> 
-                        <div class="scan-line"></div> 
-                        <div class="scan-bbox"></div> 
-                        <div class="scan-target"><img src="images/hero-moss.jpg" alt="苔蘚樣本" style="width:100%;height:100%;object-fit:cover;border-radius:3px;opacity:0.85;"></div> 
-                        <div class="scan-tag scan-tag-tl">Target Detected</div> 
-                        <div class="scan-tag scan-tag-br">Probability: 98.5%</div> 
-                    </div> 
-                </div> 
-            </div> 
-        </section> 
-        <div class="idx-timers-wrap"> 
-            <div class="idx-timers"> 
-                <div class="idx-timer-card"> 
-                    <h4> <span class="timer-label" style="color:#1565c0;">科學展覽會 剩餘時間</span> <a href="countdown.html" class="btn-timer-link">設定時間</a> </h4> 
-                    <div class="idx-timer-divider"></div> 
-                    <div class="idx-huge-timer" id="idx-sci"></div> 
-                </div> 
-                <div class="idx-timer-card"> 
-                    <h4> <span class="timer-label" style="color:#ef6c00;">中學生小論文 剩餘時間</span> <a href="countdown.html" class="btn-timer-link">設定時間</a> </h4> 
-                    <div class="idx-timer-divider"></div> 
-                    <div class="idx-huge-timer" id="idx-ess"></div> 
-                </div> 
-            </div> 
-        </div> 
+    // --- 1. 動態載入導覽列（直接寫入，不依賴 fetch，相容 file:// 本機開啟）---
+    const navbarPlaceholder = document.getElementById("navbar-placeholder");
+    if (navbarPlaceholder) {
+        navbarPlaceholder.innerHTML = `
+<header>
+    <div class="brand">
+        <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <img src="images/logo.png" alt="LOGO" class="logo-img" onerror="this.style.display='none'">
+            <div class="brand-text">
+                <h2>AI 蘚苔探險家</h2>
+                <span>發現腳下的森林，讓 AI 成為你的科學放大鏡！</span>
+            </div>
+        </a>
     </div>
-
-    <button class="wcl-fab" id="sitemap-fab"> 
-        網站地圖
-    </button>
-
-    <div class="wcl-panel" id="sitemap-panel"> 
-        <div class="wcl-head"> 
-            <div class="wcl-head-left"> 
-                <h3>網站地圖</h3> 
-                <span class="wcl-head-sub">AI 蘚苔探險家全站快速導覽</span> 
-            </div> 
-            <div class="wcl-head-right"> 
-                <button class="wcl-x" id="sitemap-x">✖</button> 
-            </div> 
-        </div> 
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; padding: 10px 0;">
-            <div>
-                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">主專區</h4>
-                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
-                    <li><a href="index.html" style="color: #555; text-decoration: none;">首頁</a></li>
-                    <li><a href="quest.html" style="color: #555; text-decoration: none;">研究導航</a></li>
-                    <li><a href="microscope.html" style="color: #555; text-decoration: none;">蘚苔觀察</a></li>
-                    <li><a href="ai-logic.html" style="color: #555; text-decoration: none;">AI 苔蘚解碼</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">研究工具箱</h4>
-                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
-                    <li><a href="countdown.html" style="color: #555; text-decoration: none;">投稿倒數計時器</a></li>
-                    <li><a href="calendar.html" style="color: #555; text-decoration: none;">館員諮詢預約</a></li>
-                    <li><a href="palette.html" style="color: #555; text-decoration: none;">海報配色實驗室</a></li>
-                    <li><a href="matrix.html" style="color: #555; text-decoration: none;">特徵比較器</a></li>
-                    <li><a href="ratio-calculator.html" style="color: #555; text-decoration: none;">AI 資料比例</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">其他資源</h4>
-                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
-                    <li><a href="issues.html" style="color: #555; text-decoration: none;">延伸議題</a></li>
-                    <li><a href="resources.html" style="color: #555; text-decoration: none;">學術資源</a></li>
-                    <li><a href="glossary.html" style="color: #555; text-decoration: none;">關鍵詞表</a></li>
-                    <li><a href="faq.html" style="color: #555; text-decoration: none;">常見問題</a></li>
-                    <li><a href="about.html" style="color: #555; text-decoration: none;">關於我們</a></li>
-                </ul>
+    <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+    <nav class="nav-links" id="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="quest.html">研究導航</a>
+        <a href="microscope.html">蘚苔觀察</a>
+        <a href="ai-logic.html">AI 苔蘚解碼</a>
+        <div class="dropdown">
+            <a href="tools.html" class="dropbtn">研究工具箱 </a>
+            <div class="dropdown-content">
+                <div class="dropdown-submenu">
+                    <button class="submenu-btn">科展輔助工具</button>
+                    <div class="submenu-content">
+                        <a href="countdown.html">投稿倒數計時器</a>
+                        <a href="calendar.html">館員諮詢預約</a>
+                        <a href="palette.html">海報配色實驗室</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <button class="submenu-btn">AI 研究工具</button>
+                    <div class="submenu-content">
+                        <a href="matrix.html">特徵比較器</a>
+                        <a href="ratio-calculator.html">AI 資料比例</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div> 
+        <a href="issues.html">延伸議題</a>
+        <a href="resources.html">學術資源</a>
+        <a href="glossary.html">關鍵詞表</a>
+        <a href="faq.html">常見問題</a>
+        <a href="about.html">關於我們</a>
+    </nav>
+</header>`;
+    }
+
+    // --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
+    function updateCountdowns() {
+        const now = new Date().getTime();
+        const currentYear = new Date().getFullYear();
+        
+        function formatTime(distance) {
+            if (isNaN(distance) || distance < 0) return "已截止";
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            const hrStr = hours.toString().padStart(2, '0');
+            const minStr = minutes.toString().padStart(2, '0');
+            const secStr = seconds.toString().padStart(2, '0');
+
+            return `${days}<span>天</span>${hrStr}<span>時</span>${minStr}<span>分</span>${secStr}<span>秒</span>`;
+        }
+
+        // 獨立更新：科學展覽會倒數
+        const timerScience = document.getElementById("timer-science");
+        if (timerScience) {
+            const savedSciStr = localStorage.getItem("targetDateScience") || `${currentYear}-09-01T23:59:59`;
+            timerScience.innerHTML = formatTime(new Date(savedSciStr).getTime() - now);
+        }
+
+        // 獨立更新：小論文倒數 (若該頁面沒有此區塊也不會當機)
+        const timerEssay = document.getElementById("timer-essay");
+        if (timerEssay) {
+            const savedEssStr = localStorage.getItem("targetDateEssay") || `${currentYear}-10-15T12:00:00`;
+            timerEssay.innerHTML = formatTime(new Date(savedEssStr).getTime() - now);
+        }
+    }
+    updateCountdowns();
+    setInterval(updateCountdowns, 1000);
     
-    <script src="js/main.js?v=7"></script> 
-</body>
-</html>
+    // --- 3. 懸浮調色盤開關邏輯 ---
+    const colorBarPanel = document.getElementById('color-bar-panel');
+    const openColorBtn = document.getElementById('open-color-btn');
+    const closeColorBtn = document.getElementById('close-color-btn');
+
+    if (openColorBtn && closeColorBtn && colorBarPanel) {
+        openColorBtn.addEventListener('click', () => {
+            colorBarPanel.classList.add('show');
+            openColorBtn.style.display = 'none'; 
+        });
+
+        closeColorBtn.addEventListener('click', () => {
+            colorBarPanel.classList.remove('show');
+            openColorBtn.style.display = 'flex'; 
+        });
+    }
+
+    // --- 5. AI 訓練資料庫比例計算機邏輯 ---
+    const totalInput = document.getElementById('totalPhotos');
+    if (totalInput) {
+        const ratioSelect = document.getElementById('ratioSelect');
+        const resTrain = document.getElementById('res-train');
+        const resValid = document.getElementById('res-valid');
+        const resTest = document.getElementById('res-test');
+        const barTrain = document.getElementById('bar-train');
+        const barValid = document.getElementById('bar-valid');
+        const barTest = document.getElementById('bar-test');
+
+        function calculateRatio() {
+            let total = parseInt(totalInput.value);
+            if(isNaN(total) || total < 0) total = 0;
+
+            let ratios = ratioSelect.value.split(',').map(Number);
+            let sumRatio = ratios[0] + ratios[1] + ratios[2];
+
+            let validCount = Math.round(total * (ratios[1] / sumRatio));
+            let testCount = Math.round(total * (ratios[2] / sumRatio));
+            let trainCount = total - validCount - testCount; 
+
+            resTrain.textContent = trainCount;
+            resValid.textContent = validCount;
+            resTest.textContent = testCount;
+
+            barTrain.style.width = `${(trainCount / total) * 100}%`;
+            barValid.style.width = `${(validCount / total) * 100}%`;
+            barTest.style.width = `${(testCount / total) * 100}%`;
+        }
+
+        totalInput.addEventListener('input', calculateRatio);
+        ratioSelect.addEventListener('change', calculateRatio);
+        calculateRatio(); 
+    }
+
+    // --- 6. 館員諮詢服務月 (Calendar) 邏輯 ---
+    const calendarBody = document.getElementById("calendar-body");
+    if (calendarBody) {
+        const selectedDateInput = document.getElementById("selected-date");
+        const btnGenLetter = document.getElementById("btn-gen-letter");
+        const letterResult = document.getElementById("letter-result");
+        const letterContent = document.getElementById("letter-content");
+        
+        const bookedDates = [13, 15, 20];
+        const today = 27; 
+
+        function renderCalendar() {
+            let html = "";
+            let date = 1;
+            for (let i = 0; i < 5; i++) {
+                html += "<tr>";
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < 5) {
+                        html += "<td class='empty'></td>";
+                    } else if (date > 31) {
+                        html += "<td class='empty'></td>";
+                    } else {
+                        let className = "";
+                        if (date === today) className += " date-today";
+                        if (!bookedDates.includes(date)) className += " date-available";
+                        
+                        html += `<td class="${className}" onclick="selectDate(this, ${date})">${date}</td>`;
+                        date++;
+                    }
+                }
+                html += "</tr>";
+                if (date > 31) break;
+            }
+            calendarBody.innerHTML = html;
+        }
+
+        window.selectDate = function(el, day) {
+            document.querySelectorAll('#calendar-body td').forEach(td => td.classList.remove('date-selected'));
+            el.classList.add('date-selected');
+            selectedDateInput.value = `2026-05-${day.toString().padStart(2, '0')}`;
+        };
+
+        btnGenLetter.addEventListener("click", function() {
+            const date = selectedDateInput.value;
+            const school = document.getElementById("student-school").value || "[您的學校]";
+            const title = document.getElementById("project-title").value || "[您的研究題目]";
+
+            if (!date) { alert("請先選擇諮詢日期！"); return; }
+
+            const template = `館員您好：\n\n我們是來自${school}的學生，目前正在進行一項關於「${title}」的研究計畫。\n\n我們在文獻搜尋過程中遇到了一些瓶頸，希望能預約在 ${date} 進行專業諮詢。希望能針對：\n1. 如何在學術資料庫中更精準地搜尋「蘚苔植物與AI」的相關論文。\n2. 引用格式的校對建議。\n\n不知當天時間是否方便？期待您的回覆，謝謝您！`;
+
+            letterContent.value = template;
+            letterResult.style.display = "block";
+        });
+
+        document.getElementById("btn-copy-letter")?.addEventListener("click", function() {
+            letterContent.select();
+            document.execCommand("copy");
+            alert("邀請信內容已複製到剪貼簿！");
+        });
+
+        renderCalendar();
+    }
+
+    // --- 7. 海報配色建議工具 (Palette) 邏輯 ---
+    const palettePage = document.querySelector('.palette-page');
+    if (palettePage) {
+        const themeData = {
+            moss: { primary: '#2e7d32', secondary: '#81c784', accent: '#ffb300', bg: '#f7faf5', text: '#333' },
+            tech: { primary: '#1565c0', secondary: '#90caf9', accent: '#ff5722', bg: '#f0f4f8', text: '#222' },
+            earth: { primary: '#5d4037', secondary: '#a1887f', accent: '#8bc34a', bg: '#efebe9', text: '#3e2723' }
+        };
+
+        const paletteCards = document.querySelectorAll('.palette-card');
+        const posterBoard = document.getElementById('poster-board');
+        const pHeader = document.getElementById('p-header');
+        const pHeadings = document.querySelectorAll('.p-heading');
+        const pTexts = document.querySelectorAll('.p-text');
+        const pAccent = document.getElementById('p-accent');
+        const copyMsg = document.getElementById('copy-msg');
+
+        paletteCards.forEach(card => {
+            card.addEventListener('click', function() {
+                paletteCards.forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+
+                const theme = themeData[this.getAttribute('data-theme')];
+
+                posterBoard.style.backgroundColor = theme.bg;
+                pHeader.style.backgroundColor = theme.primary;
+                pAccent.style.backgroundColor = theme.accent;
+                
+                pHeadings.forEach(h => {
+                    h.style.color = theme.primary;
+                    h.style.borderBottomColor = theme.secondary;
+                });
+                
+                pTexts.forEach(t => {
+                    t.style.color = theme.text;
+                });
+            });
+        });
+
+        const swatches = document.querySelectorAll('.swatch-item');
+        swatches.forEach(swatch => {
+            swatch.addEventListener('click', function(e) {
+                e.stopPropagation(); 
+                const hexCode = this.querySelector('span').innerText;
+                
+                navigator.clipboard.writeText(hexCode).then(() => {
+                    copyMsg.innerText = `已複製色碼：${hexCode} `;
+                    setTimeout(() => { copyMsg.innerText = ''; }, 2000);
+                });
+            });
+        });
+    }
+
+    // --- 8. 苔蘚特徵矩陣比對器 (Matrix) 邏輯 ---
+    const matrixForm = document.getElementById("matrix-form");
+    if (matrixForm) {
+        const tbody = document.getElementById("matrix-tbody");
+        const btnExportCSV = document.getElementById("btn-export-csv");
+        let matrixData = [];
+
+        matrixForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const sample = {
+                id: document.getElementById("m-id").value,
+                growth: document.getElementById("m-growth").value,
+                color: document.getElementById("m-color").value,
+                substrate: document.getElementById("m-substrate").value,
+                capsule: document.getElementById("m-capsule").value
+            };
+
+            matrixData.push(sample);
+            renderMatrixTable();
+            
+            matrixForm.reset();
+            document.getElementById("m-id").focus();
+        });
+
+        function renderMatrixTable() {
+            if (matrixData.length === 0) {
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="6" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = "";
+            matrixData.forEach((item, index) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td style="font-family: monospace; font-weight: bold; color: var(--primary);">${item.id}</td> <td>${item.growth}</td> <td>${item.color}</td> <td>${item.substrate}</td> <td>${item.capsule}</td> <td><button class="btn-delete-row" onclick="deleteMatrixRow(${index})">刪除</button></td> `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        window.deleteMatrixRow = function(index) {
+            matrixData.splice(index, 1);
+            renderMatrixTable();
+        };
+
+        btnExportCSV.addEventListener("click", function() {
+            if (matrixData.length === 0) {
+                alert("目前沒有資料可以匯出喔！請先新增資料。");
+                return;
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
+            csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無\n"; 
+
+            matrixData.forEach(row => {
+                const rowString = `${row.id},${row.growth},${row.color},${row.substrate},${row.capsule}`;
+                csvContent += rowString + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "moss_feature_matrix.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    }
+
+    // --- 9. 開場動畫 (Splash Screen) 終極防呆邏輯 ---
+    const splashScreen = document.getElementById('splash-screen');
+    if (splashScreen) {
+        const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
+        
+        if (!hasSeenSplash) {
+            // 第一次進來，強制 2.5 秒後執行隱藏動作
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                splashScreen.style.visibility = 'hidden';
+                splashScreen.style.pointerEvents = 'none'; // 滑鼠穿透，防卡死
+                sessionStorage.setItem('moss_splash_seen', 'true');
+                
+                // 動畫結束後徹底移除
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                }, 500); 
+            }, 2500); 
+        } else {
+            // 已經看過，瞬間消失
+            splashScreen.style.display = 'none';
+        }
+    }
+
+});
