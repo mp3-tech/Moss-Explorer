@@ -1,408 +1,478 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<style>
+    .palette-controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 蘚苔探險家-海報配色建議工具</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* === 動態調色盤與海報預覽專用樣式 === */
-        .palette-layout {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .palette-options {
-            flex: 1;
-            min-width: 300px;
-        }
-        .poster-preview-container {
-            flex: 1.2;
-            min-width: 340px;
-        }
+    .preset-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+    }
 
-        /* 顏色輸入控制區 */
-        .palette-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            align-items: center;
-        }
-        .poster-picker {
-            width: 42px;
-            height: 42px;
-            cursor: pointer;
-            padding: 0;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            background: none;
-        }
-        .poster-hex {
-            padding: 10px;
-            font-family: monospace;
-            font-size: 1rem;
-            text-transform: uppercase;
-            width: 110px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-        }
-        .poster-gen-btn {
-            background: #2e7d32;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .poster-gen-btn:hover {
-            opacity: 0.85;
-        }
+    .preset-swatch {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2.5px solid transparent;
+        transition: transform 0.15s, border-color 0.15s;
+        position: relative;
+    }
 
-        /* 動態生成的調色盤卡片 */
-        .wcl-card {
-            border: 2px solid #ebebeb;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #fafafa;
-            cursor: pointer;
-            margin-bottom: 16px;
-            transition: all 0.2s;
-        }
-        .wcl-card:hover, .wcl-card.active {
-            border-color: #2e7d32;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
-        }
-        .wcl-card-head {
-            padding: 10px 14px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-        }
-        .wcl-swatches {
-            display: flex;
-            height: 55px;
-        }
-        .wcl-sw {
-            flex: 1;
-            transition: flex 0.2s;
-            position: relative;
-        }
-        .wcl-sw:hover {
-            flex: 1.5;
-        }
-        .wcl-chips {
-            display: flex;
-            padding: 10px;
-            gap: 6px;
-            background: #fff;
-        }
-        .wcl-chip {
-            font-size: 0.7rem;
-            font-family: monospace;
-            color: #666;
-            background: #f0f0f0;
-            border-radius: 4px;
-            padding: 4px 8px;
-        }
+    .preset-swatch:hover {
+        transform: scale(1.18);
+        border-color: #888;
+    }
 
-        /* 海報預覽區變數綁定 */
-        #poster-board {
-            --p-bg: #f7faf5;
-            --p-primary: #2e7d32;
-            --p-secondary: #81c784;
-            --p-accent: #ffb300;
-            
-            background-color: var(--p-bg);
-            padding: 24px;
-            border-radius: 8px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            border: 1px solid #eee;
-            transition: background-color 0.3s;
-        }
-        #p-header {
-            background-color: var(--p-primary);
-            color: #fff;
-            padding: 18px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            transition: background-color 0.3s;
-        }
-        #p-header h2 { margin: 0 0 8px 0; font-size: 1.4rem; }
-        #p-header p { margin: 0; font-size: 0.85rem; opacity: 0.9; }
-        .poster-body { display: flex; gap: 20px; }
-        .poster-col { flex: 1; }
-        .p-heading {
-            color: var(--p-primary);
-            border-bottom: 3px solid var(--p-secondary);
-            padding-bottom: 6px;
-            margin-top: 0;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-            transition: color 0.3s, border-color 0.3s;
-        }
-        .p-text { font-size: 0.85rem; color: #444; line-height: 1.6; margin-bottom: 20px; }
-        #p-graph {
-            border: 2px dashed var(--p-secondary);
-            background: rgba(255,255,255,0.5);
-            padding: 24px 12px;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            transition: border-color 0.3s;
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: #333;
-        }
-        #p-accent {
-            background-color: var(--p-accent);
-            color: #111;
-            padding: 6px 12px;
-            border-radius: 4px;
-            display: inline-block;
-            font-weight: 800;
-            margin-top: 12px;
-            transition: background-color 0.3s;
-        }
-    </style>
-</head>
+    .preset-swatch.selected {
+        border-color: #222;
+        transform: scale(1.12);
+    }
 
-<body>
-    <div id="navbar-placeholder"></div>
-    <div class="container palette-page">
-        <nav class="breadcrumb">
-            <a href="index.html">首頁</a> &gt;
-            <a href="tools.html">研究工具箱</a> &gt;
-            <span>海報配色實驗室</span>
-        </nav>
-        
-        <div class="page-header">
-            <h1> 海報配色實驗室 (Palette)</h1>
-            <p>告別五顏六色的災難排版！輸入你想要的科展海報主色，AI 將為你推薦最專業的科學配色，讓評審第一眼就愛上你的研究。</p>
+    .preset-label {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        text-align: center;
+        margin-top: 3px;
+        white-space: nowrap;
+    }
+
+    .preset-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .poster-picker {
+        width: 42px;
+        height: 42px;
+        cursor: pointer;
+        padding: 0;
+        border: 2px solid var(--color-border-tertiary);
+        border-radius: 6px;
+        background: none;
+    }
+
+    .poster-hex {
+        padding: 10px;
+        font-family: monospace;
+        font-size: 1rem;
+        text-transform: uppercase;
+        width: 110px;
+        border: 2px solid var(--color-border-tertiary);
+        border-radius: 6px;
+        background: var(--color-background-primary);
+        color: var(--color-text-primary);
+    }
+
+    .poster-gen-btn {
+        background: #2e7d32;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+    .poster-gen-btn:hover {
+        opacity: 0.85;
+    }
+
+    .wcl-card {
+        border: 2px solid var(--color-border-tertiary);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--color-background-secondary);
+        cursor: pointer;
+        margin-bottom: 16px;
+        transition: all 0.2s;
+    }
+
+    .wcl-card:hover,
+    .wcl-card.active {
+        border-color: #2e7d32;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .wcl-card-head {
+        padding: 10px 14px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--color-text-primary);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .wcl-swatches {
+        display: flex;
+        height: 55px;
+    }
+
+    .wcl-sw {
+        flex: 1;
+        transition: flex 0.2s;
+        position: relative;
+    }
+
+    .wcl-sw:hover {
+        flex: 1.5;
+    }
+
+    .wcl-chips {
+        display: flex;
+        padding: 10px;
+        gap: 6px;
+        background: var(--color-background-primary);
+        flex-wrap: wrap;
+    }
+
+    .wcl-chip {
+        font-size: 0.7rem;
+        font-family: monospace;
+        color: var(--color-text-secondary);
+        background: var(--color-background-secondary);
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+    }
+
+    .layout {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+    }
+
+    .col-left {
+        flex: 1;
+        min-width: 280px;
+    }
+
+    .col-right {
+        flex: 1.2;
+        min-width: 320px;
+    }
+
+    h3.st {
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--color-text-primary);
+        margin: 0 0 12px;
+    }
+
+    #copy-msg {
+        color: #2e7d32;
+        font-size: 0.85rem;
+        font-weight: bold;
+        height: 20px;
+        margin-bottom: 8px;
+    }
+
+    #poster-board {
+        --p-bg: #f7faf5;
+        --p-primary: #2e7d32;
+        --p-secondary: #81c784;
+        --p-accent: #ffb300;
+        background-color: var(--p-bg);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--color-border-tertiary);
+        transition: background-color 0.3s;
+    }
+
+    #p-header {
+        background-color: var(--p-primary);
+        color: #fff;
+        padding: 14px 16px;
+        border-radius: 6px;
+        margin-bottom: 16px;
+        transition: background-color 0.3s;
+    }
+
+    #p-header h2 {
+        margin: 0 0 6px;
+        font-size: 1.1rem;
+    }
+
+    #p-header p {
+        margin: 0;
+        font-size: 0.78rem;
+        opacity: 0.9;
+    }
+
+    .poster-body {
+        display: flex;
+        gap: 16px;
+    }
+
+    .poster-col {
+        flex: 1;
+    }
+
+    .p-heading {
+        color: var(--p-primary);
+        border-bottom: 3px solid var(--p-secondary);
+        padding-bottom: 5px;
+        margin: 0 0 10px;
+        font-size: 0.95rem;
+        transition: color 0.3s, border-color 0.3s;
+    }
+
+    .p-text {
+        font-size: 0.78rem;
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 14px;
+    }
+
+    #p-graph {
+        border: 2px dashed var(--p-secondary);
+        background: rgba(255, 255, 255, 0.5);
+        padding: 16px 8px;
+        text-align: center;
+        margin-bottom: 14px;
+        border-radius: 6px;
+        transition: border-color 0.3s;
+        font-size: 0.85rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    #p-accent {
+        background-color: var(--p-accent);
+        color: #111;
+        padding: 5px 10px;
+        border-radius: 4px;
+        display: inline-block;
+        font-weight: 800;
+        margin-top: 8px;
+        transition: background-color 0.3s;
+        font-size: 0.8rem;
+    }
+
+    .tip {
+        margin-top: 14px;
+        background: var(--color-background-secondary);
+        padding: 12px;
+        border-left: 4px solid var(--color-border-tertiary);
+        font-size: 0.82rem;
+        color: var(--color-text-secondary);
+        border-radius: 0 6px 6px 0;
+    }
+
+    .section-sep {
+        font-size: 11px;
+        color: var(--color-text-secondary);
+        margin-bottom: 6px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="layout" style="padding: 1rem 0;">
+    <div class="col-left">
+        <h3 class="st">輸入主色並選擇方案</h3>
+        <p style="font-size:0.82rem;color:var(--color-text-secondary);margin:0 0 12px;">點擊方案後右側海報即時更新。點色塊可複製 Hex。</p>
+
+        <div class="section-sep">熱門顏色快選</div>
+        <div class="preset-row" id="preset-row"></div>
+
+        <div class="section-sep" style="margin-top:8px;">自訂顏色</div>
+        <div class="palette-controls">
+            <input type="color" id="poster-picker" class="poster-picker" value="#2e7d32">
+            <input type="text" id="poster-hex" class="poster-hex" value="#2E7D32" maxlength="7">
+            <button id="poster-gen" class="poster-gen-btn">產生配色</button>
         </div>
-        
-        <div class="palette-layout">
-            <div class="palette-options">
-                <h3 class="section-title">輸入主色並選擇方案</h3>
-                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 15px;">點擊下方生成的方案，右側的海報模擬器會即時套用排版。點擊色塊可複製 Hex 色碼。</p>
-                
-                <div class="palette-controls">
-                    <input type="color" id="poster-picker" class="poster-picker" value="#2e7d32">
-                    <input type="text" id="poster-hex" class="poster-hex" value="#2E7D32" maxlength="7">
-                    <button id="poster-gen" class="poster-gen-btn">產生配色</button>
-                </div>
-                
-                <div id="copy-msg" style="color: #2e7d32; font-size: 0.85rem; font-weight: bold; height: 20px; margin-bottom: 10px;"></div>
-                
-                <div id="poster-area"></div>
-            </div>
-            
-            <div class="poster-preview-container">
-                <h3 class="section-title">海報排版模擬預覽</h3>
-                <div class="poster-board" id="poster-board">
-                    <div class="poster-header" id="p-header">
-                        <h2 id="p-title">利用 AI 進行校園蘚苔辨識之初探</h2>
-                        <p>探險員：王小明 ｜ 學校：OO高中 ｜ 指導老師：OOO老師</p>
-                    </div>
-                    <div class="poster-body">
-                        <div class="poster-col">
-                            <h4 class="p-heading">一、研究動機</h4>
-                            <p class="p-text">蘚苔植物是環境的指標，但微觀特徵難以辨識。本研究旨在建立一套標準化的影像擷取流程，並訓練卷積神經網路進行自動分類。</p>
-                            <h4 class="p-heading">二、研究方法</h4>
-                            <p class="p-text">1. 採集樣本並記錄生態環境。<br>2. 建立特徵矩陣。<br>3. 切分 8:1:1 訓練集。</p>
-                        </div>
-                        <div class="poster-col">
-                            <h4 class="p-heading">三、研究結果</h4>
-                            <div class="p-graph" id="p-graph">
-                                <div>模型準確率：95%</div>
-                                <div class="p-accent-box" id="p-accent">重點突破數據</div>
-                            </div>
-                            <h4 class="p-heading">四、結論與展望</h4>
-                            <p class="p-text">模型在自然光下表現優異，未來可推廣至自然科戶外教學中。</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="alert-box" style="margin-top: 20px; background-color: #f5f5f5; padding: 15px; border-left: 4px solid #9e9e9e; font-size: 0.9rem;">
-                    <strong>設計訣竅：</strong> 海報背景請盡量保持淺色，主色調用於大標題，輔助色用於次標題或圖表框線，強烈的強調色只用在最關鍵的數據上，千萬別貪多！
-                </div>
-            </div>
-        </div>
+
+        <div id="copy-msg"></div>
+        <div id="poster-area"></div>
     </div>
-    
-    <script src="js/main.js"></script>
-    <script>
-    (function () {
-        const picker = document.getElementById('poster-picker');
-        const hexIn  = document.getElementById('poster-hex');
-        const genBtn = document.getElementById('poster-gen');
-        const area   = document.getElementById('poster-area');
-        const msgEl  = document.getElementById('copy-msg');
-        const posterBoard = document.getElementById('poster-board');
 
-        // 色碼輸入連動
+    <div class="col-right">
+        <h3 class="st">海報排版模擬預覽</h3>
+        <div id="poster-board">
+            <div id="p-header">
+                <h2>利用 AI 進行校園蘚苔辨識之初探</h2>
+                <p>探險員：王小明 ｜ 學校：OO高中 ｜ 指導老師：OOO老師</p>
+            </div>
+            <div class="poster-body">
+                <div class="poster-col">
+                    <h4 class="p-heading">一、研究動機</h4>
+                    <p class="p-text">蘚苔植物是環境的指標，但微觀特徵難以辨識。本研究旨在建立影像擷取流程，並訓練卷積神經網路進行自動分類。</p>
+                    <h4 class="p-heading">二、研究方法</h4>
+                    <p class="p-text">1. 採集樣本並記錄生態。<br>2. 建立特徵矩陣。<br>3. 切分 8:1:1 訓練集。</p>
+                </div>
+                <div class="poster-col">
+                    <h4 class="p-heading">三、研究結果</h4>
+                    <div id="p-graph">
+                        <div>模型準確率：95%</div>
+                        <div id="p-accent">重點突破數據</div>
+                    </div>
+                    <h4 class="p-heading">四、結論與展望</h4>
+                    <p class="p-text">模型在自然光下表現優異，未來可推廣至自然科戶外教學中。</p>
+                </div>
+            </div>
+        </div>
+        <div class="tip"><strong>設計訣竅：</strong>背景用淺色，主色給大標題，輔助色給框線，強調色只用在最關鍵數據上。</div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const PRESETS = [
+            { name: '森林綠', hex: '#2E7D32' },
+            { name: '天空藍', hex: '#1565C0' },
+            { name: '珊瑚橘', hex: '#E64A19' },
+            { name: '紫羅蘭', hex: '#6A1B9A' },
+            { name: '玫瑰紅', hex: '#C62828' },
+            { name: '湖水藍', hex: '#00838F' },
+            { name: '芥末黃', hex: '#F9A825' },
+            { name: '深青灰', hex: '#37474F' },
+            { name: '玫瑰金', hex: '#AD1457' },
+            { name: '抹茶綠', hex: '#558B2F' },
+            { name: '靛藍', hex: '#283593' },
+            { name: '磚紅', hex: '#BF360C' },
+        ];
+
+        const picker = document.getElementById('poster-picker');
+        const hexIn = document.getElementById('poster-hex');
+        const genBtn = document.getElementById('poster-gen');
+        const area = document.getElementById('poster-area');
+        const msgEl = document.getElementById('copy-msg');
+        const board = document.getElementById('poster-board');
+        const presetRow = document.getElementById('preset-row');
+
+        // 建立預設色塊
+        PRESETS.forEach(p => {
+            const item = document.createElement('div');
+            item.className = 'preset-item';
+            const sw = document.createElement('div');
+            sw.className = 'preset-swatch';
+            sw.style.background = p.hex;
+            sw.title = p.name + ' ' + p.hex;
+            sw.addEventListener('click', () => {
+                document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('selected'));
+                sw.classList.add('selected');
+                picker.value = p.hex.toLowerCase();
+                hexIn.value = p.hex.toUpperCase();
+                genBtn.click();
+            });
+            const lbl = document.createElement('div');
+            lbl.className = 'preset-label';
+            lbl.textContent = p.name;
+            item.appendChild(sw); item.appendChild(lbl);
+            presetRow.appendChild(item);
+        });
+
+        // 選第一個預設標記
+        presetRow.children[0].querySelector('.preset-swatch').classList.add('selected');
+
         picker.addEventListener('input', () => {
             hexIn.value = picker.value.toUpperCase();
+            document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('selected'));
         });
         hexIn.addEventListener('input', () => {
             let v = hexIn.value.trim();
             if (!/^#/.test(v)) v = '#' + v;
-            if (/^#[0-9A-Fa-f]{6}$/.test(v)) picker.value = v.toLowerCase();
+            if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
+                picker.value = v.toLowerCase();
+                document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('selected'));
+            }
         });
 
-        // 點擊產生配色
         genBtn.addEventListener('click', () => {
             let v = hexIn.value.trim();
             if (!/^#/.test(v)) v = '#' + v;
             if (!/^#[0-9A-Fa-f]{6}$/.test(v)) {
                 hexIn.style.borderColor = 'red';
-                setTimeout(() => hexIn.style.borderColor = '#ddd', 1000);
+                setTimeout(() => hexIn.style.borderColor = '', 1000);
                 return;
             }
             picker.value = v.toLowerCase();
-            renderPosterPalettes(buildPalettes(v), v);
+            renderPosterPalettes(buildPalettes(v));
         });
 
-        // === 核心色彩學演算法 ===
         function hexToHsl(hex) {
-            let r = parseInt(hex.slice(1, 3), 16) / 255, 
-                g = parseInt(hex.slice(3, 5), 16) / 255, 
-                b = parseInt(hex.slice(5, 7), 16) / 255;
-            const mx = Math.max(r, g, b), mn = Math.min(r, g, b); 
-            let h, s, l = (mx + mn) / 2;
-            if (mx === mn) { h = s = 0; }
-            else {
-                const d = mx - mn; 
-                s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
-                switch (mx) { 
-                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break; 
-                    case g: h = ((b - r) / d + 2) / 6; break; 
-                    case b: h = ((r - g) / d + 4) / 6; break; 
-                }
+            let r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255, b = parseInt(hex.slice(5, 7), 16) / 255;
+            const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h, s, l = (mx + mn) / 2;
+            if (mx === mn) { h = s = 0; } else {
+                const d = mx - mn; s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn);
+                switch (mx) { case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break; case g: h = ((b - r) / d + 2) / 6; break; case b: h = ((r - g) / d + 4) / 6; break; }
             }
             return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
         }
-        
         function hslToHex(h, s, l) {
             s /= 100; l /= 100;
-            const k = n => (n + h / 30) % 12, 
-                  a = s * Math.min(l, 1 - l), 
-                  f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+            const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l), f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
             const x = v => Math.round(v * 255).toString(16).padStart(2, '0');
             return '#' + x(f(0)) + x(f(8)) + x(f(4));
         }
-        
         function cl(v, a, b) { return Math.max(a, Math.min(b, v)); }
         function hA(h, d) { return ((h + d) % 360 + 360) % 360; }
 
         function buildPalettes(B) {
-            B = B.toUpperCase(); 
-            const [h, s, l] = hexToHsl(B);
+            B = B.toUpperCase(); const [h, s, l] = hexToHsl(B);
             const cH = hA(h, 180), t1 = hA(h, 120), t2 = hA(h, 240);
-            
-            // 專為海報設計的 4 色陣列：[背景淺色, 主色(原色), 輔助色, 強調色]
             return [
-                {
-                    name: '類比配色 (適合自然和諧)', 
-                    colors: [hslToHex(h, cl(s-20, 5, 30), 96), B, hslToHex(hA(h,-30), cl(s, 20, 100), cl(l, 15, 45)), hslToHex(hA(h,30), cl(s-5, 20, 100), cl(l+10, 15, 60))]
-                },
-                {
-                    name: '互補配色 (適合強調對比)', 
-                    colors: [hslToHex(h, cl(s-20, 5, 30), 96), B, hslToHex(h, cl(s-10, 20, 80), cl(l-20, 10, 30)), hslToHex(cH, cl(s, 20, 100), cl(l, 15, 55))]
-                },
-                {
-                    name: '單色深淺 (適合專業俐落)', 
-                    colors: [hslToHex(h, cl(s-20, 5, 30), 96), B, hslToHex(h, cl(s, 20, 100), cl(l-20, 10, 30)), hslToHex(h, cl(s-10, 20, 80), cl(l+25, 40, 75))]
-                },
-                {
-                    name: '三角配色 (適合活潑吸睛)', 
-                    colors: [hslToHex(h, cl(s-20, 5, 30), 96), B, hslToHex(t1, cl(s, 20, 100), cl(l, 15, 45)), hslToHex(t2, cl(s, 20, 100), cl(l, 15, 50))]
-                }
+                { name: '類比配色（適合自然和諧）', colors: [hslToHex(h, cl(s - 20, 5, 30), 96), B, hslToHex(hA(h, -30), cl(s, 20, 100), cl(l, 15, 45)), hslToHex(hA(h, 30), cl(s - 5, 20, 100), cl(l + 10, 15, 60))] },
+                { name: '互補配色（適合強調對比）', colors: [hslToHex(h, cl(s - 20, 5, 30), 96), B, hslToHex(h, cl(s - 10, 20, 80), cl(l - 20, 10, 30)), hslToHex(cH, cl(s, 20, 100), cl(l, 15, 55))] },
+                { name: '單色深淺（適合專業俐落）', colors: [hslToHex(h, cl(s - 20, 5, 30), 96), B, hslToHex(h, cl(s, 20, 100), cl(l - 20, 10, 30)), hslToHex(h, cl(s - 10, 20, 80), cl(l + 25, 40, 75))] },
+                { name: '三角配色（適合活潑吸睛）', colors: [hslToHex(h, cl(s - 20, 5, 30), 96), B, hslToHex(t1, cl(s, 20, 100), cl(l, 15, 45)), hslToHex(t2, cl(s, 20, 100), cl(l, 15, 50))] }
             ];
         }
 
         function copyHex(c) {
-            navigator.clipboard.writeText(c.toUpperCase()).catch(()=>{});
-            msgEl.textContent = '已複製色碼: ' + c.toUpperCase();
+            navigator.clipboard.writeText(c.toUpperCase()).catch(() => { });
+            msgEl.textContent = '已複製色碼：' + c.toUpperCase();
             setTimeout(() => msgEl.textContent = '', 2000);
         }
 
-        // 更新海報預覽區的 CSS 變數
         function applyToPoster(colors) {
-            posterBoard.style.setProperty('--p-bg', colors[0]);
-            posterBoard.style.setProperty('--p-primary', colors[1]);
-            posterBoard.style.setProperty('--p-secondary', colors[2]);
-            posterBoard.style.setProperty('--p-accent', colors[3]);
+            board.style.setProperty('--p-bg', colors[0]);
+            board.style.setProperty('--p-primary', colors[1]);
+            board.style.setProperty('--p-secondary', colors[2]);
+            board.style.setProperty('--p-accent', colors[3]);
         }
 
-        function renderPosterPalettes(palettes, baseHex) {
+        function renderPosterPalettes(palettes) {
             area.innerHTML = '';
-            
-            palettes.forEach((p, index) => {
-                const card = document.createElement('div'); 
-                card.className = 'wcl-card';
-                if (index === 0) card.classList.add('active'); // 預設選中第一個
-
-                const hd = document.createElement('div'); 
-                hd.className = 'wcl-card-head';
-                hd.textContent = p.name;
+            palettes.forEach((p, i) => {
+                const card = document.createElement('div');
+                card.className = 'wcl-card' + (i === 0 ? ' active' : '');
+                const hd = document.createElement('div'); hd.className = 'wcl-card-head'; hd.textContent = p.name;
                 card.appendChild(hd);
-
-                const row = document.createElement('div'); 
-                row.className = 'wcl-swatches';
-                
+                const row = document.createElement('div'); row.className = 'wcl-swatches';
                 p.colors.forEach(c => {
-                    const sw = document.createElement('div'); 
-                    sw.className = 'wcl-sw';
-                    sw.style.background = c;
-                    sw.title = "點擊複製色碼";
-                    
-                    // 點擊色塊複製
-                    sw.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        copyHex(c);
-                    });
+                    const sw = document.createElement('div'); sw.className = 'wcl-sw'; sw.style.background = c; sw.title = '點擊複製';
+                    sw.addEventListener('click', e => { e.stopPropagation(); copyHex(c); });
                     row.appendChild(sw);
-                }); 
+                });
                 card.appendChild(row);
-
-                const chips = document.createElement('div'); 
-                chips.className = 'wcl-chips';
+                const chips = document.createElement('div'); chips.className = 'wcl-chips';
                 p.colors.forEach(c => {
-                    const ch = document.createElement('span'); 
-                    ch.className = 'wcl-chip';
-                    ch.textContent = c.toUpperCase();
-                    ch.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        copyHex(c);
-                    });
+                    const ch = document.createElement('span'); ch.className = 'wcl-chip'; ch.textContent = c.toUpperCase();
+                    ch.addEventListener('click', e => { e.stopPropagation(); copyHex(c); });
                     chips.appendChild(ch);
-                }); 
+                });
                 card.appendChild(chips);
-
-                // 點擊整張卡片套用至海報
                 card.addEventListener('click', () => {
                     document.querySelectorAll('.wcl-card').forEach(el => el.classList.remove('active'));
-                    card.classList.add('active');
-                    applyToPoster(p.colors);
+                    card.classList.add('active'); applyToPoster(p.colors);
                 });
-
                 area.appendChild(card);
             });
-            
-            // 初始化時套用第一組顏色到海報
             applyToPoster(palettes[0].colors);
         }
 
-        // 預設載入執行一次
         genBtn.click();
     })();
-    </script>
-</body>
-
-</html>
+</script>
