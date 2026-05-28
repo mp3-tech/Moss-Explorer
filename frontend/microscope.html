@@ -48,17 +48,17 @@
                         <li>拍攝關鍵：確保光線充足、對焦清晰、背景乾淨（最好使用標準比對色板或比例尺）。</li>
                         <li>拍攝角度：需包含頂視、側視及局部細節。</li>
                     </ul>
-                    <p>科學小原理：智慧影像識別研究證實，環境光源的穩定度與照明模式，是決定 AI 捕捉特徵輪廓成功率的絕對關鍵；而利用多角度與局部細節擷取，能有效修正目標物在野外因傾斜或旋轉造成的位置誤差，建立更精準的特徵矩陣（智慧影像識別感測系統之進階應用研究，n.d.）。</p>
+                    <p>科學小原理：智慧影像識別研究證實，環境光源的穩定度與照明模式，是決定 AI 捕捉特徵輪廓成功率的絕對關鍵；而利用多角度與局部細節擷取，能有效修正目標物在野外因傾斜或旋轉造成的位置誤差，建立更精準的特徵矩陣（周建翔，2024）。</p>
                 </div>
 
                 <!-- 參考文獻 -->
                 <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee;">
                     <h4 style="margin-bottom: 12px;">參考文獻</h4>
                     <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
-                        陳偉文、卓柏漢、林莉珊（2020）。火龍果與荔枝航照影像判釋－運用卷積神經網路影像辨識技術與作物特徵萃取分類演算法。<em>航測及遙測學刊</em>，<em>25</em>（1），25-38。
+                        陳偉文、卓柏漢、林莉珊（2020）。火龍果與荔枝航照影像判釋－運用卷積神經網路影像辨識技術與作物特徵萃取分類演算法。<em>航測及遙測學刊</em>，<em>25</em>（1），25-38。https://doi.org/10.6574/JPRS.202003_25(1).0003
                     </p>
                     <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
-                        智慧影像識別感測系統之進階應用研究（n.d.）。〔博士論文，國立淡江大學〕。
+                        周建翔（2024）。智慧影像識別感測系統之進階應用研究〔博士論文，淡江大學〕。華藝線上圖書館。https://doi.org/10.6846/tku202400118
                     </p>
                 </div>
 
@@ -85,20 +85,33 @@
                     </div>
                     <div class="photo-placeholder">
                         <img src="images/hero-moss.jpg" alt="模擬樣本圖">
-                        <span class="btn-tool" style="cursor:default; margin-top:10px;">[模擬上傳影像]</span>
+                        <span class="btn-tool" id="btn-upload" style="cursor:pointer; margin-top:10px;">[模擬上傳影像]</span>
                     </div>
                     <div class="tag-cloud">
-                        <span class="article-tag">墊狀</span>
-                        <span class="article-tag">深綠色</span>
-                        <span class="article-tag">岩石上</span>
-                        <span class="article-tag">陰暗潮濕</span>
+                        <span class="article-tag">平鋪狀</span>
+                        <span class="article-tag">翠綠色</span>
+                        <span class="article-tag">土壤或磚石</span>
+                        <span class="article-tag">潮濕</span>
                         <span class="article-tag">無孢蒴</span>
+                        <span class="article-tag">胞芽杯</span>
                     </div>
                 </div>
             </div>
 
         </div>
     </div>
+    <style>
+        #btn-upload.active {
+            background-color: var(--primary, #2e7d32) !important;
+            color: #fff !important;
+            border-color: var(--primary, #2e7d32) !important;
+        }
+    </style>
     <script src="js/main.js"></script>
+    <script>
+        document.getElementById('btn-upload').addEventListener('click', function () {
+            this.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
