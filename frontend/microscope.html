@@ -1,8 +1,104 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>微觀探險儀 - AI 蘚苔探險家</title> <link rel="stylesheet" href="css/style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微觀探險儀 - AI 蘚苔探險家</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body> <div id="navbar-placeholder"></div> <div class="container microscope-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>微觀探險儀 (Microscope)</span></nav> <div class="page-header"> <h1> 微觀探險儀 (Microscope)</h1> <p>開啟你的科學放大鏡，標準化採集苔蘚特徵，為訓練 AI 做好準備！</p> </div> <div class="micro-grid"> <div class="card micro-guide"> <h3 class="section-title">苔蘚採集與觀察指引 </h3> <p>在開始拍攝照片前，請先完成以下觀察步驟。精確的結構化特徵記錄，是 AI 能學得準的關鍵！</p> <div class="check-section"> <h4>1. 環境觀察 (生態棲位)</h4> <ul class="micro-checklist"> <li>栖物類型：岩石、樹皮、土壤、腐木、建物？</li> <li>光照情況：全日照、半日照、陰暗？</li> <li>水分狀態：潮濕、乾燥、流水邊？</li> </ul> </div> <div class="check-section"> <h4>2. 肉眼/放大鏡觀察 (巨觀特徵)</h4> <ul class="micro-checklist"> <li>生長型態：墊狀、毯狀、平鋪、叢生？</li> <li>主要顏色：深綠、淺綠、黃綠、紅褐色？</li> <li>有無蒴柄/孢蒴（「天線」與「小鼓槌」）？</li> </ul> </div> <div class="check-section"> <h4>3. 拍攝準備 (為 AI 建立高品質資料)</h4> <div class="countdown-hint" style="background-color: #e3f2fd; border-left-color: #1565c0; color: #1565c0;"> **拍攝關鍵：** 確保光線充足、對焦清晰、背景乾淨（最好使用標準比對色板或比例尺）。拍攝角度需包含頂視、側視及局部細節。
-                    </div> </div> <div class="card-action" style="margin-top: 20px;"> <a href="matrix.html" class="btn btn-primary" style="background-color: var(--primary);">前往建立特徵矩陣</a> </div> </div> <div class="card micro-viewer"> <h3 class="section-title">觀察記錄器 (模擬器) </h3> <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 20px;">*目前為純前端靜態模擬畫面，未來將連動 backend 進行特徵資料寫入。*</p> <div class="form-sim"> <div class="input-sim"> <label>樣本編號</label> <div class="val-sim">MOSS-20260527-001</div> </div> <div class="input-sim"> <label>採集日期</label> <div class="val-sim">2026-05-27</div> </div> <div class="input-sim"> <label>採集人</label> <div class="val-sim">張探險員 (帳號號碼)</div> </div> <div class="photo-placeholder"> <img src="images/hero-moss.jpg" alt="模擬樣本圖"> <span class="btn-tool" style="cursor:default; margin-top:10px;">[模擬上傳影像]</span> </div> <div class="tag-cloud"> <span class="article-tag">墊狀</span> <span class="article-tag">深綠色</span> <span class="article-tag">岩石上</span> <span class="article-tag">陰暗潮濕</span> <span class="article-tag">無孢蒴</span> </div> </div> </div> </div> </div> <script src="js/main.js"></script>
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="container microscope-page">
+        <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>微觀探險儀 (Microscope)</span></nav>
+
+        <div class="page-header">
+            <h1>微觀探險儀 (Microscope)</h1>
+            <p>開啟你的科學放大鏡，標準化採集苔蘚特徵，為訓練 AI 做好準備！</p>
+        </div>
+
+        <div class="micro-grid">
+
+            <div class="card micro-guide">
+                <h3 class="section-title">苔蘚採集與觀察指引</h3>
+                <p>在開始拍攝照片前，請先完成以下觀察步驟。精確的結構化特徵記錄，是 AI 能學得準的關鍵！</p>
+
+                <div class="check-section">
+                    <h4>1. 環境觀察 (生態棲位)</h4>
+                    <ul class="micro-checklist">
+                        <li>栖物類型：岩石、樹皮、土壤、腐木、建物？</li>
+                        <li>光照情況：全日照、半日照、陰暗？</li>
+                        <li>水分狀態：潮濕、乾燥、流水邊？</li>
+                    </ul>
+                    <p>科學小原理：結構化的環境特徵是高品質的詮釋資料（Metadata）。在植物影像判釋的研究中，結合環境背景與作物特徵萃取分類演算法，能大幅協助卷積神經網路（CNN）進行更精準的歸類與判斷（陳偉文等，2020）。</p>
+                </div>
+
+                <div class="check-section">
+                    <h4>2. 肉眼/放大鏡觀察 (巨觀特徵)</h4>
+                    <ul class="micro-checklist">
+                        <li>生長型態：墊狀、毯狀、平鋪、叢生？</li>
+                        <li>主要顏色：深綠、淺綠、黃綠、紅褐色？</li>
+                        <li>有無蒴柄/孢蒴（「天線」與「小鼓槌」）？</li>
+                    </ul>
+                    <p>科學小原理：AI 無法直接理解抽象的植物外觀，必須透過明確的特徵標籤。將苔蘚的型態與顏色轉化為固定欄位，能讓影像資料在輸入電腦視覺模型時，特徵擷取的訓練流程更加高效（陳偉文等，2020）。</p>
+                </div>
+
+                <div class="check-section">
+                    <h4>3. 拍攝準備 (為 AI 建立高品質資料)</h4>
+                    <ul class="micro-checklist">
+                        <li>拍攝關鍵：確保光線充足、對焦清晰、背景乾淨（最好使用標準比對色板或比例尺）。</li>
+                        <li>拍攝角度：需包含頂視、側視及局部細節。</li>
+                    </ul>
+                    <p>科學小原理：智慧影像識別研究證實，環境光源的穩定度與照明模式，是決定 AI 捕捉特徵輪廓成功率的絕對關鍵；而利用多角度與局部細節擷取，能有效修正目標物在野外因傾斜或旋轉造成的位置誤差，建立更精準的特徵矩陣（智慧影像識別感測系統之進階應用研究，n.d.）。</p>
+                </div>
+
+                <!-- 參考文獻 -->
+                <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee;">
+                    <h4 style="margin-bottom: 12px;">參考文獻</h4>
+                    <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
+                        陳偉文、卓柏漢、林莉珊（2020）。火龍果與荔枝航照影像判釋－運用卷積神經網路影像辨識技術與作物特徵萃取分類演算法。<em>航測及遙測學刊</em>，<em>25</em>（1），25-38。
+                    </p>
+                    <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
+                        智慧影像識別感測系統之進階應用研究（n.d.）。〔博士論文，國立淡江大學〕。
+                    </p>
+                </div>
+
+                <div class="card-action" style="margin-top: 20px;">
+                    <a href="matrix.html" class="btn btn-primary" style="background-color: var(--primary);">前往建立特徵矩陣</a>
+                </div>
+            </div>
+
+            <div class="card micro-viewer">
+                <h3 class="section-title">觀察記錄器 (模擬器)</h3>
+                <p class="text-muted" style="font-size: 0.8rem; margin-bottom: 20px;">*目前為純前端靜態模擬畫面，未來將連動 backend 進行特徵資料寫入。*</p>
+                <div class="form-sim">
+                    <div class="input-sim">
+                        <label>樣本編號</label>
+                        <div class="val-sim">MOSS-20260527-001</div>
+                    </div>
+                    <div class="input-sim">
+                        <label>採集日期</label>
+                        <div class="val-sim">2026-05-27</div>
+                    </div>
+                    <div class="input-sim">
+                        <label>採集人</label>
+                        <div class="val-sim">張探險員 (帳號號碼)</div>
+                    </div>
+                    <div class="photo-placeholder">
+                        <img src="images/hero-moss.jpg" alt="模擬樣本圖">
+                        <span class="btn-tool" style="cursor:default; margin-top:10px;">[模擬上傳影像]</span>
+                    </div>
+                    <div class="tag-cloud">
+                        <span class="article-tag">墊狀</span>
+                        <span class="article-tag">深綠色</span>
+                        <span class="article-tag">岩石上</span>
+                        <span class="article-tag">陰暗潮濕</span>
+                        <span class="article-tag">無孢蒴</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="js/main.js"></script>
 </body>
 </html>
