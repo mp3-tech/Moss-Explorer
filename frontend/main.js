@@ -1,17 +1,52 @@
 document.addEventListener("DOMContentLoaded", function() {
     
-    // --- 1. 動態載入導覽列 ---
+    // --- 1. 動態載入導覽列（直接寫入，不依賴 fetch，相容 file:// 本機開啟）---
     const navbarPlaceholder = document.getElementById("navbar-placeholder");
     if (navbarPlaceholder) {
-        fetch("navbar.html")
-            .then(response => {
-                if (!response.ok) throw new Error("無法載入導覽列");
-                return response.text();
-            })
-            .then(data => {
-                navbarPlaceholder.innerHTML = data;
-            })
-            .catch(error => console.error("載入導覽列時發生錯誤:", error));
+        navbarPlaceholder.innerHTML = `
+<header>
+    <div class="brand">
+        <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <img src="images/logo.png" alt="LOGO" class="logo-img" onerror="this.style.display='none'">
+            <div class="brand-text">
+                <h2>AI 蘚苔探險家</h2>
+                <span>發現腳下的森林，讓 AI 成為你的科學放大鏡！</span>
+            </div>
+        </a>
+    </div>
+    <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+    <nav class="nav-links" id="nav-links">
+        <a href="index.html">首頁</a>
+        <a href="quest.html">研究導航</a>
+        <a href="microscope.html">蘚苔觀察</a>
+        <a href="ai-logic.html">AI 苔蘚解碼</a>
+        <div class="dropdown">
+            <a href="tools.html" class="dropbtn">研究工具箱 </a>
+            <div class="dropdown-content">
+                <div class="dropdown-submenu">
+                    <button class="submenu-btn">科展輔助工具</button>
+                    <div class="submenu-content">
+                        <a href="countdown.html">投稿倒數計時器</a>
+                        <a href="calendar.html">館員諮詢預約</a>
+                        <a href="palette.html">海報配色實驗室</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <button class="submenu-btn">AI 研究工具</button>
+                    <div class="submenu-content">
+                        <a href="matrix.html">特徵比較器</a>
+                        <a href="ratio-calculator.html">AI 資料比例</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="issues.html">延伸議題</a>
+        <a href="resources.html">學術資源</a>
+        <a href="glossary.html">關鍵詞表</a>
+        <a href="faq.html">常見問題</a>
+        <a href="about.html">關於我們</a>
+    </nav>
+</header>`;
     }
 
     // --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
