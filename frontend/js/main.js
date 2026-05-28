@@ -66,32 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCountdowns();
     setInterval(updateCountdowns, 1000);
     
-    // --- 3. 全站色彩同步智慧控制中心 (全新升級版) ---
-    function applyGlobalSavedColors() {
-        const stored = localStorage.getItem('siteColorTheme');
-        if (stored) {
-            try {
-                const theme = JSON.parse(stored);
-                // 讀取 JSON 並精準修改當前頁面的 CSS 全域變數
-                if (theme.primary) {
-                    document.documentElement.style.setProperty('--primary', theme.primary);
-                }
-                if (theme.secondary) {
-                    document.documentElement.style.setProperty('--secondary', theme.secondary);
-                }
-                if (theme.accent) {
-                    document.documentElement.style.setProperty('--accent', theme.accent);
-                }
-                if (theme.bg) {
-                    document.documentElement.style.setProperty('--bg-body', theme.bg);
-                }
-            } catch (e) {
-                console.error("同步全站配色時發生錯誤:", e);
-            }
-        }
-    }
-    // 任何分頁一載入，立刻向首頁調色盤對齊顏色
-    applyGlobalSavedColors();
+    // (已移除原先的 3. 全站色彩同步智慧控制中心，因功能已替換為網站地圖)
 
     // --- 5. AI 訓練資料庫比例計算機邏輯 ---
     const totalInput = document.getElementById('totalPhotos');
