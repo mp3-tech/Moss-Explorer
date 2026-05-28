@@ -19,7 +19,6 @@
             position: fixed;
             inset: 0;
             z-index: 0;
-            /* radial bloom from the centre of the viewport */
             background:
                 radial-gradient(ellipse 80% 60% at 50% 42%,
                     color-mix(in srgb, var(--primary, #2e7d32) 55%, transparent) 0%,
@@ -34,7 +33,6 @@
             pointer-events: none;
         }
 
-        /* Very large ghost text that IS the background texture */
         #page-bg::before {
             content: "從一片蘚苔開始";
             position: absolute;
@@ -80,7 +78,6 @@
             min-height: 100vh;
         }
 
-        /* ── Hero ── */
         .idx-badge {
             display: inline-block;
             font-size: 0.72rem;
@@ -133,7 +130,6 @@
             justify-content: flex-start;
         }
 
-        /* ── Hero split layout ── */
         .idx-hero {
             flex: 1;
             display: flex;
@@ -166,7 +162,6 @@
             .idx-hero-visual { width: min(320px, 85vw); }
         }
 
-        /* ── AI Scanner Box ── */
         .ai-scanner {
             position: relative;
             width: 100%;
@@ -183,7 +178,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.08);
         }
 
-        /* grid lines */
         .ai-scanner::before {
             content: '';
             position: absolute;
@@ -194,7 +188,6 @@
             background-size: 28px 28px;
         }
 
-        /* scanning line */
         .scan-line {
             position: absolute;
             left: 0; right: 0;
@@ -214,7 +207,6 @@
             100% { top: 88%; opacity: 0; }
         }
 
-        /* bounding box */
         .scan-bbox {
             position: absolute;
             top: 20%; left: 22%; right: 22%; bottom: 18%;
@@ -228,7 +220,6 @@
             0%,100% { opacity: 0.65; }
             50%      { opacity: 1; }
         }
-        /* corner accents */
         .scan-bbox::before, .scan-bbox::after {
             content: '';
             position: absolute;
@@ -245,7 +236,6 @@
             border-width: 0 2px 2px 0;
         }
 
-        /* placeholder leaf */
         .scan-target {
             position: absolute;
             top: 20%; left: 22%; right: 22%; bottom: 18%;
@@ -268,7 +258,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* HUD tags */
         .scan-tag {
             position: absolute;
             font-family: 'Courier New', monospace;
@@ -407,7 +396,7 @@
         .timer-expired { color: #c62828; font-size: 0.85rem; font-weight: 600; }
 
         /* ========================================================
-           WCL PANEL & FAB STYLES (Repurposed for Sitemap)
+           SITEMAP PANEL & FAB STYLES
            ======================================================== */
         .wcl-fab {
             position: fixed;
@@ -462,19 +451,18 @@
             cursor: pointer; color: #aaa; padding: 4px 8px; line-height: 1;
         }
 
-        /* ── 首頁專屬麵包屑對齊框架 ── */
         .idx-breadcrumb-wrapper {
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 24px 40px 0; /* 與下方的 Hero 區塊維持相同的左右 padding */
+            padding: 24px 40px 0;
             box-sizing: border-box;
             position: relative;
             z-index: 10;
         }
         .idx-breadcrumb-inner {
             width: 100%;
-            max-width: 1060px; /* 精準對齊 Hero 區塊文字的 max-width */
+            max-width: 1060px;
             margin-bottom: 0; 
         }
         @media (max-width: 820px) { 
@@ -483,7 +471,7 @@
     </style>
 </head>
 <body> 
-    <div id="splash-screen" class="splash-screen"> 
+    <div id="splash-screen" class="splash-screen" style="transition: opacity 0.5s ease;"> 
         <div class="splash-content"> 
             <div class="splash-icon-wrapper"> 
                 <div class="splash-icon"></div> 
@@ -539,12 +527,10 @@
         </div> 
     </div>
 
-    <!-- 網站地圖懸浮按鈕 -->
     <button class="wcl-fab" id="sitemap-fab"> 
         網站地圖
     </button>
 
-    <!-- 網站地圖滑出面板 -->
     <div class="wcl-panel" id="sitemap-panel"> 
         <div class="wcl-head"> 
             <div class="wcl-head-left"> 
@@ -556,7 +542,6 @@
             </div> 
         </div> 
 
-        <!-- 網站地圖連結內容 -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; padding: 10px 0;">
             <div>
                 <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">主專區</h4>
@@ -592,6 +577,24 @@
     
     <script src="js/main.js?v=7"></script> 
     <script> 
+    // ── 🛡️ 雙重保險：強制關閉開場動畫 (防止 JS 錯誤導致卡住) ──
+    (function() {
+        const splash = document.getElementById('splash-screen');
+        if (splash) {
+            const hideSplash = () => {
+                splash.style.opacity = '0';
+                splash.style.pointerEvents = 'none';
+                setTimeout(() => splash.style.display = 'none', 500);
+            };
+            
+            // 1. 2.5秒後自動強制關閉
+            setTimeout(hideSplash, 2500);
+            
+            // 2. 如果還是卡住，點擊畫面任何地方立即關閉
+            document.addEventListener('click', hideSplash, { once: true });
+        }
+    })();
+
     // ── Countdown ──────────────────────────────────────────────
     (function () {
         function getMs(k, fb) {
@@ -623,23 +626,19 @@
         const sitemapCloseBtn = document.getElementById('sitemap-x');
 
         if (sitemapFab && sitemapPanel) {
-            // 1. 點擊按鈕開啟面板
             sitemapFab.addEventListener('click', (e) => {
-                e.stopPropagation(); // 防止點擊事件擴散導致立刻關閉
+                e.stopPropagation(); 
                 sitemapPanel.classList.toggle('open');
             });
 
-            // 2. 點擊右上角 X 關閉面板
             if (sitemapCloseBtn) {
                 sitemapCloseBtn.addEventListener('click', () => {
                     sitemapPanel.classList.remove('open');
                 });
             }
 
-            // 3. 點擊網頁其他空白處，自動收合面板
             document.addEventListener('click', (e) => {
                 if (sitemapPanel.classList.contains('open')) {
-                    // 判斷點擊的位置如果「不是面板本身」也不是「按鈕」，就關閉它
                     if (!sitemapPanel.contains(e.target) && !sitemapFab.contains(e.target)) {
                         sitemapPanel.classList.remove('open');
                     }
