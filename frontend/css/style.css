@@ -21,6 +21,7 @@ body {
     color: var(--text-main);
     margin: 0;
     padding: 0;
+    padding-top: 72px;   /* 全站：讓出懸浮導覽列的高度 */
     padding-bottom: 40px; 
     transition: background-color 0.3s ease;
 }
@@ -149,16 +150,26 @@ a {
    3. 頂部導覽列 (Header & Navbar)
 ========================================= */
 header {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
     padding: 0.8rem 5%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 9999;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+}
+
+/* 全站通用：讓 body 最上方留空間給懸浮導覽列 */
+body {
+    padding-top: 70px;
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
@@ -839,15 +850,31 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
 /* 🌿 掃描 Icon 區塊 */
 .splash-icon-wrapper {
     position: relative;
-    width: 80px; height: 80px;
+    width: 90px; height: 90px;
     background: #e8f5e9;
     border-radius: 20px;
     display: flex; justify-content: center; align-items: center;
-    font-size: 3rem;
     margin-bottom: 20px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(46, 125, 50, 0.2);
 }
+
+/* LOGO 圖片，失敗時顯示 emoji fallback */
+.splash-icon {
+    width: 75px; height: 75px;
+    background-image: url('../images/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-size: 3rem;
+    line-height: 75px;
+    text-align: center;
+}
+.splash-icon::after {
+    /* 當 logo.png 不存在，顯示苔蘚 emoji */
+    content: "";
+}
+/* onerror fallback handled in HTML */
 
 /* 上下移動的 AI 掃描光線 */
 .splash-scan-line {
