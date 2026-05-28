@@ -407,7 +407,7 @@
         .timer-expired { color: #c62828; font-size: 0.85rem; font-weight: 600; }
 
         /* ========================================================
-           WEB COLOR LAB
+           WCL PANEL & FAB STYLES (Repurposed for Sitemap)
            ======================================================== */
         .wcl-fab {
             position: fixed;
@@ -425,13 +425,9 @@
             display: flex; align-items: center; gap: 8px;
             transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
             letter-spacing: 0.01em;
+            text-decoration: none;
         }
         .wcl-fab:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(0,0,0,0.28); }
-        .wcl-saved-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: #ffca28; display: none; flex-shrink: 0;
-        }
-        .wcl-saved-dot.on { display: block; }
 
         .wcl-panel {
             position: fixed;
@@ -460,115 +456,10 @@
         .wcl-head-sub {
             font-size: 0.75rem; color: #999; display: block;
         }
-        .wcl-preview-tag {
-            display: none;
-            font-size: 0.71rem; font-weight: 700;
-            background: #fff3e0; color: #e65100;
-            border-radius: 5px; padding: 2px 9px;
-            margin-top: 4px;
-        }
-        .wcl-preview-tag.on { display: inline-block; }
         .wcl-head-right { display: flex; align-items: center; gap: 8px; }
-        .wcl-save {
-            background: var(--primary, #2e7d32); color: #fff;
-            border: none; border-radius: 8px;
-            padding: 8px 20px; font-size: 0.85rem; font-weight: 700;
-            cursor: pointer; opacity: 0.3; pointer-events: none;
-            transition: opacity 0.18s, transform 0.15s;
-        }
-        .wcl-save.on { opacity: 1; pointer-events: all; }
-        .wcl-save.on:hover { transform: scale(1.03); }
         .wcl-x {
             background: none; border: none; font-size: 1.1rem;
             cursor: pointer; color: #aaa; padding: 4px 8px; line-height: 1;
-        }
-
-        .wcl-inputs {
-            display: flex; align-items: center;
-            gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
-        }
-        .wcl-inputs label { font-size: 0.82rem; color: #999; white-space: nowrap; }
-        .wcl-swatch-box {
-            width: 34px; height: 34px; border-radius: 8px;
-            border: 2px solid #eee; flex-shrink: 0; transition: background 0.25s;
-        }
-        .wcl-hex {
-            font-size: 0.92rem; padding: 7px 11px;
-            border: 1.5px solid #ddd; border-radius: 8px;
-            width: 114px; font-family: monospace;
-            text-transform: uppercase;
-            transition: border-color 0.18s;
-        }
-        .wcl-hex:focus { outline: none; border-color: var(--primary, #2e7d32); }
-        .wcl-gen {
-            background: var(--primary, #2e7d32); color: #fff;
-            border: none; border-radius: 8px;
-            padding: 8px 18px; font-size: 0.84rem; font-weight: 600;
-            cursor: pointer; transition: opacity 0.18s;
-        }
-        .wcl-gen:hover { opacity: 0.85; }
-
-        .wcl-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(244px, 1fr));
-            gap: 13px;
-        }
-        .wcl-card {
-            border: 2px solid #ebebeb; border-radius: 10px;
-            overflow: hidden; background: #fafafa;
-            cursor: pointer;
-            transition: box-shadow 0.18s, border-color 0.18s, transform 0.14s;
-        }
-        .wcl-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
-        .wcl-card.on {
-            border-color: var(--primary, #2e7d32);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary,#2e7d32) 18%, transparent);
-        }
-        .wcl-card-head {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 8px 12px 3px;
-        }
-        .wcl-pname {
-            font-size: 0.71rem; font-weight: 700;
-            color: #aaa; text-transform: uppercase; letter-spacing: 0.05em;
-        }
-        .wcl-atag {
-            font-size: 0.62rem; background: var(--primary,#2e7d32);
-            color: #fff; border-radius: 4px; padding: 1px 7px; display: none;
-        }
-        .wcl-card.on .wcl-atag { display: inline-block; }
-        .wcl-swatches { display: flex; height: 52px; }
-        .wcl-sw {
-            flex: 1; position: relative; transition: flex 0.16s;
-        }
-        .wcl-sw:hover { flex: 1.7; }
-        .wcl-tip {
-            position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
-            background: rgba(0,0,0,0.6); color: #fff;
-            font-size: 0.56rem; padding: 2px 5px; border-radius: 3px;
-            white-space: nowrap; opacity: 0; pointer-events: none;
-            transition: opacity 0.12s; font-family: monospace;
-        }
-        .wcl-sw:hover .wcl-tip { opacity: 1; }
-        .wcl-sw.base::after {
-            content: 'base'; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
-            font-size: 0.52rem; color: rgba(255,255,255,0.85); font-weight: 700; letter-spacing: 0.04em;
-        }
-        .wcl-chips {
-            display: flex; padding: 5px 8px 8px; gap: 3px; flex-wrap: wrap;
-        }
-        .wcl-chip {
-            font-size: 0.56rem; font-family: monospace; color: #888;
-            background: #efefef; border-radius: 3px; padding: 2px 5px;
-            cursor: pointer; transition: background 0.12s;
-        }
-        .wcl-chip:hover { background: #ddd; }
-        .wcl-msg {
-            font-size: 0.78rem; color: var(--primary,#2e7d32);
-            font-weight: 600; min-height: 18px; margin-top: 8px;
-        }
-        .wcl-empty {
-            text-align: center; color: #ccc; padding: 28px 0; font-size: 0.88rem;
         }
 
         /* ── 首頁專屬麵包屑對齊框架 ── */
@@ -646,34 +537,59 @@
                 </div> 
             </div> 
         </div> 
-    <a href="sitemap.html" class="wcl-fab" id="wcl-fab" style="text-decoration: none;"> 
-    【網站地圖】
-</a>
-    <div class="wcl-panel" id="wcl-panel"> 
+    </div>
+
+    <button class="wcl-fab" id="sitemap-fab"> 
+        【網站地圖】
+    </button>
+
+    <div class="wcl-panel" id="sitemap-panel"> 
         <div class="wcl-head"> 
             <div class="wcl-head-left"> 
-                <h3>網頁配色實驗</h3> 
-                <span class="wcl-head-sub">輸入色碼推薦調色盤，點擊方案即時套用全站配色</span> 
-                <span class="wcl-preview-tag" id="wcl-ptag">預覽中，尚未儲存</span> 
+                <h3>網站地圖</h3> 
+                <span class="wcl-head-sub">AI 蘚苔探險家全站快速導覽</span> 
             </div> 
             <div class="wcl-head-right"> 
-                <button class="wcl-save" id="wcl-save">儲存配色</button> 
-                <button class="wcl-x" id="wcl-x"></button> 
+                <button class="wcl-x" id="sitemap-x">✖</button> 
             </div> 
         </div> 
-        <div class="wcl-inputs"> 
-            <label>輸入色碼</label> 
-            <div class="wcl-swatch-box" id="wcl-sw0" style="background:#2e7d32;"></div> 
-            <input type="color" id="wcl-picker" value="#2e7d32" style="width:34px;height:34px;border:none;background:none;cursor:pointer;padding:0;"> 
-            <input type="text" class="wcl-hex" id="wcl-hex" value="#2E7D32" maxlength="7" placeholder="#RRGGBB"> 
-            <button class="wcl-gen" id="wcl-gen">推薦配色</button> 
-        </div> 
-        <div id="wcl-area"><div class="wcl-empty">輸入色碼後點擊「推薦配色」，產生 6 組調色盤方案</div></div> 
-        <div class="wcl-msg" id="wcl-msg"></div> 
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; padding: 10px 0;">
+            <div>
+                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">主專區</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
+                    <li><a href="index.html" style="color: #555; text-decoration: none;">首頁</a></li>
+                    <li><a href="quest.html" style="color: #555; text-decoration: none;">研究導航</a></li>
+                    <li><a href="microscope.html" style="color: #555; text-decoration: none;">蘚苔觀察</a></li>
+                    <li><a href="ai-logic.html" style="color: #555; text-decoration: none;">AI 苔蘚解碼</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">研究工具箱</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
+                    <li><a href="countdown.html" style="color: #555; text-decoration: none;">投稿倒數計時器</a></li>
+                    <li><a href="calendar.html" style="color: #555; text-decoration: none;">館員諮詢預約</a></li>
+                    <li><a href="palette.html" style="color: #555; text-decoration: none;">海報配色實驗室</a></li>
+                    <li><a href="matrix.html" style="color: #555; text-decoration: none;">特徵比較器</a></li>
+                    <li><a href="ratio-calculator.html" style="color: #555; text-decoration: none;">AI 資料比例</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--primary, #2e7d32); margin: 0 0 10px 0; font-size: 0.95rem; border-bottom: 2px solid #eee; padding-bottom: 6px;">其他資源</h4>
+                <ul style="list-style: none; padding: 0; margin: 0; line-height: 2; font-size: 0.9rem;">
+                    <li><a href="issues.html" style="color: #555; text-decoration: none;">延伸議題</a></li>
+                    <li><a href="resources.html" style="color: #555; text-decoration: none;">學術資源</a></li>
+                    <li><a href="glossary.html" style="color: #555; text-decoration: none;">關鍵詞表</a></li>
+                    <li><a href="faq.html" style="color: #555; text-decoration: none;">常見問題</a></li>
+                    <li><a href="about.html" style="color: #555; text-decoration: none;">關於我們</a></li>
+                </ul>
+            </div>
+        </div>
     </div> 
     
     <script src="js/main.js?v=7"></script> 
-    <script> // ── Countdown ──────────────────────────────────────────────
+    <script> 
+    // ── Countdown ──────────────────────────────────────────────
     (function () {
         function getMs(k, fb) {
             const s = localStorage.getItem(k);
@@ -697,229 +613,36 @@
         tick(); setInterval(tick, 1000);
     })();
 
-    // ── Web Color Lab ──────────────────────────────────────────
+    // ── Sitemap Panel ──────────────────────────────────────────
     (function () {
-        const SK = 'siteColorTheme';
-        const fab    = document.getElementById('wcl-fab');
-        const panel  = document.getElementById('wcl-panel');
-        const xBtn   = document.getElementById('wcl-x');
-        const sw0    = document.getElementById('wcl-sw0');
-        const picker = document.getElementById('wcl-picker');
-        const hexIn  = document.getElementById('wcl-hex');
-        const genBtn = document.getElementById('wcl-gen');
-        const area   = document.getElementById('wcl-area');
-        const msgEl  = document.getElementById('wcl-msg');
-        const saveB  = document.getElementById('wcl-save');
-        const dot    = document.getElementById('wcl-dot');
-        const ptag   = document.getElementById('wcl-ptag');
-        const pageBg = document.getElementById('page-bg');
+        const sitemapFab = document.getElementById('sitemap-fab');
+        const sitemapPanel = document.getElementById('sitemap-panel');
+        const sitemapCloseBtn = document.getElementById('sitemap-x');
 
-        let pending = null, saved_flag = false, activeCard = null;
-
-        // Load saved
-        const stored = localStorage.getItem(SK);
-        if (stored) {
-            try { applyVars(JSON.parse(stored)); dot.classList.add('on'); saved_flag = true; }
-            catch(e) {}
-        }
-
-        // 1. 點擊按鈕開啟面板
-        fab.addEventListener('click', (e) => {
-            panel.classList.add('open');
-        });
-
-        // 2. 點擊 X 按鈕關閉
-        xBtn.addEventListener('click', () => {
-            if (pending && !saved_flag) revert();
-            panel.classList.remove('open');
-        });
-
-        // 3. 【全新加入】點擊網頁其他空白處，自動收合面板
-        document.addEventListener('click', (e) => {
-            // 如果面板是開著的
-            if (panel.classList.contains('open')) {
-                // 判斷點擊的位置「不是面板本身」也「不是打開按鈕」
-                if (!panel.contains(e.target) && !fab.contains(e.target)) {
-                    if (pending && !saved_flag) revert(); // 如果只是預覽沒按儲存，收起來時自動復原
-                    panel.classList.remove('open');
-                }
-            }
-        });
-
-        picker.addEventListener('input', () => {
-            const v = picker.value.toUpperCase();
-            hexIn.value = v; sw0.style.background = v;
-        });
-        hexIn.addEventListener('input', () => {
-            let v = hexIn.value.trim();
-            if (!/^#/.test(v)) v = '#' + v;
-            if (/^#[0-9A-Fa-f]{6}$/.test(v)) {
-                picker.value = v.toLowerCase(); sw0.style.background = v;
-            }
-        });
-
-        genBtn.addEventListener('click', () => {
-            let v = hexIn.value.trim();
-            if (!/^#/.test(v)) v = '#' + v;
-            if (!/^#[0-9A-Fa-f]{6}$/.test(v)) {
-                hexIn.style.borderColor = '#d32f2f';
-                setTimeout(() => hexIn.style.borderColor = '', 1400); return;
-            }
-            picker.value = v.toLowerCase(); sw0.style.background = v;
-            render(buildPalettes(v), v);
-            activeCard = null;
-        });
-
-        saveB.addEventListener('click', () => {
-            if (!pending) return;
-            localStorage.setItem(SK, JSON.stringify(pending));
-            saved_flag = true; dot.classList.add('on');
-            saveB.classList.remove('on'); ptag.classList.remove('on');
-            msgEl.textContent = '配色已儲存！全站套用生效。';
-            setTimeout(() => msgEl.textContent = '', 2800);
-        });
-
-        function applyVars(t) {
-            const r = document.documentElement;
-            r.style.setProperty('--primary',   t.primary);
-            r.style.setProperty('--secondary', t.secondary);
-            r.style.setProperty('--accent',    t.accent);
-            // Re-paint the page background bloom with new primary
-            pageBg.style.background = buildBg(t.primary);
-            // Scanner box gradient also uses --primary via CSS var — no extra JS needed
-            // Timer cards light tint
-            document.querySelectorAll('.idx-timer-card').forEach(el => {
-                el.style.borderColor = hexAlpha(t.primary, 0.12);
+        if (sitemapFab && sitemapPanel) {
+            // 1. 點擊按鈕開啟面板
+            sitemapFab.addEventListener('click', (e) => {
+                e.stopPropagation(); // 防止點擊事件擴散導致立刻關閉
+                sitemapPanel.classList.toggle('open');
             });
-            // Fab button color
-            fab.style.background = t.primary;
-        }
 
-        function buildBg(primary) {
-            return `
-                radial-gradient(ellipse 80% 60% at 50% 42%,
-                    ${hexAlpha(primary, 0.5)} 0%,
-                    ${hexAlpha(primary, 0.24)} 38%,
-                    ${hexAlpha(primary, 0.08)} 65%,
-                    transparent 100%),
-                linear-gradient(165deg,
-                    ${hexAlpha(primary, 0.15)} 0%,
-                    #f7faf5 55%,
-                    #fff 100%)
-            `;
-        }
-
-        function hexAlpha(hex, a) {
-            const r = parseInt(hex.slice(1,3),16);
-            const g = parseInt(hex.slice(3,5),16);
-            const b = parseInt(hex.slice(5,7),16);
-            return `rgba(${r},${g},${b},${a})`;
-        }
-
-        function revert() {
-            const s = localStorage.getItem(SK);
-            if (s) { applyVars(JSON.parse(s)); }
-            else {
-                const r = document.documentElement;
-                r.style.removeProperty('--primary');
-                r.style.removeProperty('--secondary');
-                r.style.removeProperty('--accent');
-                pageBg.style.background = '';
-            }
-            pending = null;
-            saveB.classList.remove('on'); ptag.classList.remove('on');
-        }
-
-        function preview(t) {
-            applyVars(t); pending = t; saved_flag = false;
-            saveB.classList.add('on'); ptag.classList.add('on');
-        }
-
-        // colour math
-        function hexToHsl(hex) {
-            let r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255;
-            const mx=Math.max(r,g,b), mn=Math.min(r,g,b); let h,s,l=(mx+mn)/2;
-            if(mx===mn){h=s=0;}
-            else{const d=mx-mn; s=l>.5?d/(2-mx-mn):d/(mx+mn);
-                switch(mx){case r:h=((g-b)/d+(g<b?6:0))/6;break;case g:h=((b-r)/d+2)/6;break;case b:h=((r-g)/d+4)/6;break;}}
-            return [Math.round(h*360),Math.round(s*100),Math.round(l*100)];
-        }
-        function hslToHex(h,s,l){
-            s/=100;l/=100;
-            const k=n=>(n+h/30)%12, a=s*Math.min(l,1-l), f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));
-            const x=v=>Math.round(v*255).toString(16).padStart(2,'0');
-            return '#'+x(f(0))+x(f(8))+x(f(4));
-        }
-        function cl(v,a,b){return Math.max(a,Math.min(b,v));}
-        function hA(h,d){return((h+d)%360+360)%360;}
-
-        function paletteToTheme(cols) {
-            const s=[...cols].sort((a,b)=>hexToHsl(a)[2]-hexToHsl(b)[2]);
-            const primary=s[0], secondary=s[Math.floor(s.length*.45)]||s[1], accent=s[Math.floor(s.length*.65)]||s[2];
-            const lh=hexToHsl(s[s.length-1]); const bg=lh[2]>80?s[s.length-1]:hslToHex(lh[0],Math.max(lh[1]-20,3),94);
-            return {primary,secondary,accent,bg};
-        }
-
-        function buildPalettes(B) {
-            B=B.toUpperCase(); const [h,s,l]=hexToHsl(B);
-            const cH=hA(h,180),t1=hA(h,120),t2=hA(h,240),sp1=hA(h,150),sp2=hA(h,210),sq1=hA(h,90),sq2=hA(h,180),sq3=hA(h,270);
-            return [
-                {name:'類比配色  Analogous',colors:[hslToHex(hA(h,-40),cl(s-5,20,100),cl(l+5,15,90)),hslToHex(hA(h,-20),cl(s,20,100),cl(l,15,85)),B,hslToHex(hA(h,20),cl(s,20,100),cl(l,15,85)),hslToHex(hA(h,40),cl(s-5,20,100),cl(l+5,15,92))]},
-                {name:'互補配色  Complementary',colors:[hslToHex(h,cl(s+10,20,100),cl(l-18,10,78)),B,hslToHex(h,cl(s-20,5,75),cl(l+28,20,94)),hslToHex(cH,cl(s,20,100),cl(l,15,80)),hslToHex(cH,cl(s+10,20,100),cl(l-15,10,72))]},
-                {name:'三角配色  Triadic',colors:[B,hslToHex(t1,cl(s-5,20,100),cl(l,20,80)),hslToHex(t2,cl(s-5,20,100),cl(l,20,80)),hslToHex(h,cl(s-30,5,65),cl(l+26,20,94))]},
-                {name:'分裂互補  Split-Comp',colors:[hslToHex(h,cl(s+10,20,100),cl(l-12,10,78)),B,hslToHex(h,cl(s-25,5,70),cl(l+26,20,94)),hslToHex(sp1,cl(s,20,100),cl(l,20,80)),hslToHex(sp2,cl(s,20,100),cl(l,20,80))]},
-                {name:'單色深淺  Monochromatic',colors:[hslToHex(h,cl(s+10,20,100),cl(l-28,8,58)),hslToHex(h,cl(s+5,20,100),cl(l-12,15,72)),B,hslToHex(h,cl(s-10,5,90),cl(l+15,25,90)),hslToHex(h,cl(s-25,3,65),cl(l+30,35,97))]},
-                {name:'四色矩形  Tetradic',colors:[B,hslToHex(sq1,cl(s-5,20,90),cl(l,20,80)),hslToHex(sq2,cl(s-5,20,90),cl(l,20,80)),hslToHex(sq3,cl(s-5,20,90),cl(l,20,80))]},
-            ];
-        }
-
-        function copyHex(c) {
-            navigator.clipboard.writeText(c.toUpperCase()).catch(()=>{});
-            msgEl.textContent='已複製 '+c.toUpperCase()+'  ';
-            setTimeout(()=>msgEl.textContent='',2000);
-        }
-
-        function render(palettes, baseHex) {
-            area.innerHTML='';
-            const grid=document.createElement('div'); grid.className='wcl-grid';
-            palettes.forEach(p=>{
-                const card=document.createElement('div'); card.className='wcl-card';
-                const hd=document.createElement('div'); hd.className='wcl-card-head';
-                const nm=document.createElement('span'); nm.className='wcl-pname'; nm.textContent=p.name;
-                const tg=document.createElement('span'); tg.className='wcl-atag'; tg.textContent='套用中';
-                hd.appendChild(nm); hd.appendChild(tg); card.appendChild(hd);
-
-                const row=document.createElement('div'); row.className='wcl-swatches';
-                p.colors.forEach(c=>{
-                    const sw=document.createElement('div'); sw.className='wcl-sw';
-                    if(c.toUpperCase()===baseHex.toUpperCase()) sw.classList.add('base');
-                    sw.style.background=c;
-                    const tip=document.createElement('span'); tip.className='wcl-tip'; tip.textContent=c.toUpperCase();
-                    sw.appendChild(tip);
-                    sw.addEventListener('click',e=>{e.stopPropagation();copyHex(c);});
-                    row.appendChild(sw);
-                }); card.appendChild(row);
-
-                const chips=document.createElement('div'); chips.className='wcl-chips';
-                p.colors.forEach(c=>{
-                    const ch=document.createElement('span'); ch.className='wcl-chip';
-                    ch.textContent=c.toUpperCase();
-                    ch.addEventListener('click',e=>{e.stopPropagation();copyHex(c);});
-                    chips.appendChild(ch);
-                }); card.appendChild(chips);
-
-                card.addEventListener('click',()=>{
-                    if(activeCard) activeCard.classList.remove('on');
-                    card.classList.add('on'); activeCard=card;
-                    preview(paletteToTheme(p.colors));
+            // 2. 點擊右上角 X 關閉面板
+            if (sitemapCloseBtn) {
+                sitemapCloseBtn.addEventListener('click', () => {
+                    sitemapPanel.classList.remove('open');
                 });
-                grid.appendChild(card);
-            });
-            area.appendChild(grid);
-        }
+            }
 
-        // auto-generate default
-        genBtn.click();
+            // 3. 點擊網頁其他空白處，自動收合面板
+            document.addEventListener('click', (e) => {
+                if (sitemapPanel.classList.contains('open')) {
+                    // 判斷點擊的位置如果「不是面板本身」也不是「按鈕」，就關閉它
+                    if (!sitemapPanel.contains(e.target) && !sitemapFab.contains(e.target)) {
+                        sitemapPanel.classList.remove('open');
+                    }
+                }
+            });
+        }
     })();
     </script>
 </body>
