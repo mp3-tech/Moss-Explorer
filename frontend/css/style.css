@@ -432,9 +432,9 @@ body {
 .check-section { margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px; }
 .check-section h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 1rem; }
 
-.micro-checklist { list-style: none; padding: 0; margin: 0; color: var(--text-muted); font-size: 0.9rem; }
-.micro-checklist li { position: relative; padding-left: 25px; margin-bottom: 8px; }
-.micro-checklist li::before { content: '☐'; position: absolute; left: 0; top: 0; color: var(--primary); font-weight: bold; }
+.micro-checklist { list-style: disc; padding: 0 0 0 1.5rem; margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+.micro-checklist li { padding-left: 4px; margin-bottom: 8px; }
+.micro-checklist li::before { content: none; }
 
 .form-sim { display: flex; flex-direction: column; gap: 12px; }
 .input-sim { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; }
@@ -1148,7 +1148,7 @@ input[type="color"]::-webkit-color-swatch { border: none; border-radius: 50%; }
     background: rgba(0,0,0,0.06);
 }
 /* =========================================
-   23. 浮動配色實驗室控制面板 (Floating Color Panel)
+   24. 浮動配色實驗室控制面板 (Floating Color Panel)
 ========================================= */
 /* 1. 右下角的懸浮打開按鈕 */
 .toggle-color-btn {
