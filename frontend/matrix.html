@@ -530,8 +530,16 @@ MOSS-002,叢生,黃綠,0</pre>
             window.rerenderMatrixTable();
         }
 
-        // 若資料庫查詢結果已顯示，也同步更新其按鈕狀態
-        renderResults();
+        // 只更新下方資料庫各列按鈕的選取樣式，不重跑查詢（避免筆數被清空）
+        document.querySelectorAll('#db-tbody .btn-compare-pick').forEach(btn => {
+            const sid = btn.getAttribute('data-id');
+            const inA = compareA && compareA['樣本編號'] === sid;
+            const inB = compareB && compareB['樣本編號'] === sid;
+            btn.textContent = inA ? '✓ 樣本A' : inB ? '✓ 樣本B' : '＋ 加入比對';
+            btn.style.background = inA ? '#2e7d32' : inB ? '#1565c0' : 'transparent';
+            btn.style.color = (inA || inB) ? '#fff' : '#2e7d32';
+            btn.closest('tr').style.background = inA ? '#e8f5e9' : inB ? '#e3f2fd' : '';
+        });
 
         // 引導使用者滾動到比對列
         document.getElementById('compare-bar').scrollIntoView({ behavior: 'smooth', block: 'center' });
