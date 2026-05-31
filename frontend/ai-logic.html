@@ -35,7 +35,7 @@
 
                 <div class="logic-card card">
                     <div class="logic-step">階段 2</div>
-                    <h4>特徵萃取 (Convolution)</h4>
+                    <h4>抓取特徵</h4>
                     <p>AI 會使用多層「卷積層 (Convolutional Layer)」與「池化層 (Pooling Layer)」宛如濾鏡般掃描照片，尋找特定的視覺模式：</p>
                     <ul class="micro-checklist">
                         <li>淺層特徵：識別葉片的邊緣、線條與顏色深淺。</li>
@@ -54,27 +54,16 @@
                         <div class="prob-item"><span>泥炭苔 (Sphagnum)</span> <div class="prob-bar"><div style="width: 10%;">10%</div></div></div>
                         <div class="prob-item"><span>其他物種</span> <div class="prob-bar"><div style="width: 5%;">5%</div></div></div>
                     </div>
-                    <p>科學小原理：特徵萃取完成後，數據會被攤平並送入全連接層，最終透過分類函數（如 Softmax）將特徵映射到對應的類別上，輸出一組機率分佈，機率最高者即為模型的預測結果。</p>
+                    <p>科學小原理：抓取特徵完成後，數據會被攤平並送入全連接層，最終透過分類函數（如 Softmax）將特徵映射到對應的類別上，輸出一組機率分佈，機率最高者即為模型的預測結果。</p>
                 </div>
 
             </div>
 
             <div class="alert-box">
-                <strong>探險心得：</strong> AI 的準確度高度依賴於「訓練集」的質量。如果我們給它的「課本」照片都是模糊的，它的特徵萃取就會失敗。這就是為什麼我們前面需要那份精確的觀察與拍攝記錄！
+                <strong>探險心得：</strong> AI 的準確度高度依賴於「訓練集」的質量。如果我們給它的「課本」照片都是模糊的，它就「無法」抓取特徵。這就是為什麼我們前面需要那份精確的觀察與拍攝記錄！
             </div>
 
-            <!-- 參考文獻 -->
-          <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee;">
-    <h4 style="margin-bottom: 12px;">參考文獻</h4>
-    <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
-        陳偉文、卓柏漢、林莉珊（2020）。火龍果與荔枝航照影像判釋－運用卷積神經網路影像辨識技術與作物特徵萃取分類演算法。<em>航測及遙測學刊</em>，<em>25</em>（1），25-38。
-        <a href="https://doi.org/10.6574/JPRS.202003_25(1).0003" target="_blank" rel="noopener noreferrer">https://doi.org/10.6574/JPRS.202003_25(1).0003</a>
-    </p>
-    <p style="font-size: 0.88rem; line-height: 1.8; color: var(--text-muted);">
-        周建翔（2024）。智慧影像識別感測系統之進階應用研究〔博士論文，淡江大學〕。華藝線上圖書館。
-        <a href="https://doi.org/10.6846/tku202400118" target="_blank" rel="noopener noreferrer">https://doi.org/10.6846/tku202400118</a>
-    </p>
-</div>
+           
 
         </div>
     </div>
