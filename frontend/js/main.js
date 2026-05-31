@@ -260,20 +260,26 @@ document.addEventListener("DOMContentLoaded", function() {
     if (matrixForm) {
         const tbody = document.getElementById("matrix-tbody");
         const btnExportCSV = document.getElementById("btn-export-csv");
+        const btnExportJSON = document.getElementById("btn-export-json");
         let matrixData = [];
+
+        // 將 matrixData 掛到 window，讓 matrix.html 的 inline script 可以存取
+        window.matrixData = matrixData;
 
         matrixForm.addEventListener("submit", function(e) {
             e.preventDefault();
 
             const sample = {
-                id: document.getElementById("m-id").value,
-                growth: document.getElementById("m-growth").value,
-                color: document.getElementById("m-color").value,
+                id:        document.getElementById("m-id").value,
+                growth:    document.getElementById("m-growth").value,
+                color:     document.getElementById("m-color").value,
                 substrate: document.getElementById("m-substrate").value,
-                capsule: document.getElementById("m-capsule").value
+                capsule:   document.getElementById("m-capsule").value,
+                location:  document.getElementById("m-location").value || "未記錄"
             };
 
             matrixData.push(sample);
+            window.matrixData = matrixData; // 同步更新全域參考
             renderMatrixTable();
             
             matrixForm.reset();
@@ -282,46 +288,128 @@ document.addEventListener("DOMContentLoaded", function() {
 
         function renderMatrixTable() {
             if (matrixData.length === 0) {
-                tbody.innerHTML = `<tr class="empty-row"><td colspan="6" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td></tr>`;
+                tbody.innerHTML = `<tr class="empty-row"><td colspan="8" style="text-align: center; color: #999;">尚未加入任何特徵資料，請由左方表單新增。</td></tr>`;
                 return;
             }
 
             tbody.innerHTML = "";
             matrixData.forEach((item, index) => {
+                const inA = window.compareA && window.compareA['樣本編號'] === item.id;
+                const inB = window.compareB && window.compareB['樣本編號'] === item.id;
+
                 const tr = document.createElement("tr");
+                if (inA) tr.style.background = '#e8f5e9';
+                if (inB) tr.style.background = '#e3f2fd';
+
                 tr.innerHTML = `
-                    <td style="font-family: monospace; font-weight: bold; color: var(--primary);">${item.id}</td> <td>${item.growth}</td> <td>${item.color}</td> <td>${item.substrate}</td> <td>${item.capsule}</td> <td><button class="btn-delete-row" onclick="deleteMatrixRow(${index})">刪除</button></td> `;
+                    <td style="font-family: monospace; font-weight: bold; color: var(--primary);">${item.id}</td>
+                    <td>${item.growth}</td>
+                    <td>${item.color}</td>
+                    <td>${item.substrate}</td>
+                    <td>${item.capsule}</td>
+                    <td>${item.location}</td>
+                    <td>
+                        <button class="btn-delete-row" onclick="deleteMatrixRow(${index})">刪除</button>
+                    </td>
+                    <td>
+                        <button class="btn-add-compare"
+                            data-index="${index}"
+                            style="font-size:0.78rem; padding:3px 10px; border-radius:8px;
+                                   border:1.5px solid #a5d6a7;
+                                   background:${inA ? '#2e7d32' : inB ? '#1565c0' : 'transparent'};
+                                   color:${(inA || inB) ? '#fff' : '#2e7d32'};
+                                   cursor:pointer; white-space:nowrap; transition: all 0.2s;">
+                            ${inA ? '✓ 樣本A' : inB ? '✓ 樣本B' : '＋ 加入比對'}
+                        </button>
+                    </td>`;
                 tbody.appendChild(tr);
+            });
+
+            // 綁定加入比對按鈕事件
+            tbody.querySelectorAll('.btn-add-compare').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const idx = parseInt(btn.getAttribute('data-index'));
+                    if (typeof window.addMyRecordToCompare === 'function') {
+                        window.addMyRecordToCompare(idx);
+                    }
+                });
             });
         }
 
+        // 公開給 matrix.html 的 inline script 呼叫，以便同步重繪
+        window.rerenderMatrixTable = renderMatrixTable;
+
         window.deleteMatrixRow = function(index) {
+            // 若刪除的資料正在比對中，一併清除
+            if (window.compareA && window.compareA['_isMyRecord'] && window.compareA['樣本編號'] === matrixData[index]?.id) {
+                window.compareA = null;
+            }
+            if (window.compareB && window.compareB['_isMyRecord'] && window.compareB['樣本編號'] === matrixData[index]?.id) {
+                window.compareB = null;
+            }
             matrixData.splice(index, 1);
+            window.matrixData = matrixData;
             renderMatrixTable();
+            // 若比對列存在，同步更新
+            if (typeof window.updateCompareBar === 'function') {
+                window.updateCompareBar();
+            }
         };
 
-        btnExportCSV.addEventListener("click", function() {
-            if (matrixData.length === 0) {
-                alert("目前沒有資料可以匯出喔！請先新增資料。");
-                return;
-            }
+        // CSV 匯出
+        if (btnExportCSV) {
+            btnExportCSV.addEventListener("click", function() {
+                if (matrixData.length === 0) {
+                    alert("目前沒有資料可以匯出喔！請先新增資料。");
+                    return;
+                }
 
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF"; 
-            csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無\n"; 
+                let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+                csvContent += "樣本編號,生長型態,顏色,生長基質,孢蒴有無,觀測地點\n";
 
-            matrixData.forEach(row => {
-                const rowString = `${row.id},${row.growth},${row.color},${row.substrate},${row.capsule}`;
-                csvContent += rowString + "\n";
+                matrixData.forEach(row => {
+                    const rowString = `${row.id},${row.growth},${row.color},${row.substrate},${row.capsule},${row.location}`;
+                    csvContent += rowString + "\n";
+                });
+
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "moss_feature_matrix.csv");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             });
+        }
 
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "moss_feature_matrix.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
+        // JSON 匯出
+        if (btnExportJSON) {
+            btnExportJSON.addEventListener("click", function() {
+                if (matrixData.length === 0) {
+                    alert("目前沒有資料可以匯出喔！請先新增資料。");
+                    return;
+                }
+
+                const jsonData = matrixData.map(row => ({
+                    "樣本編號": row.id,
+                    "生長型態": row.growth,
+                    "主要顏色": row.color,
+                    "生長基質": row.substrate,
+                    "孢蒴有無": row.capsule,
+                    "觀測地點": row.location
+                }));
+
+                const blob = new Blob([JSON.stringify(jsonData, null, 2)], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", "moss_feature_matrix.json");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            });
+        }
     }
 
     // --- 9. 開場動畫 (Splash Screen) 終極防呆邏輯 ---
@@ -330,32 +418,26 @@ document.addEventListener("DOMContentLoaded", function() {
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
         
         if (!hasSeenSplash) {
-            // 播放開場動畫期間，先將導覽列區塊完全隱藏
             if (navbarPlaceholder) {
                 navbarPlaceholder.style.display = 'none';
             }
 
-            // 第一次進來，強制 2.5 秒後執行隱藏動作
             setTimeout(() => {
                 splashScreen.style.opacity = '0';
                 splashScreen.style.visibility = 'hidden';
-                splashScreen.style.pointerEvents = 'none'; // 滑鼠穿透，防卡死
+                splashScreen.style.pointerEvents = 'none';
                 sessionStorage.setItem('moss_splash_seen', 'true');
                 
-                // 動畫淡出時，同步讓導覽列顯示出來
                 if (navbarPlaceholder) {
                     navbarPlaceholder.style.display = 'block';
                 }
                 
-                // 動畫結束後徹底移除動畫組件
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                 }, 500); 
             }, 2500); 
         } else {
-            // 已經看過，開場動畫瞬間消失
             splashScreen.style.display = 'none';
-            // 確保跳過動畫的訪客可以直接、正常地看到導覽列
             if (navbarPlaceholder) {
                 navbarPlaceholder.style.display = 'block';
             }
