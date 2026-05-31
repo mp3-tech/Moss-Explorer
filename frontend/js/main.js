@@ -330,6 +330,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const hasSeenSplash = sessionStorage.getItem('moss_splash_seen');
         
         if (!hasSeenSplash) {
+            // 播放開場動畫期間，先將導覽列區塊完全隱藏
+            if (navbarPlaceholder) {
+                navbarPlaceholder.style.display = 'none';
+            }
+
             // 第一次進來，強制 2.5 秒後執行隱藏動作
             setTimeout(() => {
                 splashScreen.style.opacity = '0';
@@ -337,14 +342,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 splashScreen.style.pointerEvents = 'none'; // 滑鼠穿透，防卡死
                 sessionStorage.setItem('moss_splash_seen', 'true');
                 
-                // 動畫結束後徹底移除
+                // 動畫淡出時，同步讓導覽列顯示出來
+                if (navbarPlaceholder) {
+                    navbarPlaceholder.style.display = 'block';
+                }
+                
+                // 動畫結束後徹底移除動畫組件
                 setTimeout(() => {
                     splashScreen.style.display = 'none';
                 }, 500); 
             }, 2500); 
         } else {
-            // 已經看過，瞬間消失
+            // 已經看過，開場動畫瞬間消失
             splashScreen.style.display = 'none';
+            // 確保跳過動畫的訪客可以直接、正常地看到導覽列
+            if (navbarPlaceholder) {
+                navbarPlaceholder.style.display = 'block';
+            }
         }
     }
 
