@@ -1,29 +1,254 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title> AI 蘚苔探險家-關鍵詞表</title> <link rel="stylesheet" href="css/style.css"> <style> .thesaurus-table { width:100%; border-collapse:collapse; font-size:0.88rem; margin-top:16px; }
-        .thesaurus-table th { background:#f5f5f5; padding:10px 12px; text-align:left; border-bottom:2px solid var(--border-color); white-space:nowrap; font-size:0.82rem; color:var(--text-muted); }
-        .thesaurus-table td { padding:12px; border-bottom:1px solid #eee; vertical-align:top; line-height:1.55; }
-        .thesaurus-table tbody tr:hover { background:#f9fdf9; }
-        .term-main { font-weight:700; color:var(--text-main); font-size:0.95rem; }
-        .rel-tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.75rem; margin:2px 3px 2px 0; }
-        .rt { background:#e3f2fd; color:#1565c0; }
-        .bt { background:#f3e5f5; color:#7b1fa2; }
-        .nt { background:#e8f5e9; color:#2e7d32; }
-        .use { background:#fff3e0; color:#e65100; }
-        .uf { background:#fce4ec; color:#c62828; }
-        .category-block { margin-bottom:40px; }
-        .category-block h2 { font-size:1.1rem; font-weight:700; padding:8px 14px; border-radius:8px 8px 0 0; margin:0; }
-        .cat-ai { background:#e3f2fd; color:#1565c0; }
-        .cat-botany { background:#e8f5e9; color:#1b5e20; }
-        .table-scroll { overflow-x:auto; border:1px solid var(--border-color); border-radius:0 0 8px 8px; }
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 蘚苔探險家-關鍵詞表</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .thesaurus-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            margin-top: 16px;
+        }
+
+        .thesaurus-table th {
+            background: #f5f5f5;
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+            white-space: nowrap;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .thesaurus-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .thesaurus-table tbody tr:hover {
+            background: #f9fdf9;
+        }
+
+        .term-main {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .rel-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin: 2px 3px 2px 0;
+        }
+
+        .rt {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .bt {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .nt {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .use {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .uf {
+            background: #fce4ec;
+            color: #c62828;
+        }
+
+        .category-block {
+            margin-bottom: 40px;
+        }
+
+        .category-block h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 8px 8px 0 0;
+            margin: 0;
+        }
+
+        .cat-ai {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .cat-botany {
+            background: #e8f5e9;
+            color: #1b5e20;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 0 0 8px 8px;
+        }
     </style>
 </head>
-<body> <div id="navbar-placeholder"></div> <div class="container glossary-page"> <nav class="breadcrumb"><a href="index.html">首頁</a> &gt; <span>關鍵詞表</span></nav> <div class="page-header"> <h1> 關鍵詞表</h1> <p>含 BT（上位詞）、NT（下位詞）、RT（相關詞）與 USE/UF 的完整學術索引典，幫助你建立精確的文獻搜尋關鍵字。</p> </div> <div class="alert-box" style="margin-bottom:28px;"> <strong>使用說明：</strong> <span class="rel-tag bt">BT</span>上位詞（更廣義的分類）　
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container glossary-page">
+
+        <nav class="breadcrumb">
+            <a href="index.html">首頁</a> &gt; <span>關鍵詞表</span>
+        </nav>
+
+        <div class="page-header">
+            <h1>關鍵詞表</h1>
+            <p>含 BT（上位詞）、NT（下位詞）、RT（相關詞）與 USE/UF 的完整學術索引典，幫助你建立精確的文獻搜尋關鍵字。</p>
+        </div>
+
+        <div class="alert-box" style="margin-bottom: 28px;">
+            <strong>使用說明：</strong>
+            <span class="rel-tag bt">BT</span>上位詞（更廣義的分類）　
             <span class="rel-tag nt">NT</span>下位詞（更具體的子類）　
             <span class="rel-tag rt">RT</span>相關詞（平行關聯概念）　
             <span class="rel-tag use">USE</span>正式用語（應使用這個詞）　
             <span class="rel-tag uf">UF</span>同義詞/舊稱（亦稱為…）
-        </div> <!-- 苔蘚植物學 --> <div class="category-block"> <h2 class="cat-botany"> 苔蘚植物學術語</h2> <div class="table-scroll"> <table class="thesaurus-table"> <thead> <tr> <th>關鍵詞</th> <th>釋義</th> <th>BT 上位詞</th> <th>NT 下位詞</th> <th>RT 相關詞</th> <th>USE / UF</th> </tr> </thead> <tbody> <tr> <td><span class="term-main">苔蘚植物</span></td> <td>不具維管束、臺灣分布極廣，且適合作為環境指標之植物。</td> <td><span class="rel-tag bt">BT</span> 植物界</td> <td><span class="rel-tag nt">NT</span> 水苔、泥炭苔</td> <td><span class="rel-tag rt">RT</span> 苔球法、物候監測</td> <td><span class="rel-tag uf">UF</span> 蘚苔植物</td> </tr> <tr> <td><span class="term-main">分類學</span></td> <td>包含分類、鑑定、描述與命名四大要素之植物科學。</td> <td><span class="rel-tag bt">BT</span> 植物學</td> <td><span class="rel-tag nt">NT</span> 物種鑑定、命名</td> <td><span class="rel-tag rt">RT</span> 苔蘚特徵矩陣</td> <td>—</td> </tr> <tr> <td><span class="term-main">苔球法</span></td> <td>將苔蘚綁成球狀吊掛，藉由細胞受損狀況偵測空汙的環境監測技術。</td> <td><span class="rel-tag bt">BT</span> 環境監測技術</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 空氣污染、酸雨監測</td> <td>—</td> </tr> <tr> <td><span class="term-main">泥炭沼澤</span></td> <td>水苔生長之區域，其分佈位移可作為全球暖化之生態證據。</td> <td><span class="rel-tag bt">BT</span> 生態系統</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 水苔、全球暖化</td> <td>—</td> </tr> <tr> <td><span class="term-main">孢蒴</span></td> <td>苔蘚植物用來裝載與散播孢子的器官，長在蒴柄頂端，是辨識物種的重要特徵。</td> <td><span class="rel-tag bt">BT</span> 苔蘚植物形態</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 苔蘚特徵矩陣</td> <td><span class="rel-tag uf">UF</span> Capsule</td> </tr> <tr> <td><span class="term-main">物候監測</span></td> <td>針對生物受氣候影響產生之週期性現象進行長期觀測。</td> <td><span class="rel-tag bt">BT</span> 環境科學</td> <td><span class="rel-tag nt">NT</span> 遠端物候監測</td> <td><span class="rel-tag rt">RT</span> 公民科學、雜訊過濾</td> <td>—</td> </tr> </tbody> </table> </div> </div> <!-- AI 術語 --> <div class="category-block"> <h2 class="cat-ai"> AI 與資訊科學術語</h2> <div class="table-scroll"> <table class="thesaurus-table"> <thead> <tr> <th>關鍵詞</th> <th>釋義</th> <th>BT 上位詞</th> <th>NT 下位詞</th> <th>RT 相關詞</th> <th>USE / UF</th> </tr> </thead> <tbody> <tr> <td><span class="term-main">卷積神經網路</span></td> <td>利用分層處理與自動學習進行圖像分析之神經網路，是目前影像辨識的主流技術。</td> <td><span class="rel-tag bt">BT</span> 人工智慧</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 像素分解、圖像分析</td> <td><span class="rel-tag use">USE</span> CNN</td> </tr> <tr> <td><span class="term-main">像素分解</span></td> <td>將影像拆成千萬像素並掃描特徵，以利 AI 學習之技術。</td> <td><span class="rel-tag bt">BT</span> 圖像分析</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 卷積神經網路</td> <td>—</td> </tr> <tr> <td><span class="term-main">苔蘚特徵矩陣</span></td> <td>記錄葉型、中肋、邊緣鋸齒等特徵之結構化數據工具，是建立 AI 標籤的科學基礎。</td> <td><span class="rel-tag bt">BT</span> 實驗設計</td> <td>—</td> <td><span class="rel-tag rt">RT</span> AI 標籤、Quest 3</td> <td>—</td> </tr> <tr> <td><span class="term-main">訓練集</span></td> <td>符合科學比例（如 8:1:1）分配，用於訓練模型之數據集合。</td> <td><span class="rel-tag bt">BT</span> AI 訓練資料</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 驗證集、測試集</td> <td><span class="rel-tag uf">UF</span> Training Set</td> </tr> <tr> <td><span class="term-main">過度擬合</span></td> <td>模型過度擬合原始數據，導致對新樣本辨識力下降的現象。</td> <td><span class="rel-tag bt">BT</span> 機器學習</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 比例計算機、驗證集</td> <td><span class="rel-tag uf">UF</span> Overfitting</td> </tr> <tr> <td><span class="term-main">資料集偏差</span></td> <td>因收集資料的過程不夠客觀，導致訓練出來的 AI 產生偏見的現象。</td> <td><span class="rel-tag bt">BT</span> 機器學習</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 訓練集、過度擬合</td> <td><span class="rel-tag uf">UF</span> Dataset Bias</td> </tr> <tr> <td><span class="term-main">特徵萃取</span></td> <td>將複雜的原始資料（如高畫素照片），提煉出最關鍵、最具代表性數值的過程。</td> <td><span class="rel-tag bt">BT</span> 圖像分析</td> <td>—</td> <td><span class="rel-tag rt">RT</span> 卷積神經網路、苔蘚特徵矩陣</td> <td><span class="rel-tag uf">UF</span> Feature Extraction</td> </tr> </tbody> </table> </div> </div> <div class="alert-box" style="margin-top: 20px;"> <strong> 寫作建議：</strong> 撰寫科展報告時，第一次提到這些專有名詞，建議在括號內附上英文（例如：假根 Rhizoid），之後再統一使用中文。在文獻搜尋時，可同時使用中文詞條及其對應的 USE 英文術語，以獲得更完整的搜尋結果。
-        </div> </div> <script src="js/main.js"></script>
+        </div>
+
+        <div class="category-block">
+            <div class="table-scroll">
+                <table class="thesaurus-table">
+                    <thead>
+                        <tr>
+                            <th>關鍵詞</th>
+                            <th>釋義</th>
+                            <th>BT 上位詞</th>
+                            <th>NT 下位詞</th>
+                            <th>RT 相關詞</th>
+                            <th>USE / UF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="term-main"> 苔蘚植物(Bryophytes)</span></td>
+                            <td>不具維管束、臺灣分布極廣，且適合作為環境指標之植物。</td>
+                            <td><span class="rel-tag bt">BT</span> 植物界(Plantae)</td>
+                            <td><span class="rel-tag nt">NT</span> 水苔、泥炭苔(Sphagnum / Peat Moss)</td>
+                            <td><span class="rel-tag rt">RT</span> 苔球法、物候監測(Moss Ball Method / Phenological Monitoring)</td>
+                            <td><span class="rel-tag uf">UF</span> 蘚苔(Bryophytes)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 植物分類學(Plant Taxonomy)</span></td>
+                            <td>包含分類、鑑定、描述與命名，四大要素之植物科學。</td>
+                            <td><span class="rel-tag bt">BT</span> 植物學(Botany)</td>
+                            <td><span class="rel-tag nt">NT</span> 物種鑑定、命名(Species Identification /Nomenclature)</td>
+                            <td><span class="rel-tag rt">RT</span> 苔蘚特徵矩陣(Bryophyte Feature Matrix)</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 苔蘚特徵矩陣(Bryophyte Feature Matrix)</span></td>
+                            <td>記錄葉型、中肋、邊緣鋸齒等特徵之結構化數據工具。</td>
+                            <td><span class="rel-tag bt">BT</span> 實驗設計(Experimental Design)</td>
+                            <td><span class="rel-tag nt">NT</span></td>
+                            <td><span class="rel-tag rt">RT</span> 人工智慧標籤(Data Annotation / AI Labeling)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 卷積神經網絡(Convolutional Neural Networks, CNN)</span></td>
+                            <td>利用分層處理與自動學習進行圖像分析之神經網路。</td>
+                            <td><span class="rel-tag bt">BT</span> 人工智慧(Artificial Intelligence, AI)</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 像素分解、圖像分析(Pixel Decomposition / Image Analysis)</td>
+                            <td><span class="rel-tag use">USE</span> CNN (Convolutional Neural Networks)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 像素分解(Pixel Decomposition)</span></td>
+                            <td>將影像拆成千萬像素並掃描特徵，以利AI學習之技術。</td>
+                            <td><span class="rel-tag bt">BT</span> 圖像分析(Image Analysis)</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 卷積神經網路(Convolutional Neural Networks, CNN)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 物候監測(Phenological Monitoring)</span></td>
+                            <td>針對生物受氣候影響產生之週期性現象進行長期觀測。</td>
+                            <td><span class="rel-tag bt">BT</span> 環境科學
+                            (Environmental Science)</td>
+                            <td><span class="rel-tag nt">NT</span> 遠端物候監測
+                            (Remote Phenological Monitoring)</td>
+                            <td><span class="rel-tag rt">RT</span> 公民科學、雜訊過濾
+                            (Citizen Science / Noise Filtering)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main">訓練集
+                            (Training Set)
+</span></td>
+                            <td>符合科學比例（如8:1:1）分配，用於訓練模式之數據。</td>
+                            <td><span class="rel-tag bt">BT</span> AI訓練資料
+                            (AI Training Data)
+</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 驗證集、測試集
+                            (Validation Set / Test Set)
+
+</td>
+                            <td><span class="rel-tag uf">UF</span> Training Set</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main">過度擬合
+                            (Overfitting)
+</span></td>
+                            <td>模型過度擬合原始數據，導致對新樣本辨識力下降現象。</td>
+                            <td><span class="rel-tag bt">BT</span> 機器學習
+                            (Machine Learning)
+</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 比例計算機、驗證集(Ratio Calculator / Validation Set)</td>
+                            <td><span class="rel-tag uf">UF</span> Overfitting</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main">苔球法
+                            (Moss Ball Method)
+</span></td>
+                            <td>將苔蘚綁成球狀吊掛，藉由細胞受損狀況偵測空汙。</td>
+                            <td><span class="rel-tag bt">BT</span> 環境監測技術
+                            (Environmental Monitoring Technology)
+</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 空氣污染、酸雨監測
+                            (Air Pollution / Acid Rain Monitoring)
+</td>
+                        </tr>
+                        <tr>
+                            <td><span class="term-main"> 泥炭沼澤(Peatlands)</span></td>
+                            <td>水苔生長之區域，其分佈位移可作為全球暖化之證據。</td>
+                            <td><span class="rel-tag bt">BT</span> 生態系統(Ecosystem)</td>
+                            <td><span class="rel-tag nt">NT</span> </td>
+                            <td><span class="rel-tag rt">RT</span> 水苔、全球暖化(Sphagnum / Global Warming)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="alert-box" style="margin-top: 20px;">
+            <strong>寫作建議：</strong> 撰寫科展報告時，第一次提到這些專有名詞，建議在括號內附上英文（例如：假根 Rhizoid），之後再統一使用中文。在文獻搜尋時，可同時使用中文詞條及其對應的 USE
+            英文術語，以獲得更完整的搜尋結果。
+        </div>
+
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
+
 </html>
