@@ -47,8 +47,18 @@ document.addEventListener("DOMContentLoaded", function() {
         <a href="about.html">關於我們</a>
     </nav>
 </header>`;
-    }
 
+        // 【新增的修復邏輯】在 HTML 生成後，馬上綁定漢堡選單點擊事件
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const navLinks = document.getElementById("nav-links");
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener("click", function() {
+                // 點擊時，切換 'active' 這個 class 來控制顯示/隱藏
+                navLinks.classList.toggle("active");
+            });
+        }
+    }
     // --- 2. 倒數計時器邏輯 (首頁儀表板專用) ---
     function updateCountdowns() {
         const now = new Date().getTime();
