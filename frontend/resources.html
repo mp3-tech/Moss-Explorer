@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head> 
@@ -35,6 +34,18 @@
         .rec-label { font-size:0.72rem; font-weight:700; color:var(--primary); margin-top:8px; }
         .rec-text { font-size:0.78rem; color:var(--text-muted); line-height:1.6; margin-top:3px; }
         .sub-field-title { font-size:0.9rem; font-weight:700; color:var(--text-muted); margin:18px 0 10px; padding-left:8px; border-left:3px solid var(--primary); }
+
+        /* 入門科普專用樣式 */
+        .pop-type-tag { display:inline-block; font-size:0.68rem; padding:2px 8px; border-radius:10px; margin-right:6px; margin-bottom:4px; font-weight:700; }
+        .tag-book { background:#fff8e1; color:#e65100; border:1px solid #ffe082; }
+        .tag-manga { background:#fce4ec; color:#880e4f; border:1px solid #f48fb1; }
+        .tag-video { background:#e8eaf6; color:#283593; border:1px solid #9fa8da; }
+        .tag-web { background:#e0f7fa; color:#006064; border:1px solid #80deea; }
+        .tag-magazine { background:#f3e5f5; color:#4a148c; border:1px solid #ce93d8; }
+        .tag-cartoon { background:#e8f5e9; color:#1b5e20; border:1px solid #a5d6a7; }
+        .pop-card { background:var(--bg-card); border:1px solid var(--border-color); border-radius:10px; padding:14px 16px; transition:0.2s; }
+        .pop-card:hover { border-color:var(--primary); box-shadow:0 4px 12px rgba(46,125,50,0.08); transform:translateX(3px); }
+        .pop-card .org-title { margin-top:4px; }
     </style>
 </head>
 <body> 
@@ -50,7 +61,8 @@
             <button class="tab-btn active" data-tab="orgs" role="tab">組織網站</button> 
             <button class="tab-btn" data-tab="journals" role="tab">相關期刊</button> 
             <button class="tab-btn" data-tab="conferences" role="tab">指標性研討會</button> 
-            <button class="tab-btn" data-tab="databases" role="tab">資料庫平台</button> 
+            <button class="tab-btn" data-tab="databases" role="tab">資料庫平台</button>
+            <button class="tab-btn" data-tab="popular" role="tab">入門科普</button>
         </div> 
 
         <!-- 組織網站 -->
@@ -277,6 +289,227 @@
                 <div class="org-card"><div class="org-title"><a href="https://www.kaggle.com/" target="_blank">Kaggle 資料科學社群</a></div><div class="org-sub">Google 旗下資料科學競賽與資料集平台 — 找尋開源圖像辨識資料集的好地方</div><div class="rec-label">推薦原因</div><div class="rec-text">有大量整理好的圖像辨識資料集可直接使用，也有入門教學筆記本（Notebook），即使沒寫過 Python 也能跟著學習 AI 模型訓練。</div></div>
             </div>
         </div>
+
+        <!-- 入門科普 -->
+        <div class="tab-panel" id="tab-popular">
+            <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:24px;">以下精選書籍、漫畫、影音頻道與科普網站，適合作為正式研究前的暖身閱讀，幫助你用輕鬆的方式建立各領域的基礎概念。</p>
+
+            <!-- 植物學科普 -->
+            <div class="resource-field">
+                <div class="field-title">植物學</div>
+                <div class="sub-field-title">書籍 / 圖文書</div>
+                <div class="org-grid">
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010765386" target="_blank">植物博物館</a></div>
+                        <div class="org-sub">凱蒂．史考特 ╳ 英國皇家植物園 聯手打造</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">以精緻手繪插圖介紹全球 200 種代表性植物，每一頁都是視覺與知識的饗宴，是從零開始認識植物世界的最美入門書，適合各年齡層收藏翻閱。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-manga">漫畫</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010683923" target="_blank">植物世界歷險記</a></div>
+                        <div class="org-sub">Sweet Factory 著，韓賢東 繪</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">以漫畫冒險故事的方式帶領讀者認識植物的藥性、毒性與生存策略，輕鬆易讀，是讓人一口氣想把植物知識學完的趣味入門漫畫。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://pansci.asia/archives/tag/%E6%A4%8D%E7%89%A9" target="_blank">PanSci 泛科學 — 植物專區</a></div>
+                        <div class="org-sub">全台最大科學知識社群，免費線上閱讀</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">台灣最大科普平台，植物專區匯集了植物生理、生態、演化等各類深入淺出的文章，由研究者撰寫、編輯把關，是日常補充植物科學知識的最佳免費來源。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-video">YouTube</span>
+                        <div class="org-title"><a href="https://www.youtube.com/@LIScinema" target="_blank">LIS 情境科學教材</a></div>
+                        <div class="org-sub">非營利組織出品，專為國中小自然科設計的影音教材</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">以故事情境切入科學原理，生動呈現植物生理等自然現象，完全免費且品質優良，是輕鬆複習或自學基礎植物學概念的理想頻道。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-magazine">科普雜誌</span>
+                        <div class="org-title"><a href="https://www.scimonth.com.tw/" target="_blank">科學月刊</a></div>
+                        <div class="org-sub">1970 年創刊，台灣最資深科普雜誌之一</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">創刊超過 50 年的老牌台灣科普雜誌，長期刊載植物生態、演化等科普文章，語言親切、深度適中，是高中生建立跨領域科學思維的絕佳讀物，官網可免費瀏覽部分文章。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://research.sinica.edu.tw/" target="_blank">研之有物 — 中央研究院科普媒體</a></div>
+                        <div class="org-sub">中研院 2017 年成立，深入淺出的頂尖研究科普報導</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">將中研院植物所等機構的嚴肅論文轉化為圖文並茂的科普報導，讀者能看到台灣最前沿的植物科學研究成果，文章水準高且完全免費。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 苔蘚學科普 -->
+            <div class="resource-field">
+                <div class="field-title">苔蘚學</div>
+                <div class="sub-field-title">書籍 / 圖文書</div>
+                <div class="org-grid">
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010994689" target="_blank">台灣苔蘚微觀誌</a></div>
+                        <div class="org-sub">從零開始的賞苔之旅，帶你走進迷你森林！</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">台灣第一本足跡遍及全台各海拔的苔蘚圖鑑與賞苔指南，以精美攝影與插畫呈現物種辨識、探蘚路線與養苔攻略，是最適合科展前期實地觀察與物種辨識練習的入門書。由農業部生物多樣性研究所專家推薦。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/CN11821168" target="_blank">苔蘚的秘密世界</a></div>
+                        <div class="org-sub">吳鵬程、施定基 著，中科院植物研究所研究員作品</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">以通俗文字搭配大量插圖，系統介紹苔蘚植物四億年的演化歷程、各類群識別要點及生態分布，並探討其在環境保護上的應用，是了解苔蘚科學背景的必讀入門書。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://daintsuoh.medium.com/%E8%8B%94%E8%98%9A%E5%AD%B8%E5%A0%82-%E8%8B%94%E8%98%9A%E5%8F%83%E8%80%83%E6%9B%B8%E7%B1%8D-part-3-%E7%AB%A5%E6%9B%B8-7cb7716557c5" target="_blank">苔蘚學堂 — Medium 科普專欄</a></div>
+                        <div class="org-sub">台灣苔蘚愛好者 Yu Feng 撰寫的中文入門系列文章</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">由台灣苔蘚研究者撰寫的 Medium 系列文章，以平易近人的語言介紹苔蘚相關書籍、觀察技巧與知識，是中文苔蘚科普資訊難得的優質來源，適合科展前做基礎概念建立。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-video">YouTube</span>
+                        <div class="org-title"><a href="https://www.youtube.com/channel/UC2PiIQuoK79zCa3WBPZoSdg" target="_blank">小牛頓愛科學 YouTube 頻道</a></div>
+                        <div class="org-sub">小牛頓科學教育出品，免費自然科學影片庫</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">台灣科普出版老品牌小牛頓的官方 YouTube 頻道，內含豐富自然科學動畫與解說影片，每週不定時更新，以生動方式介紹植物、微觀生物等自然知識，適合作為苔蘚科學的入門暖身。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-magazine">科普雜誌</span>
+                        <div class="org-title"><a href="https://www.newtonkids-online.com/" target="_blank">新小牛頓雜誌</a></div>
+                        <div class="org-sub">全台最資深兒少科普雜誌，每月 5 日出刊</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">台灣最資深的兒少科普雜誌，曾多次以植物、微觀生物為主題製作專題，是從小培養自然科學閱讀習慣的優質刊物，也能在其中找到苔蘚植物相關的科普介紹。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 植物分類學科普 -->
+            <div class="resource-field">
+                <div class="field-title">植物分類學</div>
+                <div class="sub-field-title">書籍 / 圖文書</div>
+                <div class="org-grid">
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/E050232927" target="_blank">植物學家（牧野富太郎傳記）</a></div>
+                        <div class="org-sub">NHK 晨間劇原著改編，日本植物分類學之父的故事</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">透過「日本植物分類學之父」牧野富太郎跌宕起伏的一生，讓人感受到分類學研究的熱情與執著。對於想了解「植物命名是怎麼一回事」的讀者而言，這是最能激發興趣的入門傳記，NHK 同名晨間劇亦可搭配觀看。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/E050214742" target="_blank">植物的生活（世界科普經典）</a></div>
+                        <div class="org-sub">陶秉珍 著，以詩意筆調介紹植物基礎科學</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">以散文筆調融合精美手繪插圖，透過 28 篇小文介紹植物分類的基礎概念，如草本與木本的區別、植物的運輸機關等，語言優美易讀，適合作為植物分類學的第一步啟蒙讀物。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://pansci.asia/" target="_blank">PanSci 泛科學</a></div>
+                        <div class="org-sub">台灣最大科學知識社群，涵蓋演化、分類等主題</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">泛科學網站定期發布植物分類與演化相關的科普文章，以「為什麼植物長得像卻不同科」等貼近日常的問題切入，幫助讀者建立分類學的直覺，完全免費且文章持續更新。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-video">YouTube</span>
+                        <div class="org-title"><a href="https://www.youtube.com/@JuJuShoe" target="_blank">啾啾鞋 YouTube 頻道</a></div>
+                        <div class="org-sub">台灣知名科普 YouTuber，擅長將論文轉化為生活化知識</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">化學系出身的科普 YouTuber，擅長將艱澀科學以輕鬆幽默的方式講解，頻道涵蓋演化與生物分類等主題，是建立「為什麼物種分類會改變」等概念的絕佳入門影音資源。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 人工智慧科普 -->
+            <div class="resource-field">
+                <div class="field-title">人工智慧</div>
+                <div class="sub-field-title">書籍 / 漫畫</div>
+                <div class="org-grid">
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-manga">漫畫書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010850590" target="_blank">一本漫畫就讀懂！人工智慧</a></div>
+                        <div class="org-sub">松尾豐 監修，日本 AI 專家 × 科普繪本畫家聯手創作</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">由日本知名 AI 專家監修，以漫畫形式從五大面向切入介紹 AI，包含 AI 歷史、機器學習原理、AI 與心智、未來展望等，是完全不需程式背景也能讀懂的最佳 AI 入門漫畫。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010957263" target="_blank">寫給中學生看的 AI 課（增訂版）</a></div>
+                        <div class="org-sub">台大、師大等多位教授推薦，專為高中生設計的 AI 入門書</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">由台灣本土團隊撰寫，以高中生能理解的語言介紹 AI 如何應用於醫療、交通、藝術等領域，並包含實作思考練習。台大李宏毅教授、葉丙成教授等人聯合推薦，是目前最適合台灣高中生的 AI 科普讀物。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010957259" target="_blank">寫給小學生看的 AI 課</a></div>
+                        <div class="org-sub">蔡宗翰 著，以角色故事帶領讀者認識 AI 應用</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">雖名為「小學生看的」，但其對 GAN、電腦視覺、聊天機器人等概念的圖解說明相當清楚，是快速建立 AI 基礎詞彙與概念的超高效入門書，也適合沒有 AI 背景的高中生作為第一本讀物。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-video">YouTube</span>
+                        <div class="org-title"><a href="https://www.youtube.com/@HungyiLeeML2021" target="_blank">李宏毅教授 機器學習課程（YouTube）</a></div>
+                        <div class="org-sub">台灣大學電機系教授，全球華語 AI 教育最具影響力的免費課程</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">台大李宏毅教授的機器學習課程在全球華語 AI 學習社群中享有極高聲譽，以幽默生動的方式解釋深度學習原理，從最基礎的概念開始，高中生從前幾堂課即可建立對 AI 的正確認識。完全免費。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://research.sinica.edu.tw/" target="_blank">研之有物 — AI 主題報導</a></div>
+                        <div class="org-sub">中央研究院科普媒體，含豐富 AI 研究應用報導</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">中研院「研之有物」有大量關於 AI 與生活、AI 倫理、AI 如何訓練等主題的精彩科普報導，以真實研究案例說明 AI 的能與不能，適合搭配 AI 論文閱讀，幫助理解研究背景。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI 圖像分析科普 -->
+            <div class="resource-field">
+                <div class="field-title">AI 圖像分析</div>
+                <div class="sub-field-title">書籍 / 影音</div>
+                <div class="org-grid">
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-book">科普書</span>
+                        <div class="org-title"><a href="https://www.books.com.tw/products/0010957259" target="_blank">寫給小學生看的 AI 課 — 電腦視覺章節</a></div>
+                        <div class="org-sub">第五章「堪比人類雙眼的電腦視覺技術」專章介紹</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">書中第五章以「AI 是個全能運動員」為題，深入淺出介紹電腦視覺的基本原理，包括機器如何「看懂」圖片、辨識物體等核心概念，是了解 AI 圖像辨識前必讀的基礎章節。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普文章</span>
+                        <div class="org-title"><a href="https://research.sinica.edu.tw/computer-vision-liao-hong-yuan/" target="_blank">研之有物 — 人工智慧再進化，開啟電腦新「視」界</a></div>
+                        <div class="org-sub">中研院資訊所廖弘源特聘研究員專訪</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">由中研院資訊所研究員親身解說電腦視覺如何「看」世界，以人臉辨識、浮水印技術等真實案例說明影像辨識的原理，是理解 AI 圖像分析技術最好的中文入門文章之一，免費線上閱讀。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-video">YouTube</span>
+                        <div class="org-title"><a href="https://www.youtube.com/@HungyiLeeML2021" target="_blank">李宏毅教授課程 — 卷積神經網路（CNN）單元</a></div>
+                        <div class="org-sub">台大機器學習課程，影像辨識核心技術解說</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">李宏毅教授的課程中有專門介紹卷積神經網路（CNN）的單元，以直覺化的方式說明 AI 如何從圖片中擷取特徵、進行分類，是理解「為什麼 AI 能辨識苔蘚」技術原理的最佳免費影音資源。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-web">科普網站</span>
+                        <div class="org-title"><a href="https://pansci.asia/" target="_blank">PanSci 泛科學 — AI 與電腦視覺主題</a></div>
+                        <div class="org-sub">搜尋「電腦視覺」、「深度學習」、「影像辨識」可找到大量科普文章</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">泛科學網站定期刊載 AI 圖像辨識在農業、醫療、生態等應用的科普報導，以日常語言說明技術，是了解「AI 圖像分析如何改變世界」的最佳免費中文平台。</div>
+                    </div>
+                    <div class="pop-card">
+                        <span class="pop-type-tag tag-magazine">科普雜誌</span>
+                        <div class="org-title"><a href="https://www.scimonth.com.tw/" target="_blank">科學月刊 — AI 與影像專題</a></div>
+                        <div class="org-sub">曾刊載「我們與 AI 的距離」等影像辨識相關科普專題</div>
+                        <div class="rec-label">推薦原因</div>
+                        <div class="rec-text">科學月刊曾多次以 AI 視覺辨識為主題製作深度科普專題，以嚴謹但易讀的方式呈現技術原理與社會影響，是想在小論文中引用本土科普資料的好選擇。</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- end tab-popular -->
 
     </div> 
 
