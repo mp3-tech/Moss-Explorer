@@ -156,38 +156,80 @@ document.addEventListener("DOMContentLoaded", function() {
         const letterResult = document.getElementById("letter-result");
         const letterContent = document.getElementById("letter-content");
         
+        // 抓取標題與切換按鈕
+        const monthLabel = document.getElementById("current-month");
+        const navBtns = document.querySelectorAll(".cal-nav-btn");
+        
+        // 1. 初始化動態日期變數
+        let displayDate = new Date();
+        let currentYear = displayDate.getFullYear();
+        let currentMonth = displayDate.getMonth(); // 0-11
+        
         const bookedDates = [13, 15, 20];
-        const today = 27; 
 
+        // 2. 動態渲染日曆
         function renderCalendar() {
+            // 更新月份標題
+            if (monthLabel) {
+                monthLabel.textContent = `${currentYear}年 ${currentMonth + 1}月`;
+            }
+
+            const firstDayIndex = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // 取得真實的今天
+            const realToday = new Date();
+            const isThisMonth = realToday.getFullYear() === currentYear && realToday.getMonth() === currentMonth;
+            const todayDate = realToday.getDate();
+
             let html = "";
             let date = 1;
-            for (let i = 0; i < 5; i++) {
-                html += "<tr>";
+
+            // 產生 6 週的網格
+            for (let i = 0; i < 6; i++) {
+                let rowHtml = "<tr>";
                 for (let j = 0; j < 7; j++) {
-                    if (i === 0 && j < 5) {
-                        html += "<td class='empty'></td>";
-                    } else if (date > 31) {
-                        html += "<td class='empty'></td>";
+                    if ((i === 0 && j < firstDayIndex) || date > daysInMonth) {
+                        rowHtml += "<td class='empty'></td>";
                     } else {
                         let className = "";
-                        if (date === today) className += " date-today";
+                        // 判斷是否為真實的今天
+                        if (isThisMonth && date === todayDate) className += " date-today";
                         if (!bookedDates.includes(date)) className += " date-available";
                         
-                        html += `<td class="${className}" onclick="selectDate(this, ${date})">${date}</td>`;
+                        rowHtml += `<td class="${className}" onclick="selectDate(this, ${date})">${date}</td>`;
                         date++;
                     }
                 }
-                html += "</tr>";
-                if (date > 31) break;
+                rowHtml += "</tr>";
+                html += rowHtml;
+                if (date > daysInMonth) break;
             }
             calendarBody.innerHTML = html;
         }
 
+        // 3. 綁定按鈕切換事件
+        if (navBtns.length >= 2) {
+            navBtns[0].addEventListener("click", () => {
+                currentMonth--;
+                if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+                renderCalendar();
+            });
+            navBtns[1].addEventListener("click", () => {
+                currentMonth++;
+                if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+                renderCalendar();
+            });
+        }
+
+        // 4. 動態組合選取日期
         window.selectDate = function(el, day) {
             document.querySelectorAll('#calendar-body td').forEach(td => td.classList.remove('date-selected'));
             el.classList.add('date-selected');
-            selectedDateInput.value = `2026-05-${day.toString().padStart(2, '0')}`;
+            
+            const formattedMonth = String(currentMonth + 1).padStart(2, '0');
+            const formattedDay = String(day).padStart(2, '0');
+            selectedDateInput.value = `${currentYear}-${formattedMonth}-${formattedDay}`;
         };
 
         btnGenLetter.addEventListener("click", function() {
@@ -209,6 +251,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("邀請信內容已複製到剪貼簿！");
         });
 
+        // 啟動時先渲染一次
         renderCalendar();
     }
 
