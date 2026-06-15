@@ -32,3 +32,39 @@ Moss-Explorer/
 │   ├── database/schema.sql    # 資料庫表結構 (SQL)
 │   └── output/                # 爬蟲輸出的 CSV/JSON 暫存區
 └── .github/workflows/         # GitHub Actions 自動化工作流
+快速開始 (Getting Started)
+1. 前端環境 (Frontend)
+前端採靜態網頁設計，無需複雜的編譯過程：
+
+將 Repository clone 到本地端。
+
+直接使用瀏覽器開啟 frontend/index.html，或使用 VS Code 的 Live Server 啟動。
+
+2. 資料爬蟲與資料庫 (Data Scraper & Supabase)
+若要更新資料庫或執行爬蟲：
+
+進入 moss_scraper/ 目錄。
+
+複製環境變數範例檔：cp .env.example .env，並填入您的 Supabase URL 與 API Key。
+
+安裝所需套件（建議使用虛擬環境）。
+
+執行爬蟲：python scraper.py
+
+同步至資料庫：python upload_to_supabase.py
+
+🤝 參與貢獻 (Contributing)
+我們非常歡迎開發者、教育工作者與生物學愛好者加入維護！無論是：
+
+修復前端 Bug 或優化 UI/UX
+
+擴充 Python 爬蟲的資料來源
+
+完善教育文件與 Glossary (詞彙表)
+
+導入 AI 自動化程式碼審查與 Issue 分流 (Current Focus)
+
+請直接發送 Pull Request，或在 Issues 區塊提出您的想法。針對開源新手，請參考 issues.html 中的指引。
+
+📄 授權條款 (License)
+本專案採用開源授權，鼓勵教育用途的散佈與修改。
